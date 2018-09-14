@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MuayThaiTraining"
         mc:Ignorable="d"
-        Title="Tutorial" Height="600" Width="700" >
+        Title="Tutorial" Height="700" Width="1000" >
     <Grid>
         <Label Content="tutorial" HorizontalAlignment="Left" Height="57" Margin="149,151,0,0" VerticalAlignment="Top" Width="215"/>
 

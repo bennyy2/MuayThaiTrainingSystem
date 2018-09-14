@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MuayThaiTraining"
         mc:Ignorable="d"
-        Title="Mode" Height="600" Width="700">
+        Title="Mode" Height="700" Width="1000">
     <Grid>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="141,495,0,0" VerticalAlignment="Top" Width="121" Click="Add_pose_btn" Height="34"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="770,526,0,0" VerticalAlignment="Top" Width="121" Click="Add_pose_btn" Height="34"/>
 
     </Grid>
 </Window>

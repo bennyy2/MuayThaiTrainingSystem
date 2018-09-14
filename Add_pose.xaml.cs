@@ -49,7 +49,6 @@ namespace MuayThaiTraining
                     kSensor.Start();
                     this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable();
-                    kSensor.DepthStream.Enable();
                     kSensor.SkeletonStream.Enable();
 
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
@@ -83,6 +82,7 @@ namespace MuayThaiTraining
 
         }
 
+
         private void KSensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
             using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
@@ -92,16 +92,24 @@ namespace MuayThaiTraining
                     return;
                 }
 
-
                 //byte[] colorData = GenerateColorByte(colorFrame);
                 byte[] colorData = new byte[colorFrame.PixelDataLength];
 
                 colorFrame.CopyPixelDataTo(colorData);
 
-                int stride = colorFrame.Width * 4;
+                int stride = colorFrame.Width * colorFrame.BytesPerPixel;
 
-                imgDetect.Source = BitmapSource.Create((int)imgDetect.Width, (int)imgDetect.Height,
+                try
+                {
+                    this.colorImage.Source = BitmapSource.Create(colorFrame.Width, colorFrame.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
+                }
+                catch
+                {
+                    this.camera_error.Content = "Cannot open kinect frame.";
+                }
+
+
             }
         }
 
@@ -176,7 +184,7 @@ namespace MuayThaiTraining
 
 
         private byte[] GenerateColorByte(DepthImageFrame colorFrame)
-        {
+        { 
             short[] rawDepthData = new short[colorFrame.PixelDataLength];
             colorFrame.CopyPixelDataTo(rawDepthData);
 

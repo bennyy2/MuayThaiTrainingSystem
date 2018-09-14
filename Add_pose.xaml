@@ -5,16 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MuayThaiTraining"
         mc:Ignorable="d"
-        Title="Add_pose" Height="600" Width="700">
+        Title="Add new pose" Height="700" Width="1000">
     <Grid>
-        <Label Content="Status" HorizontalAlignment="Left" Height="23" Margin="31,38,0,0" VerticalAlignment="Top" Width="92"/>
-        <Label x:Name="lbStatus" Content="-" HorizontalAlignment="Left" Height="23" Margin="123,38,0,0" VerticalAlignment="Top" Width="313"/>
-        <Label x:Name="label" Content="Kinect ID" HorizontalAlignment="Left" Height="23" Margin="31,78,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="lbKinectID" Content="-" HorizontalAlignment="Left" Height="23" Margin="123,78,0,0" VerticalAlignment="Top" Width="313"/>
-        <Button x:Name="btnConnect" Content="Connect" Height="34" Margin="558,0,41,40" VerticalAlignment="Bottom" Click="btn_connect" RenderTransformOrigin="0.783,1.006"/>
-        <Image x:Name="imgDetect" HorizontalAlignment="Left" Height="341" Margin="31,131,0,0" VerticalAlignment="Top" Width="620"/>
+        <Label Content="New Pose" HorizontalAlignment="Left" Margin="31,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.263,-0.25" Width="108" FontWeight="Bold" FontSize="16"/>
+        <Label Content="Name" HorizontalAlignment="Left" Height="24" Margin="31,59,0,0" VerticalAlignment="Top" Width="78"/>
+        <Label Content="Description" HorizontalAlignment="Left" Height="24" Margin="31,88,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="148,59,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="798"/>
+        <TextBox HorizontalAlignment="Left" Height="67" Margin="148,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="798"/>
+        <Label x:Name="camera_error" Content="" HorizontalAlignment="Left" Height="32" Margin="334,207,0,0" VerticalAlignment="Top" Width="308"/>
 
-        <Canvas x:Name="skelCanvas" HorizontalAlignment="Left" Height="341" Margin="31,131,0,0" VerticalAlignment="Top" Width="620"/>
+        <Label Content="Status" HorizontalAlignment="Left" Height="23" Margin="10,630,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="0.875,13.935" FontWeight="Bold"/>
+        <Label x:Name="lbStatus" Content="-" HorizontalAlignment="Left" Height="23" Margin="101,630,0,0" VerticalAlignment="Top" Width="173"/>
+        <Label x:Name="lbKinectID" Content="-" HorizontalAlignment="Left" Height="23" Margin="279,630,0,0" VerticalAlignment="Top" Width="313"/>
+        
+        <Button x:Name="btnConnect" Content="Connect" Height="32" Margin="0,0,46,452" VerticalAlignment="Bottom" Click="btn_connect" RenderTransformOrigin="0.783,1.006" HorizontalAlignment="Right" Width="71"/>
 
+        <Image x:Name="colorImage" HorizontalAlignment="Left" Height="330" Margin="101,262,0,0" VerticalAlignment="Top" Width="805"/>
+        <Canvas x:Name="skelCanvas" HorizontalAlignment="Left" Height="330" Margin="101,262,0,0" VerticalAlignment="Top" Width="805"/>
+        
     </Grid>
 </Window>
