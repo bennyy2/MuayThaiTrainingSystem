@@ -17,3 +17,10 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThai
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csproj.CopyComplete
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.exe
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.pdb
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Tutorial.g.cs
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Tutorial.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Mode.g.cs
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Mode.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Add_pose.g.cs
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Add_pose.baml

@@ -7,14 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="700">
     <Grid>
-        <Label Content="Status" HorizontalAlignment="Left" Height="23" Margin="31,38,0,0" VerticalAlignment="Top" Width="92"/>
-        <Label x:Name="lbStatus" Content="-" HorizontalAlignment="Left" Height="23" Margin="123,38,0,0" VerticalAlignment="Top" Width="313"/>
-        <Label x:Name="label" Content="Kinect ID" HorizontalAlignment="Left" Height="23" Margin="31,78,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label x:Name="lbKinectID" Content="-" HorizontalAlignment="Left" Height="23" Margin="123,78,0,0" VerticalAlignment="Top" Width="313"/>
-        <Button x:Name="btnConnect" Content="Connect" Height="34" Margin="558,0,41,40" VerticalAlignment="Bottom" Click="btn_connect" RenderTransformOrigin="0.783,1.006"/>
-        <Image x:Name="imgDetect" HorizontalAlignment="Left" Height="341" Margin="31,131,0,0" VerticalAlignment="Top" Width="620"/>
-
-        <Canvas x:Name="skelCanvas" HorizontalAlignment="Left" Height="341" Margin="31,131,0,0" VerticalAlignment="Top" Width="620"/>
+        <Button Content="Tutorial" HorizontalAlignment="Left" Height="81" Margin="50,180,0,0" VerticalAlignment="Top" Width="95" Click="Tutorial_Click"/>
+        <Button Content="Basic Mode" HorizontalAlignment="Left" Margin="201,180,0,0" VerticalAlignment="Top" Width="95" Height="81" Click="Mode_Click" />
+        <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="98,47,0,0" VerticalAlignment="Top" Height="63" Width="500" FontWeight="Bold" FontFamily="Segoe UI Black" FontSize="36"/>
 
     </Grid>
 </Window>

@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
@@ -18,29 +17,23 @@ using System.Windows.Shapes;
 namespace MuayThaiTraining
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Mode.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Mode : Window
     {
         
 
-        public MainWindow()
+        public Mode()
         {
             InitializeComponent();
         }
-        
 
-        private void Tutorial_Click(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            tutorial.Show();
-            this.Close();
-        }
 
-        private void Mode_Click(object sender, RoutedEventArgs e)
+
+        private void Add_pose_btn(object sender, RoutedEventArgs e)
         {
-            Mode mode = new Mode();
-            mode.Show();
+            Add_pose add_pose = new Add_pose();
+            add_pose.Show();
             this.Close();
         }
     }
