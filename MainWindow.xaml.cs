@@ -29,7 +29,7 @@ namespace MuayThaiTraining
             InitializeComponent();
         }
         
-
+         
         private void Tutorial_Click(object sender, RoutedEventArgs e)
         {
             Tutorial tutorial = new Tutorial();

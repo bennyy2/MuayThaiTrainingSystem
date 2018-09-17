@@ -22,6 +22,7 @@ namespace MuayThaiTraining
     public partial class Add_pose : Window
     {
         KinectSensor kSensor;
+        int count = 0;
 
         public Add_pose()
         {
@@ -71,6 +72,7 @@ namespace MuayThaiTraining
                     this.btnConnect.Content = "Connect";
                     this.lbStatus.Content = "Disconnect";
                     this.lbKinectID.Content = "-";
+                    count = 0;
 
                 }
             }
@@ -170,9 +172,10 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
-                    Console.Write("X: " + skeleton.Joints[JointType.Spine].Position.X);
-                    Console.Write(" Y: " + skeleton.Joints[JointType.Spine].Position.Y);
-                    Console.Write(" Z: " + skeleton.Joints[JointType.Spine].Position.Z);
+                    count += 1;
+                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HandRight].Position.X);
+                    Console.Write(" Y: " + skeleton.Joints[JointType.HandRight].Position.Y);
+                    Console.Write(" Z: " + skeleton.Joints[JointType.HandRight].Position.Z);
                     Console.WriteLine(" ");
 
                 }
@@ -249,5 +252,14 @@ namespace MuayThaiTraining
             skelCanvas.Children.Add(backBone);
         }
 
+        private void add_db(object sender, RoutedEventArgs e)
+        {
+                ConnectDB connectDB = new ConnectDB();
+                connectDB.getDB(this.nameText.Text);
+                this.nameText.Text = "";
+                this.camera_error.Content = "Inserted.";
+
+                
+        }
     }
 }

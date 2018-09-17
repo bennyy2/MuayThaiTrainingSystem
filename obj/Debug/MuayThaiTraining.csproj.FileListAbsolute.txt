@@ -23,3 +23,4 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Mode.g.c
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Mode.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Add_pose.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Add_pose.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache
