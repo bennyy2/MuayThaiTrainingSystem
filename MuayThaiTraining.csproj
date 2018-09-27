@@ -65,18 +65,23 @@
     <Compile Include="Add_pose.xaml.cs">
       <DependentUpon>Add_pose.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Comparison.cs" />
     <Compile Include="ConnectDB.cs" />
-    <Compile Include="Mode.xaml.cs">
-      <DependentUpon>Mode.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MuayThaiDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MuayThaiDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Pose.xaml.cs">
+      <DependentUpon>Pose.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowCategory.xaml.cs">
+      <DependentUpon>ShowCategory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vector.cs" />
     <Page Include="Add_pose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -93,7 +98,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Mode.xaml">
+    <Page Include="Pose.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowCategory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

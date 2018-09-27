@@ -12,28 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
-
 namespace MuayThaiTraining
 {
     /// <summary>
-    /// Interaction logic for Mode.xaml
+    /// Interaction logic for Pose.xaml
     /// </summary>
-    public partial class Mode : Window
+    public partial class Pose : Window
     {
-        
-
-        public Mode()
+        public Pose()
         {
             InitializeComponent();
         }
 
-
-
-        private void Add_pose_btn(object sender, RoutedEventArgs e)
+        private void add_button(object sender, RoutedEventArgs e)
         {
-            Add_pose add_pose = new Add_pose();
-            add_pose.Show();
+            Add_pose add_Pose = new Add_pose();
+            add_Pose.Show();
             this.Close();
         }
     }

@@ -6,10 +6,15 @@
         xmlns:local="clr-namespace:MuayThaiTraining"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
-    <Grid>
-        <Button Content="Tutorial" HorizontalAlignment="Left" Height="81" Margin="50,180,0,0" VerticalAlignment="Top" Width="95" Click="Tutorial_Click"/>
-        <Button Content="Basic Mode" HorizontalAlignment="Left" Margin="201,180,0,0" VerticalAlignment="Top" Width="95" Height="81" Click="Mode_Click" />
-        <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="98,47,0,0" VerticalAlignment="Top" Height="63" Width="500" FontWeight="Bold" FontFamily="Segoe UI Black" FontSize="36"/>
+    <Grid Name="mainPanel">
+        <Frame Content="" Name="mainFrame" HorizontalAlignment="Left" Height="669" VerticalAlignment="Top" Width="992"/>
 
+        <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="98,47,0,0" VerticalAlignment="Top" Height="63" Width="500" FontWeight="Bold" FontFamily="Segoe UI Black" FontSize="36"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="265,162,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="265,220,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308"/>
+        <Label Content="User name" HorizontalAlignment="Left" Height="23" Margin="125,162,0,0" VerticalAlignment="Top" Width="84"/>
+        <Label Content="Password" HorizontalAlignment="Left" Height="23" Margin="125,220,0,0" VerticalAlignment="Top" Width="84"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="503,319,0,0" VerticalAlignment="Top" Width="75" Click="Button_Login"/>
+     
     </Grid>
 </Window>

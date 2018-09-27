@@ -28,20 +28,25 @@ namespace MuayThaiTraining
         {
             InitializeComponent();
         }
-        
-         
-        private void Tutorial_Click(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            tutorial.Show();
-            this.Close();
-        }
 
-        private void Mode_Click(object sender, RoutedEventArgs e)
+
+        private void Button_Login(object sender, RoutedEventArgs e)
         {
-            Mode mode = new Mode();
-            mode.Show();
+            ShowCategory showCategory = new ShowCategory();
+            showCategory.Show();
             this.Close();
+
+            //if (checkUser())
+            //{
+            //    ShowCategory showCategory = new ShowCategory();
+            //    showCategory.Show();
+            //    this.Close();
+            //}
+            //else
+            //{
+
+            //}
+
         }
     }
 }

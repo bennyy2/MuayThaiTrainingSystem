@@ -22,7 +22,9 @@ namespace MuayThaiTraining
     public partial class Add_pose : Window
     {
         KinectSensor kSensor;
+        ConnectDB connectDB = new ConnectDB();
         int count = 0;
+        float x, y, z;
 
         public Add_pose()
         {
@@ -31,7 +33,7 @@ namespace MuayThaiTraining
 
         private void btn_connect(object sender, RoutedEventArgs e)
         {
-            if (btnConnect.Content.ToString() == "Connect")
+            if (btnConnect.Content.ToString() == "Start Record")
             {
                 if (KinectSensor.KinectSensors.Count > 0)
                 {
@@ -68,13 +70,35 @@ namespace MuayThaiTraining
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
+                    //saveFile();
+                    //savePosition(double x, double y, double z);
                     kSensor.Stop();
+                    this.statusText.Content = "X :" + x + " Y:" + y + " Z:" + z;
+
                     this.btnConnect.Content = "Connect";
                     this.lbStatus.Content = "Disconnect";
                     this.lbKinectID.Content = "-";
                     count = 0;
 
                 }
+            }
+
+        }
+
+        private void saveFile()
+        {
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)colorImage.Width, (int)colorImage.Height, 60d, 60d, PixelFormats.Default);
+            renderTarget.Render(colorImage);
+            
+            //var crop = new CroppedBitmap(rtb, new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));            
+
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
+            using (var fs = System.IO.File.OpenWrite(path1 + "\\pic.png"))
+            {
+                pngEncoder.Save(fs);
             }
         }
 
@@ -103,12 +127,14 @@ namespace MuayThaiTraining
 
                 try
                 {
+                    
                     this.colorImage.Source = BitmapSource.Create(colorFrame.Width, colorFrame.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
+                    //this.colorImage.Source = colorImageBitmap;
                 }
                 catch
                 {
-                    this.camera_error.Content = "Cannot open kinect frame.";
+                    this.statusText.Content = "Cannot open kinect frame.";
                 }
 
 
@@ -173,9 +199,12 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
                     count += 1;
-                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HandRight].Position.X);
-                    Console.Write(" Y: " + skeleton.Joints[JointType.HandRight].Position.Y);
-                    Console.Write(" Z: " + skeleton.Joints[JointType.HandRight].Position.Z);
+                    x = skeleton.Joints[JointType.HipCenter].Position.X;
+                    y = skeleton.Joints[JointType.HipCenter].Position.Y;
+                    z = skeleton.Joints[JointType.HipCenter].Position.Z;
+                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
+                    Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
+                    Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
                     Console.WriteLine(" ");
 
                 }
@@ -183,6 +212,8 @@ namespace MuayThaiTraining
 
             }
         }
+
+
 
 
 
@@ -254,12 +285,13 @@ namespace MuayThaiTraining
 
         private void add_db(object sender, RoutedEventArgs e)
         {
-                ConnectDB connectDB = new ConnectDB();
-                connectDB.getDB(this.nameText.Text);
-                this.nameText.Text = "";
-                this.camera_error.Content = "Inserted.";
+            saveFile();
+            //ConnectDB connectDB = new ConnectDB();
+            //connectDB.getDB(this.nameText.Text);
+            //this.nameText.Text = "";
+            //this.statusText.Content = "Inserted.";
 
-                
+
         }
     }
 }

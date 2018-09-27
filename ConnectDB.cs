@@ -6,18 +6,29 @@ using System.Threading.Tasks;
 
 using System.Data.OleDb;
 using System.Configuration;
+using System.Windows.Documents;
 
 namespace MuayThaiTraining
 {
     class ConnectDB
     {
+        OleDbConnection con;
+
+        private OleDbConnection connect()
+        {
+            OleDbConnection con = new OleDbConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["MuayThaiDBConnectionString"].ToString();
+            return con;
+        }
+
+
         //string connectionString = "Data Source=DESKTOP-ODAF6RA;Initial Catalog=MuayThaiDB;Integrated Security=True;Pooling=False;";
         public void getDB(String name)
         {
-            OleDbConnection con = new OleDbConnection();
+            
             try
             {
-                con.ConnectionString = ConfigurationManager.ConnectionStrings["MuayThaiDBConnectionString"].ToString();
+                con = connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.CommandText = "insert into [Joint](jointName) Values(@name)";
@@ -35,6 +46,53 @@ namespace MuayThaiTraining
             }
             
 
+        }
+
+        public List<String> getListMode()
+        {
+            List<String> listMode = new List<String>();
+
+            try
+            {
+                con = connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                String sqlQuery = "SELECT [modeName] from [mode]";
+                cmd = new OleDbCommand(sqlQuery, con);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var dataInTable = Convert.ToString(reader["modeName"].ToString());
+                    listMode.Add(dataInTable);
+                }
+                return listMode;    
+                //con = connect();
+                //con.Open();
+                //OleDbCommand cmd = new OleDbCommand();
+                //String sqlQuery = "SELECT [modeName] from [mode]";
+                //cmd = new OleDbCommand(sqlQuery, con);
+                //cmd.CommandText = sqlQuery;
+                ////cmd.Parameters.Add("@CallerName", OleDbType.VarChar).Value = labelProblemDate.Text.Trim();
+                ////cmd.Parameters.AddWithValue("@name", name);
+                ////cmd.Parameters["@CallerName"].Value = name;
+                //cmd.ExecuteNonQuery();
+                //cmd.Connection = con;
+                //int a = cmd.ExecuteNonQuery();
+
+                //while (row_reader.read()) int rows = row_reader.GetInt32(0);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Close();
+                
+            }
+            
         }
 
 
