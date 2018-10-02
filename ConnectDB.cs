@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data.OleDb;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Windows.Documents;
 
 namespace MuayThaiTraining
@@ -54,6 +55,16 @@ namespace MuayThaiTraining
 
             try
             {
+                //String sqlQuery = "SELECT [modeName] from [mode]";
+                //con = new SqlConnection(connectionString);
+                //con.Open();
+                //cmd = new SqlCommand(sqlQuery, con);
+                //reader = cmd.ExecuteReader();
+                //while (reader.Read())
+                //{
+                //    var dataInTable = Convert.ToString(reader["modeName"].ToString());
+                //    listMode.Add(dataInTable);
+                //}
                 con = connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
@@ -68,20 +79,7 @@ namespace MuayThaiTraining
                     listMode.Add(dataInTable);
                 }
                 return listMode;    
-                //con = connect();
-                //con.Open();
-                //OleDbCommand cmd = new OleDbCommand();
-                //String sqlQuery = "SELECT [modeName] from [mode]";
-                //cmd = new OleDbCommand(sqlQuery, con);
-                //cmd.CommandText = sqlQuery;
-                ////cmd.Parameters.Add("@CallerName", OleDbType.VarChar).Value = labelProblemDate.Text.Trim();
-                ////cmd.Parameters.AddWithValue("@name", name);
-                ////cmd.Parameters["@CallerName"].Value = name;
-                //cmd.ExecuteNonQuery();
-                //cmd.Connection = con;
-                //int a = cmd.ExecuteNonQuery();
 
-                //while (row_reader.read()) int rows = row_reader.GetInt32(0);
             }
             catch (Exception)
             {
@@ -94,58 +92,6 @@ namespace MuayThaiTraining
             }
             
         }
-
-
-
-
-
-        //public void connect()
-        //{
-        //    string provider = ConfigurationManager.AppSettings["provider"];
-        //    string connectionString = ConfigurationManager.AppSettings["connectionString"];
-
-        //    DbProviderFactory factory = DbProviderFactories.GetFactory(provider);
-
-        //    using (DbConnection connection = factory.CreateConnection())
-        //    {
-        //        if (connection == null)
-        //        {
-        //            Console.WriteLine("Connection Error");
-        //            Console.ReadLine();
-        //            return;
-        //        }
-
-        //        connection.ConnectionString = connectionString;
-        //        connection.Open();
-        //        DbCommand command = factory.CreateCommand();
-
-        //        if (command == null)
-        //        {
-        //            Console.WriteLine("Command Error");
-        //            Console.ReadLine();
-        //            return;
-        //        }
-
-        //        command.Connection = connection;
-        //        command.CommandText = "Select * From Joint";
-
-        //        using (DbDataReader dataReader = command.ExecuteReader())
-        //        {
-        //            while (dataReader.Read())
-        //            {
-        //                Console.WriteLine($"{ dataReader["jointName"]}");
-        //            }
-        //        }
-
-        //        Console.ReadLine();
-
-
-        //    }
-
-        //}
-
-
-
 
     }
 }

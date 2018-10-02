@@ -127,8 +127,9 @@ namespace MuayThaiTraining
 
                 try
                 {
+
                     
-                    this.colorImage.Source = BitmapSource.Create(colorFrame.Width, colorFrame.Height,
+                    this.colorImage.Source = BitmapSource.Create((int) skelCanvas.Width, (int)skelCanvas.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
                     //this.colorImage.Source = colorImageBitmap;
                 }
@@ -202,6 +203,7 @@ namespace MuayThaiTraining
                     x = skeleton.Joints[JointType.HipCenter].Position.X;
                     y = skeleton.Joints[JointType.HipCenter].Position.Y;
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
+
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
                     Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
