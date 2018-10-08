@@ -1,12 +1,18 @@
-﻿namespace MuayThaiTraining
-{
-    public class Vector
-    {
-        public double x;
-        public double y;
-        public double z;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-        public Vector(){}
+namespace MuayThaiTraining
+{
+    class Vector
+    {
+        double x;
+        double y;
+        double z;
+
+        public Vector() { }
 
         public Vector(double x, double y, double z)
         {

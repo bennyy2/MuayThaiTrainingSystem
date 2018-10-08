@@ -8,18 +8,52 @@ using System.Data.OleDb;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Microsoft.Kinect;
 
 namespace MuayThaiTraining
 {
     class ConnectDB
     {
         OleDbConnection con;
+        Vector vector = new Vector();
 
         private OleDbConnection connect()
         {
             OleDbConnection con = new OleDbConnection();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["MuayThaiDBConnectionString"].ToString();
             return con;
+        }
+
+
+        
+
+        public void savePosition(Skeleton skeletons, String name, String des)
+        {
+            try
+            {
+                con = connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "insert into Pose ([poseName], [poseDescription], [jointID], [modeID]) values (?,?,?,?)";
+                cmd.Parameters.AddWithValue("@poseName", name);
+                cmd.Parameters.AddWithValue("@poseDescrition", des);
+                cmd.Parameters.AddWithValue("@jointID", 1);
+                cmd.Parameters.AddWithValue("@modeID", 1);
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
+            //double x = skeletons.Joints[JointType.HipCenter].Position.Y;
+            //Console.WriteLine(x);
         }
 
 
@@ -49,49 +83,81 @@ namespace MuayThaiTraining
 
         }
 
-        public List<String> getListMode()
+        //public List<String> getListMode()
+        //{
+        //    List<String> listMode = new List<String>();
+
+        //    try
+        //    {
+        //        con = connect();
+        //        con.Open();
+        //        OleDbCommand cmd = new OleDbCommand();
+        //        String sqlQuery = "SELECT [modeName] from [mode]";
+        //        cmd = new OleDbCommand(sqlQuery, con);
+        //        cmd.CommandType = System.Data.CommandType.Text;
+
+        //        OleDbDataReader reader = cmd.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            var dataInTable = reader["modeName"].ToString();
+        //            listMode.Add(dataInTable);
+        //        }
+        //        return listMode;    
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        con.Close();
+                
+        //    }
+            
+        //}
+
+        public List<string> getJointPosition(JointType j)
         {
-            List<String> listMode = new List<String>();
+            String s = j.ToString();
+            List<String> v = new List<string>();
 
             try
             {
-                //String sqlQuery = "SELECT [modeName] from [mode]";
-                //con = new SqlConnection(connectionString);
-                //con.Open();
-                //cmd = new SqlCommand(sqlQuery, con);
-                //reader = cmd.ExecuteReader();
-                //while (reader.Read())
-                //{
-                //    var dataInTable = Convert.ToString(reader["modeName"].ToString());
-                //    listMode.Add(dataInTable);
-                //}
                 con = connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT [modeName] from [mode]";
+                String sqlQuery = "SELECT axis_x, axis_y, axis_z FROM [Position] WHERE jointID = @jointID" +
+                    " and poseID = @poseID and modeID = @modeID";
+                cmd.Parameters.AddWithValue("@jointID", 1);
+                cmd.Parameters.AddWithValue("@poseID", 7);
+                cmd.Parameters.AddWithValue("@modeID", 2);
                 cmd = new OleDbCommand(sqlQuery, con);
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var dataInTable = Convert.ToString(reader["modeName"].ToString());
-                    listMode.Add(dataInTable);
+                    v.Add(reader["axis_x"].ToString());
+                    //vector = new Vector((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
                 }
-                return listMode;    
-
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.Message);
             }
             finally
             {
                 con.Close();
                 
+
             }
-            
+            return v;
+
         }
+
+
 
     }
 }

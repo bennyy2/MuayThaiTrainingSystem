@@ -22,9 +22,10 @@ namespace MuayThaiTraining
     public partial class Add_pose : Window
     {
         KinectSensor kSensor;
-        ConnectDB connectDB = new ConnectDB();
+        ConnectDB connectDB;
         int count = 0;
         float x, y, z;
+        Skeleton skel;
 
         public Add_pose()
         {
@@ -53,7 +54,6 @@ namespace MuayThaiTraining
                     this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable();
                     kSensor.SkeletonStream.Enable();
-
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
                     kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                     //kSensor.AllFramesReady += KSensor_AllFramesReady;
@@ -70,7 +70,7 @@ namespace MuayThaiTraining
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
-                    //saveFile();
+                    saveFile();
                     //savePosition(double x, double y, double z);
                     kSensor.Stop();
                     this.statusText.Content = "X :" + x + " Y:" + y + " Z:" + z;
@@ -87,9 +87,19 @@ namespace MuayThaiTraining
 
         private void saveFile()
         {
+            string name = this.nameText.Text;
+            string des = this.desText.Text;
+
+            //savePicture();
+            connectDB = new ConnectDB();
+            connectDB.savePosition(skel, name, des);
+        }
+
+        public void savePicture()
+        {
             RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)colorImage.Width, (int)colorImage.Height, 60d, 60d, PixelFormats.Default);
             renderTarget.Render(colorImage);
-            
+
             //var crop = new CroppedBitmap(rtb, new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));            
 
             BitmapEncoder pngEncoder = new PngBitmapEncoder();
@@ -101,6 +111,8 @@ namespace MuayThaiTraining
                 pngEncoder.Save(fs);
             }
         }
+
+
 
         void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
@@ -199,11 +211,12 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
-                    count += 1;
+                    //count += 1;
                     x = skeleton.Joints[JointType.HipCenter].Position.X;
                     y = skeleton.Joints[JointType.HipCenter].Position.Y;
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
+                    skel = skeleton;
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
                     Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);

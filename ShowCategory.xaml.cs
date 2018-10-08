@@ -29,7 +29,7 @@ namespace MuayThaiTraining
         private void getMode()
         {
             List<String> mode = new List<string>();
-            mode = connectDB.getListMode();
+            //mode = connectDB.getListMode();
 
             foreach(var item in mode)
             {
@@ -46,10 +46,9 @@ namespace MuayThaiTraining
 
         private void Tutorial_Click(object sender, RoutedEventArgs e)
         {
-            getMode();
-            //Tutorial tutorial = new Tutorial();
-            //tutorial.Show();
-            //this.Close();
+            Tutorial tutorial = new Tutorial();
+            tutorial.Show();
+            this.Close();
         }
 
         private void Mode_Click(object sender, RoutedEventArgs e)

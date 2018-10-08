@@ -78,6 +78,7 @@
     <Compile Include="ShowCategory.xaml.cs">
       <DependentUpon>ShowCategory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TreeNode.cs" />
     <Compile Include="Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>
@@ -151,6 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SkeletonTree.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

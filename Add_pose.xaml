@@ -11,7 +11,7 @@
         <Label Content="Name" HorizontalAlignment="Left" Height="24" Margin="31,59,0,0" VerticalAlignment="Top" Width="78"/>
         <Label Content="Description" HorizontalAlignment="Left" Height="24" Margin="31,88,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
         <TextBox x:Name="nameText" HorizontalAlignment="Left" Height="24" Margin="148,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="798"/>
-        <TextBox HorizontalAlignment="Left" Height="67" Margin="148,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="798"/>
+        <TextBox Name="desText" HorizontalAlignment="Left" Height="67" Margin="148,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="798"/>
         <Label x:Name="statusText" Content="" HorizontalAlignment="Left" Height="32" Margin="296,185,0,0" VerticalAlignment="Top" Width="414"/>
 
         <Label Content="Status" HorizontalAlignment="Left" Height="23" Margin="10,630,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="0.875,13.935" FontWeight="Bold"/>
