@@ -117,29 +117,28 @@ namespace MuayThaiTraining
             
         //}
 
-        public List<string> getJointPosition(JointType j)
+        public Vector getJointPosition(JointType j)
         {
             String s = j.ToString();
-            List<String> v = new List<string>();
+            //List<String> v = new List<string>();
 
             try
             {
                 con = connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT axis_x, axis_y, axis_z FROM [Position] WHERE jointID = @jointID" +
-                    " and poseID = @poseID and modeID = @modeID";
-                cmd.Parameters.AddWithValue("@jointID", 1);
-                cmd.Parameters.AddWithValue("@poseID", 7);
-                cmd.Parameters.AddWithValue("@modeID", 2);
+                String sqlQuery = "SELECT axis_x, axis_y, axis_z FROM [Position] WHERE jointID = 1";
+                //cmd.Parameters.AddWithValue("@jointID", Int32.Parse("1"));
+                //cmd.Parameters.AddWithValue("@poseID", 7);
+                //cmd.Parameters.AddWithValue("@modeID", 2);
                 cmd = new OleDbCommand(sqlQuery, con);
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    v.Add(reader["axis_x"].ToString());
-                    //vector = new Vector((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
+                    //v.Add(reader["axis_x"].ToString());
+                    vector = new Vector((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
                 }
                 
             }
@@ -153,7 +152,7 @@ namespace MuayThaiTraining
                 
 
             }
-            return v;
+            return vector;
 
         }
 
