@@ -26,3 +26,12 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Pose.g.c
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Add_pose.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Pose.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\Tutorial.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\concrt140.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\cvextern.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\msvcp140.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\opencv_ffmpeg341_64.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\vcruntime140.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\cvextern.lib
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.World.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.World.xml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining_Content.g.cs

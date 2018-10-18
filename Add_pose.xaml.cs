@@ -22,7 +22,8 @@ namespace MuayThaiTraining
     public partial class Add_pose : Window
     {
         KinectSensor kSensor;
-        ConnectDB connectDB;
+        ConnectDB connectDB = new ConnectDB();
+        Comparison compare = new Comparison();
         int count = 0;
         float x, y, z;
         Skeleton skel;
@@ -30,6 +31,7 @@ namespace MuayThaiTraining
         public Add_pose()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
         }
 
         private void btn_connect(object sender, RoutedEventArgs e)
@@ -70,16 +72,45 @@ namespace MuayThaiTraining
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
-                    saveFile();
-                    //savePosition(double x, double y, double z);
+                    //saveFile();
+                    //compare.calScore(skel);
                     kSensor.Stop();
+                    showPosition();
                     this.statusText.Content = "X :" + x + " Y:" + y + " Z:" + z;
-
                     this.btnConnect.Content = "Connect";
                     this.lbStatus.Content = "Disconnect";
                     this.lbKinectID.Content = "-";
                     count = 0;
 
+                }
+            }
+
+        }
+
+        private void showPosition()
+        {
+            
+            List<JointType> legLeft = new List<JointType> { JointType.HipCenter, JointType.HipLeft,
+            JointType.KneeLeft, JointType.AnkleLeft, JointType.FootLeft};
+
+            List<JointType> legRight = new List<JointType> { JointType.HipRight,
+            JointType.KneeRight, JointType.AnkleRight, JointType.FootRight};
+
+            List<JointType> handLeft = new List<JointType> { JointType.Spine, JointType.ShoulderCenter,
+            JointType.ShoulderLeft, JointType.ElbowLeft, JointType.WristLeft, JointType.HandLeft};
+
+            List<JointType> handRight = new List<JointType> { JointType.ShoulderRight, JointType.ElbowRight, JointType.WristRight, JointType.HandRight };
+
+
+            List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
+
+
+            foreach (List<JointType> j in li)
+            {
+
+                foreach (JointType i in j)
+                {
+                    Console.WriteLine(i +" "+ skel.Joints[i].Position.X.ToString());
                 }
             }
 
@@ -91,7 +122,6 @@ namespace MuayThaiTraining
             string des = this.desText.Text;
 
             //savePicture();
-            connectDB = new ConnectDB();
             connectDB.savePosition(skel, name, des);
         }
 
@@ -139,8 +169,6 @@ namespace MuayThaiTraining
 
                 try
                 {
-
-                    
                     this.colorImage.Source = BitmapSource.Create((int) skelCanvas.Width, (int)skelCanvas.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
                     //this.colorImage.Source = colorImageBitmap;
@@ -205,13 +233,13 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
                     DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
 
-                    //left leg
+                    //Right leg
                     DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
                     DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
                     DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
-                    //count += 1;
+                    count += 1;
                     x = skeleton.Joints[JointType.HipCenter].Position.X;
                     y = skeleton.Joints[JointType.HipCenter].Position.Y;
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
@@ -275,6 +303,12 @@ namespace MuayThaiTraining
             return pixels;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //Comparison compare = new Comparison();
+            statusText.Content = compare.calScore(skel);
+            //compare.testCalScore(skel);
+        }
 
         private void DrawBone(Skeleton skeleton, JointType joint1, JointType joint2)
         {
@@ -293,20 +327,24 @@ namespace MuayThaiTraining
             backBone.X2 = joint2Point.X;
             backBone.Y2 = joint2Point.Y;
 
-
-
             skelCanvas.Children.Add(backBone);
         }
 
         private void add_db(object sender, RoutedEventArgs e)
         {
-            saveFile();
+            if (connectDB.saveSkel(skel))
+            {
+                Pose pose = new Pose();
+                pose.Show();
+                this.Close();
+            }
+            else{
+                statusText.Content = "Cannot save pose";
+            }
             //ConnectDB connectDB = new ConnectDB();
             //connectDB.getDB(this.nameText.Text);
             //this.nameText.Text = "";
             //this.statusText.Content = "Inserted.";
-
-
         }
     }
 }

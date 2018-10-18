@@ -23,6 +23,7 @@
         <Image x:Name="colorImage" HorizontalAlignment="Left" Height="320" Margin="101,242,0,0" VerticalAlignment="Top" Width="640"/>
         <Canvas x:Name="skelCanvas" HorizontalAlignment="Left" Height="320" Margin="101,242,0,0" VerticalAlignment="Top" Width="640"/>
         <Button Content="Save" HorizontalAlignment="Left" Margin="859,618,0,0" VerticalAlignment="Top" Width="87" Click="add_db" RenderTransformOrigin="0.187,12.8" Height="25"/>
+        <Button x:Name="compareBtn" Content="Compare" HorizontalAlignment="Left" Height="25" Margin="726,618,0,0" VerticalAlignment="Top" Width="58" RenderTransformOrigin="-1.069,8.615" Click="Button_Click"/>
 
     </Grid>
 </Window>

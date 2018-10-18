@@ -25,6 +25,7 @@ namespace MuayThaiTraining
         public Tutorial()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
 
         }
 

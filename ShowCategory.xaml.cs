@@ -24,6 +24,7 @@ namespace MuayThaiTraining
         public ShowCategory()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
         }
 
         private void getMode()

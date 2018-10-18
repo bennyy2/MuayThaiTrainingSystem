@@ -8,6 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("skeletontree.xml")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("concrt140.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cvextern.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("msvcp140.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("opencv_ffmpeg341_64.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("vcruntime140.dll")]
 
 

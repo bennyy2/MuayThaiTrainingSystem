@@ -22,6 +22,7 @@ namespace MuayThaiTraining
         public Pose()
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
         }
 
         private void add_button(object sender, RoutedEventArgs e)
