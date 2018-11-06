@@ -30,7 +30,7 @@ namespace MuayThaiTraining
         OleDbConnection con;
         Vector vector = new Vector();
 
-        private OleDbConnection connect()
+        public OleDbConnection connect()
         {
             OleDbConnection con = new OleDbConnection();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["MuayThaiDBConnectionString"].ToString();

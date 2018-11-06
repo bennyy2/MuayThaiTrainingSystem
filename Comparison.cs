@@ -4,33 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.Data.Text;
 using Microsoft.Kinect;
 
 namespace MuayThaiTraining
 {
     class Comparison
     {
-
-
+        
         List<JointType> legLeft = new List<JointType> { JointType.HipCenter, JointType.HipLeft,
             JointType.KneeLeft, JointType.AnkleLeft, JointType.FootLeft};
 
-        List<JointType> legRight = new List<JointType> { JointType.HipRight,
+        List<JointType> legRight = new List<JointType> { JointType.HipCenter, JointType.HipRight,
             JointType.KneeRight, JointType.AnkleRight, JointType.FootRight};
 
-        List<JointType> handLeft = new List<JointType> { JointType.Spine, JointType.ShoulderCenter,
+        List<JointType> handLeft = new List<JointType> { JointType.HipCenter, JointType.Spine, JointType.ShoulderCenter,
             JointType.ShoulderLeft, JointType.ElbowLeft, JointType.WristLeft, JointType.HandLeft};
 
-        List<JointType> handRight = new List<JointType> { JointType.ShoulderRight, JointType.ElbowRight, JointType.WristRight, JointType.HandRight };
+        List<JointType> handRight = new List<JointType> { JointType.HipCenter, JointType.Spine, JointType.ShoulderCenter,
+            JointType.ShoulderRight, JointType.ElbowRight, JointType.WristRight, JointType.HandRight };
 
         ConnectDB connect = new ConnectDB();
         Vector vector = new Vector();
-        Double x;
-        Double y;
-        Double z;
 
         public Vector getVector(Double x1, Double y1, Double z1, Double x2, Double y2, Double z2)
         {
+            //Matrix<double> a = DenseMatrix.OfArray(new double[,]
+            //{
+            //    { },
+            //    { }
+            //});
+            //Vector<double> a = 
             vector = new Vector(x2-x1, y2-y1, z2-z1);
             return vector;
         }
@@ -65,27 +72,28 @@ namespace MuayThaiTraining
             double totalScore = 0;
 
 
-            List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
+            List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight};
 
             foreach (List<JointType> j in li)
             {
                 for (int i = 0; i < j.Count - 1; i++)
                 {
-                    //s.Joints[j[i]].Position
-                    ////s.Joints[j[i + 1]]
+                      //s.Joints[j[i]].Position
+                    //s.Joints[j[i + 1]]
                     Vector traninee = getVector(s.Joints[j[i]].Position.X, s.Joints[j[i]].Position.Y, s.Joints[j[i]].Position.Z,
                         s.Joints[j[i + 1]].Position.X, s.Joints[j[i + 1]].Position.Y, s.Joints[j[i + 1]].Position.Z);
+
                     Vector traninerUnit = normalize(getTrainnerVector(j[i], j[i + 1]));
                     Vector tranineeUnit = normalize(traninee);
                     score = compareVector(traninerUnit, tranineeUnit);
-                    Console.Write(j[i] + ". X: " + s.Joints[j[i]].Position.X);
-                    Console.Write(" Y: " + s.Joints[j[i]].Position.Y);
-                    Console.Write(" Z: " + s.Joints[j[i]].Position.Z);
-                    Console.WriteLine("");
-                    Console.WriteLine(j[i] + " to " + j[i + 1] + " " + tranineeUnit.X + " " + tranineeUnit.Y + " " + tranineeUnit.Z);
-                    Console.WriteLine(j[i] + " to " + j[i + 1] + " " + traninerUnit.X + " " + traninerUnit.Y + " " + traninerUnit.Z);
+                    //Console.Write(j[i] + ". X: " + s.Joints[j[i]].Position.X);
+                    //Console.Write(" Y: " + s.Joints[j[i]].Position.Y);
+                    //Console.Write(" Z: " + s.Joints[j[i]].Position.Z);
+                    //Console.WriteLine("");
+                    //Console.WriteLine(j[i] + " to " + j[i + 1] + " " + tranineeUnit.X + " " + tranineeUnit.Y + " " + tranineeUnit.Z);
+                    //Console.WriteLine(j[i] + " to " + j[i + 1] + " " + traninerUnit.X + " " + traninerUnit.Y + " " + traninerUnit.Z);
                     Console.WriteLine(score);
-                   
+
                 }
             }
             return totalScore;
@@ -97,8 +105,10 @@ namespace MuayThaiTraining
         {
             Vector trainer = connect.getJointPosition(joint);
             Vector trainer1 = connect.getJointPosition(nextJoint);
-            Vector traniner = getVector(trainer.X, trainer.Y, trainer.Z, trainer1.X, trainer1.Y, trainer1.Z);
-            return trainer;
+            
+            Vector vector = getVector(trainer.X, trainer.Y, trainer.Z, trainer1.X, trainer1.Y, trainer1.Z);
+
+            return vector;
         }
 
         private Vector normalize(Vector v)

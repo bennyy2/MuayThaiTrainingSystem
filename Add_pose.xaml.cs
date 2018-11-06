@@ -73,12 +73,11 @@ namespace MuayThaiTraining
                 if (kSensor != null && kSensor.IsRunning)
                 {
                     //saveFile();
-                    //compare.calScore(skel);
+                    compare.calScore(skel);
                     kSensor.Stop();
-                    showPosition();
                     this.statusText.Content = "X :" + x + " Y:" + y + " Z:" + z;
                     this.btnConnect.Content = "Connect";
-                    this.lbStatus.Content = "Disconnect";
+                    this.lbStatus.Content = "Disconnec t";
                     this.lbKinectID.Content = "-";
                     count = 0;
 
@@ -334,9 +333,9 @@ namespace MuayThaiTraining
         {
             if (connectDB.saveSkel(skel))
             {
-                Pose pose = new Pose();
-                pose.Show();
-                this.Close();
+                //Pose pose = new Pose();
+                //pose.Show();
+                //this.Close();
             }
             else{
                 statusText.Content = "Cannot save pose";

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\App.xaml
-5169265393
+61664432808
 5-1503054670
-18-2038971730
-181363173120
-Add_pose.xaml;MainWindow.xaml;Pose.xaml;ShowCategory.xaml;Tutorial.xaml;
+21-1136006370
+27-1329196820
+Add_pose.xaml;UserControl\LearningPoseUC.xaml;UserControl\ClassRoomUC.xaml;MainWindow.xaml;ShowClassRoom.xaml;ShowPose.xaml;
 
-False
+True
 

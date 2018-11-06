@@ -37,8 +37,23 @@
     <Reference Include="Coding4Fun.Kinect.Wpf, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Coding4Fun.Kinect.Wpf.1.7.0\lib\Coding4Fun.Kinect.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>..\..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.UI.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.World">
       <HintPath>..\..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.6.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.Data.Text, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Data.Text.4.0.0\lib\net40\MathNet.Numerics.Data.Text.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Coding4Fun.Kinect.Wpf.1.7.0\lib\Microsoft.Expression.Drawing.dll</HintPath>
@@ -47,6 +62,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,25 +87,38 @@
     <Compile Include="Add_pose.xaml.cs">
       <DependentUpon>Add_pose.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\LearningPoseUC.xaml.cs">
+      <DependentUpon>LearningPoseUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ClassRoomUC.xaml.cs">
+      <DependentUpon>ClassRoomUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Comparison.cs" />
     <Compile Include="ConnectDB.cs" />
+    <Compile Include="Model\ClassRoom.cs" />
+    <Compile Include="Model\Pose.cs" />
     <Compile Include="MuayThaiDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MuayThaiDBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Pose.xaml.cs">
-      <DependentUpon>Pose.xaml</DependentUpon>
+    <Compile Include="ShowClassRoom.xaml.cs">
+      <DependentUpon>ShowClassRoom.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowCategory.xaml.cs">
-      <DependentUpon>ShowCategory.xaml</DependentUpon>
+    <Compile Include="ShowPose.xaml.cs">
+      <DependentUpon>ShowPose.xaml</DependentUpon>
     </Compile>
     <Compile Include="TreeNode.cs" />
-    <Compile Include="Tutorial.xaml.cs">
-      <DependentUpon>Tutorial.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Vector.cs" />
     <Page Include="Add_pose.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\LearningPoseUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\ClassRoomUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,15 +134,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pose.xaml">
+    <Page Include="ShowClassRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowCategory.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tutorial.xaml">
+    <Page Include="ShowPose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +206,9 @@
     <Content Include="vcruntime140.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Library\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

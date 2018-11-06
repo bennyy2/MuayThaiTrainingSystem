@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="MuayThaiTraining.LearningPoseUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MuayThaiTraining"
+             mc:Ignorable="d" 
+             d:DesignHeight="614" d:DesignWidth="1052">
+    <Grid Name="posepanel" >
+        <Button Content="Add Pose" Margin="949,0,28,34" RenderTransformOrigin="1.082,0.986" Height="39" VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>
