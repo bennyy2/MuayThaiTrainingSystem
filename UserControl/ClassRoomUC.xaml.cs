@@ -30,6 +30,8 @@ namespace MuayThaiTraining
             createClassRoomBtn();
         }
 
+
+
         private void createClassRoomBtn()
         {
             // Create a Button margin
@@ -50,7 +52,7 @@ namespace MuayThaiTraining
                 btn.HorizontalAlignment = HorizontalAlignment.Left;
                 btn.VerticalAlignment = VerticalAlignment.Top;
                 btn.Content = i.ClassName;
-                btn.Name = i.ClassName;
+                btn.Name = i.ClassName.Replace(' ', '_');
                 //System.Drawing.Rectangle workingRectangle = Screen.PrimaryScreen.WorkingArea;
                 //if (x + 200 > workingRectangle.Width)
                 //{
@@ -71,10 +73,19 @@ namespace MuayThaiTraining
         private void classRoomClick(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Content.ToString());
+            LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Name.ToString());
             classpanel.Children.Clear();
             classpanel.Children.Add(learningPoseUC);
 
         }
+
+        private void addClassRoomClick(object sender, RoutedEventArgs e)
+        {
+            addClassRoomUC addClassRoomUC = new addClassRoomUC();
+            classpanel.Children.Clear();
+            classpanel.Children.Add(addClassRoomUC);
+
+        }
+
     }
 }

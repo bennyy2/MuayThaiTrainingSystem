@@ -12,6 +12,7 @@ namespace MuayThaiTraining.Model
     {
         ConnectDB connectDB = new ConnectDB();
         OleDbConnection con = new OleDbConnection();
+        ClassRoom classRoom = new ClassRoom();
 
         string poseName;
         string poseDescription;
@@ -65,6 +66,69 @@ namespace MuayThaiTraining.Model
                 con.Close();
             }
             return listPose;
+        }
+
+
+        public Boolean savePoseDetail(String name, String des, String classname)
+        {
+            bool result = false;
+
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                int id = classRoom.getClassId(classname);
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "insert into Pose ([poseName], [poseDescription], [classID]) values (?,?,?)";
+                cmd.Parameters.AddWithValue("@poseName", name);
+                cmd.Parameters.AddWithValue("@poseDescrition", des);
+                cmd.Parameters.AddWithValue("@classID", id);
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+
+        public int getPoseId()
+        {
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                String sqlQuery = "SELECT top 1 poseID " +
+                    "FROM Pose " +
+                    "ORDER BY poseID DESC";
+                cmd = new OleDbCommand(sqlQuery, con);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    poseID = (int)reader["poseID"];
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return poseID;
         }
 
     }

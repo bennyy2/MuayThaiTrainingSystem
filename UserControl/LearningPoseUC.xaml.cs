@@ -24,11 +24,15 @@ namespace MuayThaiTraining
     {
 
         Pose pose = new Pose();
+        ClassRoom classRoom = new ClassRoom();
+        String room;
 
         public LearningPoseUC(String room)
         {
             InitializeComponent();
+            this.room = room;
             createPoseBtn(room);
+           
         }
 
         private void createPoseBtn(String room)
@@ -52,7 +56,7 @@ namespace MuayThaiTraining
                 btn.HorizontalAlignment = HorizontalAlignment.Left;
                 btn.VerticalAlignment = VerticalAlignment.Top;
                 btn.Content = i.PoseName;
-                btn.Name = i.PoseName.Replace(" ", "");
+                btn.Name = i.PoseName.Replace(' ', '_');
                 //btn.Name = i.PoseID.ToString();
                 top += 100;
 
@@ -66,8 +70,19 @@ namespace MuayThaiTraining
 
         private void poseClick(object sender, RoutedEventArgs e)
         {
+            //Button btn = (Button)sender;
+            //LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Content.ToString());
+            //classpanel.Children.Clear();
+            //classpanel.Children.Add(learningPoseUC);
             Button btn = (Button)sender;
-            Console.WriteLine(btn.Name.ToString());
+            Console.WriteLine(btn.Content.ToString());
+        }
+
+        private void addClick(object sender, RoutedEventArgs e)
+        {
+            AddPoseUC addPoseUC = new AddPoseUC(room);
+            posepanel.Children.Clear();
+            posepanel.Children.Add(addPoseUC);
 
         }
     }

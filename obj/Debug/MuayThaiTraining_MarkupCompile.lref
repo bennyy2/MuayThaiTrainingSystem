@@ -1,9 +1,10 @@
 ﻿
 
-FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\Add_pose.xaml;;
+FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\Home.xaml;;
+FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\UserControl\AddPoseUC.xaml;;
 FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\UserControl\LearningPoseUC.xaml;;
 FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\UserControl\ClassRoomUC.xaml;;
 FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\MainWindow.xaml;;
-FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\ShowClassRoom.xaml;;
-FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\ShowPose.xaml;;
+FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\UserControl\AddClassRoomUC.xaml;;
+FC:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\UserControl\ComparePoseUC.xaml;;
 

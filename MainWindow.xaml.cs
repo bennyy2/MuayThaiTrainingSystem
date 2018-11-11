@@ -31,8 +31,10 @@ namespace MuayThaiTraining
 
         private void btnLogin(object sender, RoutedEventArgs e)
         {
-            ShowClassRoom showClassRoom = new ShowClassRoom();
-            showClassRoom.Show();
+            Home home = new Home();
+            home.Show();
+            //ShowClassRoom showClassRoom = new ShowClassRoom();
+            //showClassRoom.Show();
             this.Close();
         }
     }

@@ -6,5 +6,7 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052" >
-    <Grid Name="classpanel"/>
+    <Grid Name="classpanel">
+        <Button Name="addClassRoom" Content="Add Class room" Margin="0,0,100,42" Height="61" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="180" Click="addClassRoomClick"/>
+    </Grid>
 </UserControl>

@@ -13,5 +13,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("msvcp140.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("opencv_ffmpeg341_64.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("vcruntime140.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("accord.dll.config")]
 
 

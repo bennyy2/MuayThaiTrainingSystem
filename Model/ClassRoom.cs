@@ -14,14 +14,16 @@ namespace MuayThaiTraining.Model
         OleDbConnection con = new OleDbConnection();
 
         String className;
+        int classID;
 
         public ClassRoom(){}
         public ClassRoom(string className)
         {
             ClassName = className;
-        } 
+        }
 
         public string ClassName { get => className; set => className = value; }
+        public int ClassID { get => classID; set => classID = value; }
 
         public List<ClassRoom> getClassRoom()
         {
@@ -53,6 +55,64 @@ namespace MuayThaiTraining.Model
                 con.Close();
             }
             return listClass;
+        }
+
+        public Boolean addClass(String className)
+        {
+            bool result = false;
+
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "insert into ClassRoom ([className]) values (?)";
+                cmd.Parameters.AddWithValue("@classname", className);
+                cmd.Connection = con;
+                int a = cmd.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public int getClassId(String room)
+        {
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                String sqlQuery = "SELECT classId " +
+                    "FROM ClassRoom " +
+                    "WHERE className = @room";
+                cmd = new OleDbCommand(sqlQuery, con);
+                cmd.Parameters.AddWithValue("@room", room);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    classID = (int)reader["classId"];
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return classID;
         }
 
     }
