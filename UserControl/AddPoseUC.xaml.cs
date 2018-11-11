@@ -180,7 +180,7 @@ namespace MuayThaiTraining
             pngEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
 
             string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
-            using (var fs = System.IO.File.OpenWrite(path1 + "\\"+ count +".png"))
+            using (var fs = System.IO.File.OpenWrite(path1 + "\\"+ nameText.Text.Replace(' ', '_') + ".png"))
             {
                 pngEncoder.Save(fs);
                 count++;
