@@ -70,12 +70,16 @@ namespace MuayThaiTraining
 
         private void poseClick(object sender, RoutedEventArgs e)
         {
+
             //Button btn = (Button)sender;
             //LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Content.ToString());
             //classpanel.Children.Clear();
             //classpanel.Children.Add(learningPoseUC);
             Button btn = (Button)sender;
-            Console.WriteLine(btn.Content.ToString());
+            ComparePoseUC comparePoseUC = new ComparePoseUC(btn.Content.ToString(), room);
+            posepanel.Children.Clear();
+            posepanel.Children.Add(comparePoseUC);
+            
         }
 
         private void addClick(object sender, RoutedEventArgs e)

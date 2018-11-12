@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.OleDb;
 using Microsoft.Kinect;
 using MuayThaiTraining.Model;
+using System.Windows.Media.Media3D;
 
 namespace MuayThaiTraining
 {
@@ -86,6 +87,54 @@ namespace MuayThaiTraining
             return result;
 
         }
+
+        public Point3D getPosition(JointType j, string poseName, string classRoom)
+        {
+            int s = (int)j;
+            Point3D point = new Point3D();
+
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                String sqlQuery = "SELECT p.axis_x, p.axis_y, p.axis_z " +
+                    "FROM Position p " +
+                    "INNER JOIN ClassRoom c " +
+                    "ON p.classID = c.classId " +
+                    "INNER JOIN Pose s " +
+                    "ON s.poseID = p.poseID " +
+                    "WHERE c.className = @room " +
+                    "AND s.poseName = @poseName " +
+                    "AND p.jointID = @joint";
+                cmd = new OleDbCommand(sqlQuery, con);
+                cmd.Parameters.AddWithValue("@room", classRoom);
+                cmd.Parameters.AddWithValue("@poseName", poseName);
+                cmd.Parameters.AddWithValue("@joint", s);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    //v.Add(reader["axis_x"].ToString());
+                    point = new Point3D((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+
+
+            }
+            return point;
+
+        }    
 
     }
 }

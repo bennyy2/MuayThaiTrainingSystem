@@ -42,7 +42,7 @@ namespace MuayThaiTraining
         int count = 0;
         float x, y, z;
         Skeleton skel;
-        Stopwatch stopwatch = new Stopwatch();
+        //Stopwatch stopwatch = new Stopwatch();
         String room;
 
 
@@ -60,10 +60,10 @@ namespace MuayThaiTraining
                 {
                     this.btnConnect.Content = "Stop";
                     kSensor = KinectSensor.KinectSensors[0];
-                    //if (kSensor.Status == KinectStatus.Connected)
-                    //{
-                    //    this.lbStatus.Content = kSensor.Status.ToString();
-                    //}
+                    if (kSensor.Status == KinectStatus.Connected)
+                    {
+                        this.connectStatus.Content = kSensor.Status.ToString();
+                    }
 
                     KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
 
@@ -73,9 +73,9 @@ namespace MuayThaiTraining
                     kSensor.Start();
                     //startRecord();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
-                    kSensor.ColorStream.Enable();
+                    kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                     kSensor.SkeletonStream.Enable();
-                    kSensor.ColorFrameReady += KSensor_ColorFrameReady; ;
+                    kSensor.ColorFrameReady += KSensor_ColorFrameReady;
                     kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                 }
                 catch
@@ -95,12 +95,15 @@ namespace MuayThaiTraining
                     //compare.calScore(skel);
                     savePicture();
                     kSensor.Stop();
-                    stopwatch.Stop();
+                    colorImage.Source = null;
+                    skelCanvas.Children.Clear();
+                    //stopwatch.Stop();
 
                     // Write result.
-                    Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+                    //Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
                     this.btnConnect.Content = "Start Record";
                     this.connectStatus.Content = "Disconnect";
+                    this.frameStatus.Content = "Disconnect";
 
                 }
             }
@@ -108,19 +111,28 @@ namespace MuayThaiTraining
 
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
-            if(pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room) && 
-            position.saveSkel(skel, room))
+            
+            if (poseradio.IsChecked == true)
             {
-                addPosePanel.Children.Clear();
-                LearningPoseUC learningPoseUC = new LearningPoseUC(room);
-                addPosePanel.Children.Add(learningPoseUC);
+                if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, poseradio.Content.ToString()) &&
+            position.saveSkel(skel, room))
+                {
+                    addPosePanel.Children.Clear();
+                    LearningPoseUC learningPoseUC = new LearningPoseUC(room);
+                    addPosePanel.Children.Add(learningPoseUC);
 
 
+                }
+                else
+                {
+                    this.connectStatus.Content = "Cannot save pose.";
+                }
             }
             else
             {
-                this.connectStatus.Content = "Cannot save pose.";
+
             }
+            
 
         }
 
@@ -317,6 +329,7 @@ namespace MuayThaiTraining
                 }
                 catch
                 {
+                    colorImage.Source = null;
                     this.frameStatus.Content = "Cannot open kinect frame.";
                 }
 

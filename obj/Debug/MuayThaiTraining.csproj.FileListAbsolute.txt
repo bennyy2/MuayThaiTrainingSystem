@@ -65,3 +65,5 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserCont
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\AddClassRoomUC.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ComparePoseUC.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ComparePoseUC.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ScoreUC.g.cs
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ScoreUC.baml

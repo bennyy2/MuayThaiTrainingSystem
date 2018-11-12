@@ -17,19 +17,22 @@ namespace MuayThaiTraining.Model
         string poseName;
         string poseDescription;
         int poseID;
+        string type;
 
         public Pose(){}
 
-        public Pose(int poseID, string poseName, string poseDescription)
+        public Pose(int poseID, string poseName, string poseDescription, string type)
         {
             this.PoseID = poseID;
             this.PoseName = poseName;
             this.PoseDescription = poseDescription;
+            this.Type = type;
         }
 
         public string PoseDescription { get => poseDescription; set => poseDescription = value; }
         public string PoseName { get => poseName; set => poseName = value; }
         public int PoseID { get => poseID; set => poseID = value; }
+        public string Type { get => type; set => type = value; }
 
         public List<Pose> getPose(String room)
         {
@@ -40,7 +43,7 @@ namespace MuayThaiTraining.Model
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT p.poseID, p.poseName, p.poseDescription " +
+                String sqlQuery = "SELECT p.poseID, p.poseName, p.poseDescription, p.type " +
                     "FROM Pose p " +
                     "INNER JOIN ClassRoom c " +
                     "ON p.classID = c.classId " +
@@ -52,7 +55,7 @@ namespace MuayThaiTraining.Model
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Pose pose = new Pose((int)reader["poseID"], reader["poseName"].ToString(), reader["poseDescription"].ToString());
+                    Pose pose = new Pose((int)reader["poseID"], reader["poseName"].ToString(), reader["poseDescription"].ToString(), reader["type"].ToString());
                     listPose.Add(pose);
                 }
 
@@ -69,7 +72,7 @@ namespace MuayThaiTraining.Model
         }
 
 
-        public Boolean savePoseDetail(String name, String des, String classname)
+        public Boolean savePoseDetail(String name, String des, String classname, String type)
         {
             bool result = false;
 
@@ -79,10 +82,11 @@ namespace MuayThaiTraining.Model
                 con.Open();
                 int id = classRoom.getClassId(classname);
                 OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandText = "insert into Pose ([poseName], [poseDescription], [classID]) values (?,?,?)";
+                cmd.CommandText = "insert into Pose ([poseName], [poseDescription], [classID], [type]) values (?,?,?,?)";
                 cmd.Parameters.AddWithValue("@poseName", name);
                 cmd.Parameters.AddWithValue("@poseDescrition", des);
                 cmd.Parameters.AddWithValue("@classID", id);
+                cmd.Parameters.AddWithValue("@type", type);
                 cmd.Connection = con;
                 int a = cmd.ExecuteNonQuery();
                 result = true;

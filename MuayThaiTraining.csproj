@@ -97,6 +97,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Position.cs" />
+    <Compile Include="UserControl\ScoreUC.xaml.cs">
+      <DependentUpon>ScoreUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\ComparePoseUC.xaml.cs">
       <DependentUpon>ComparePoseUC.xaml</DependentUpon>
     </Compile>
@@ -116,7 +119,7 @@
       <DependentUpon>ClassRoomUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Comparison.cs" />
-    <Compile Include="ConnectDB.cs" />
+    <Compile Include="Library\ConnectDB.cs" />
     <Compile Include="Model\ClassRoom.cs" />
     <Compile Include="Model\Pose.cs" />
     <Compile Include="MuayThaiDBDataSet.Designer.cs">
@@ -124,8 +127,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuayThaiDBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="TreeNode.cs" />
     <Compile Include="Vector.cs" />
+    <Page Include="UserControl\ScoreUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControl\ComparePoseUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -227,9 +233,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Library\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
