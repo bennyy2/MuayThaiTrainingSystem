@@ -15,6 +15,7 @@
         <Label Content="User name" HorizontalAlignment="Left" Height="23" Margin="125,162,0,0" VerticalAlignment="Top" Width="84"/>
         <Label Content="Password" HorizontalAlignment="Left" Height="23" Margin="125,220,0,0" VerticalAlignment="Top" Width="84"/>
         <Button Content="Login" HorizontalAlignment="Left" Margin="503,319,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin"/>
+        <Button Content="Test" HorizontalAlignment="Left" Margin="665,319,0,0" VerticalAlignment="Top" Width="75" Click="testBtn"/>
      
     </Grid>
 </Window>

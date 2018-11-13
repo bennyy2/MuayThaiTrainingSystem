@@ -10,63 +10,43 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using System.IO;
-using System.Drawing;
-using Microsoft.Win32;
 using Microsoft.Kinect;
-using MuayThaiTraining.Model;
-using Emgu.CV;
-using Emgu.Util;
-using Emgu.CV.Structure;
-using System.Diagnostics;
-using System.Threading;
-
-using Accord.Video;
-
 
 namespace MuayThaiTraining
 {
     /// <summary>
-    /// Interaction logic for AddPoseUC.xaml
+    /// Interaction logic for TestDTW.xaml
     /// </summary>
-    public partial class AddPoseUC : UserControl
+    public partial class TestDTW : Window
     {
-        KinectSensor kSensor;
         ConnectDB connectDB = new ConnectDB();
-        Comparison compare = new Comparison();
         Position position = new Position();
-        Pose pose = new Pose();
-        int count = 0;
-        float x, y, z;
+        KinectSensor kSensor;
         Skeleton skel;
-        //Stopwatch stopwatch = new Stopwatch();
-        String room;
+        int count = 0;
+        double x;
+        double y;
+        double z;
+        int filename = 0;
 
-
-        public AddPoseUC(String room)
+        public TestDTW()
         {
             InitializeComponent();
-            this.room = room;
+            this.WindowState = WindowState.Maximized;
         }
 
-        private void btnConnectClick(object sender, RoutedEventArgs e)
+        private void connectBtn(object sender, RoutedEventArgs e)
         {
-            if (btnConnect.Content.ToString() == "Start Record")
+            if (btnConnect.Content.ToString() == "Connect")
             {
-                if (KinectSensor.KinectSensors.Count > 0)
+                btnConnect.Content = "Stop";
+                KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
+                kSensor = KinectSensor.KinectSensors[0];
+                if (kSensor.Status == KinectStatus.Connected)
                 {
-                    this.btnConnect.Content = "Stop";
-                    kSensor = KinectSensor.KinectSensors[0];
-                    if (kSensor.Status == KinectStatus.Connected)
-                    {
-                        this.connectStatus.Content = kSensor.Status.ToString();
-                    }
-
-                    KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
-
+                    this.statusLB.Content = kSensor.Status.ToString();
                 }
                 try
                 {
@@ -80,122 +60,20 @@ namespace MuayThaiTraining
                 }
                 catch
                 {
-                    this.connectStatus.Content = "Cannot connect Kinect";
+                    this.statusLB.Content = kSensor.Status.ToString();
                 }
-                  
-
             }
             else
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
-
-                    //saveFile();
-                    //stopRecord();
-                    //compare.calScore(skel);
-                    savePicture();
                     kSensor.Stop();
                     //colorImage.Source = null;
                     //skelCanvas.Children.Clear();
-                    //stopwatch.Stop();
-
-                    // Write result.
-                    //Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
-                    this.btnConnect.Content = "Start Record";
-                    this.connectStatus.Content = "Disconnect";
-                    this.frameStatus.Content = "Disconnect";
+                    this.btnConnect.Content = "Connect";
+                    this.statusLB.Content = "Disconnect";
 
                 }
-            }
-        }
-
-        private void savePoseClick(object sender, RoutedEventArgs e)
-        {
-            
-            if (poseradio.IsChecked == true)
-            {
-                if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, poseradio.Content.ToString()) &&
-            position.saveSkel(skel, room))
-                {
-                    addPosePanel.Children.Clear();
-                    LearningPoseUC learningPoseUC = new LearningPoseUC(room);
-                    addPosePanel.Children.Add(learningPoseUC);
-
-
-                }
-                else
-                {
-                    this.connectStatus.Content = "Cannot save pose.";
-                }
-            }
-            else
-            {
-
-            }
-            
-
-        }
-
-        //private void stopRecord()
-        //{
-        //    if (videoCapture != null)
-        //    {
-        //        videoCapture.Stop();
-        //    }
-        //}
-
-        //private void startRecord()
-        //{
-        //    if (videoCapture == null)
-        //    {
-        //        OpenFileDialog openFileDialog = new OpenFileDialog();
-        //        openFileDialog.Filter = "Video File |*.mp4";
-        //        var result = MessageBox.Show("Message", "caption", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-        //        if (result == MessageBoxResult.Yes)
-        //        {
-        //            videoCapture = new VideoCapture(openFileDialog.FileName);
-        //        }
-        //        try
-        //        {
-        //            //videoCapture.ImageGrabbed += VideoCapture_ImageGrabbed;
-        //            videoCapture.Start();
-        //        }
-        //        catch
-        //        {
-        //            this.frameStatus.Content = "Cannot start recording video";
-        //        }
-        //    }
-        //}
-
-        //private void VideoCapture_ImageGrabbed(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        Mat m = new Mat();
-        //        videoCapture.Retrieve(m);
-        //        colorImage.Source = m.Bitmap;
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
-        public void savePicture()
-        {
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)colorImage.Width, (int)colorImage.Height, 60d, 60d, PixelFormats.Default);
-            renderTarget.Render(colorImage);
-
-            //var crop = new CroppedBitmap(rtb, new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));            
-
-            BitmapEncoder pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
-
-            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
-            using (var fs = System.IO.File.OpenWrite(path1 + "\\"+ nameText.Text.Replace(' ', '_') + ".png"))
-            {
-                pngEncoder.Save(fs);
-                count++;
             }
         }
 
@@ -257,13 +135,14 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
                     count++;
-                    x = skeleton.Joints[JointType.HipCenter].Position.X;
-                    y = skeleton.Joints[JointType.HipCenter].Position.Y;
-                    z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
-                    //savePicture();
                     
+                    
+                    //savePicture();
+
+                
+
 
                     //// Begin timing.
                     //stopwatch.Start();
@@ -274,10 +153,10 @@ namespace MuayThaiTraining
                     //    Thread.Sleep(1);
                     //}
 
-                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
-                    Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
-                    Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
-                    Console.WriteLine(" ");
+                    //Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
+                    //Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
+                    //Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
+                    //Console.WriteLine(" ");
 
                 }
 
@@ -313,7 +192,7 @@ namespace MuayThaiTraining
                 {
                     return;
                 }
-                
+
 
                 byte[] colorData = new byte[colorFrame.PixelDataLength];
 
@@ -325,12 +204,12 @@ namespace MuayThaiTraining
                 {
                     this.colorImage.Source = BitmapSource.Create((int)skelCanvas.Width, (int)skelCanvas.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
-                    
+
                 }
                 catch
                 {
                     colorImage.Source = null;
-                    this.frameStatus.Content = "Cannot open kinect frame.";
+                    this.statusLB.Content = "Cannot open kinect frame.";
                 }
 
 
@@ -339,7 +218,88 @@ namespace MuayThaiTraining
 
         private void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            this.connectStatus.Content = kSensor.Status.ToString();
+            statusLB.Content = kSensor.Status.ToString();
+        }
+
+        private void recordBtn(object sender, RoutedEventArgs e)
+        {
+
+            if (btnConnect.Content.ToString() == "Connect")
+            {
+                btnConnect.Content = "Stop";
+                KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
+                kSensor = KinectSensor.KinectSensors[0];
+                if (kSensor.Status == KinectStatus.Connected)
+                {
+                    this.statusLB.Content = kSensor.Status.ToString();
+                }
+                try
+                {
+                    kSensor.Start();
+                    //startRecord();
+                    //this.lbKinectID.Content = kSensor.DeviceConnectionId;
+                    kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                    kSensor.SkeletonStream.Enable();
+                    kSensor.ColorFrameReady += KSensor_ColorFrameReady;
+                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+                }
+                catch
+                {
+                    this.statusLB.Content = kSensor.Status.ToString();
+                }
+            }
+            else
+            {
+                if (kSensor != null && kSensor.IsRunning)
+                {
+                    kSensor.Stop();
+                    //colorImage.Source = null;
+                    //skelCanvas.Children.Clear();
+                    this.btnConnect.Content = "Connect";
+                    this.statusLB.Content = "Disconnect";
+
+                }
+            }
+        }
+
+        private void saveBtn(object sender, RoutedEventArgs e)
+        {
+            savePicture();
+            if(position.saveSkel(skel, "TestPose"))
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                this.statusLB.Content = "Cannot save skeleton";
+            }
+        }
+
+        public void savePicture()
+        {
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)colorImage.Width, (int)colorImage.Height, 60d, 60d, PixelFormats.Default);
+            renderTarget.Render(colorImage);
+
+            //var crop = new CroppedBitmap(rtb, new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));            
+
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
+            using (var fs = System.IO.File.OpenWrite(path1 + "\\" + filename.ToString() + ".png"))
+            {
+                pngEncoder.Save(fs);
+                count++;
+            }
+        }
+
+        private void compareBtn(object sender, RoutedEventArgs e)
+        {
+            TestDTW testDTW = new TestDTW();
+            testDTW.Show();
+            this.Close();
         }
     }
 }

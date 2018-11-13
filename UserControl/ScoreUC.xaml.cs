@@ -24,16 +24,13 @@ namespace MuayThaiTraining
     {
         Position position = new Position();
 
-        public ScoreUC(string poseName, string classRoom)
+        public ScoreUC(double score)
         {
             InitializeComponent();
-            comparePose(poseName, classRoom);
+            this.scoreLB.Content = score;
         }
 
-        private void comparePose(string poseName, string classRoom)
-        {
-            
-        }
+
 
     }
 }

@@ -97,6 +97,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Position.cs" />
+    <Compile Include="TestDTW.xaml.cs">
+      <DependentUpon>TestDTW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\ScoreUC.xaml.cs">
       <DependentUpon>ScoreUC.xaml</DependentUpon>
     </Compile>
@@ -118,7 +121,7 @@
     <Compile Include="UserControl\ClassRoomUC.xaml.cs">
       <DependentUpon>ClassRoomUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Comparison.cs" />
+    <Compile Include="Library\Comparison.cs" />
     <Compile Include="Library\ConnectDB.cs" />
     <Compile Include="Model\ClassRoom.cs" />
     <Compile Include="Model\Pose.cs" />
@@ -127,7 +130,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuayThaiDBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Vector.cs" />
+    <Page Include="TestDTW.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControl\ScoreUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

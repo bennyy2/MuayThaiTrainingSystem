@@ -65,7 +65,7 @@ namespace MuayThaiTraining
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                     kSensor.SkeletonStream.Enable();
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
-                    //kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                 }
                 catch
                 {
@@ -146,16 +146,8 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
                     count++;
-                    x = skeleton.Joints[JointType.HipCenter].Position.X;
-                    y = skeleton.Joints[JointType.HipCenter].Position.Y;
-                    z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
-
-                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
-                    Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
-                    Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
-                    Console.WriteLine(" ");
                 }
 
             }
@@ -220,8 +212,8 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
-            //comparison.calScore(skel, poseName, classRoom);
-            ScoreUC scoreUC = new ScoreUC(poseName, classRoom);
+            double score = comparison.calScore(skel, poseName, classRoom);
+            ScoreUC scoreUC = new ScoreUC(score);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
 

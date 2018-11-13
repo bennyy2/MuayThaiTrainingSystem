@@ -21,7 +21,7 @@ namespace MuayThaiTraining
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        Position position = new Position();
 
         public MainWindow()
         {
@@ -35,6 +35,13 @@ namespace MuayThaiTraining
             home.Show();
             //ShowClassRoom showClassRoom = new ShowClassRoom();
             //showClassRoom.Show();
+            this.Close();
+        }
+
+        private void testBtn(object sender, RoutedEventArgs e)
+        {
+            TestDTW testDTW = new TestDTW();
+            testDTW.Show();
             this.Close();
         }
     }

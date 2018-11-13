@@ -1,0 +1,19 @@
+﻿<Window x:Class="MuayThaiTraining.TestDTW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MuayThaiTraining"
+        mc:Ignorable="d"
+        Title="TestDTW" Height="720" Width="1080">
+    <Grid>
+        <Image x:Name="colorImage" Margin="148,74,0,0" HorizontalAlignment="Left" Width="640" Height="480" VerticalAlignment="Top"/>
+        <Canvas x:Name="skelCanvas" Margin="148,74,0,0" HorizontalAlignment="Left" Width="640" Height="480" VerticalAlignment="Top"/>
+        <Button Name="btnConnect" Content="Connect" Click="connectBtn" Margin="0,280,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        <Button Content="Record Motion" Click="recordBtn" Margin="0,369,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        <Button Content="Save Skeleton" Click="saveBtn" Margin="0,446,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        <Button Content="Compare" Click="compareBtn" Margin="0,201,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        <Label Name="statusLB" HorizontalAlignment="Left" Margin="883,74,0,0" VerticalAlignment="Top" Height="48" Width="123"/>
+
+    </Grid>
+</Window>

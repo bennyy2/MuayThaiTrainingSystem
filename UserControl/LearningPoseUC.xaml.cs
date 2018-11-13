@@ -26,6 +26,7 @@ namespace MuayThaiTraining
         Pose pose = new Pose();
         ClassRoom classRoom = new ClassRoom();
         String room;
+        
 
         public LearningPoseUC(String room)
         {
@@ -79,6 +80,7 @@ namespace MuayThaiTraining
             ComparePoseUC comparePoseUC = new ComparePoseUC(btn.Content.ToString(), room);
             posepanel.Children.Clear();
             posepanel.Children.Add(comparePoseUC);
+
             
         }
 

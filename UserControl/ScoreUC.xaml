@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052">
     <Grid>
-            
+        <Label Name="scoreLB" Content="Label" Margin="418,217,373,168" FontSize="36" FontWeight="Bold"/>
+        <Label Content="SCORE" HorizontalAlignment="Center" Margin="418,72,373,0" VerticalAlignment="Top" Height="49" FontWeight="Bold" FontSize="20"/>
+
     </Grid>
 </UserControl>

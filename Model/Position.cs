@@ -62,7 +62,7 @@ namespace MuayThaiTraining
                     {
 
                         OleDbCommand cmd = new OleDbCommand();
-                        cmd.CommandText = "insert into [Position]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID)";
+                        cmd.CommandText = "insert into [JointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID)";
                         cmd.Parameters.AddWithValue("@axis_x", skel.Joints[i].Position.X);
                         cmd.Parameters.AddWithValue("@axis_y", skel.Joints[i].Position.Y);
                         cmd.Parameters.AddWithValue("@axis_z", skel.Joints[i].Position.Z);
@@ -98,27 +98,22 @@ namespace MuayThaiTraining
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT p.axis_x, p.axis_y, p.axis_z " +
-                    "FROM Position p " +
-                    "INNER JOIN ClassRoom c " +
-                    "ON p.classID = c.classId " +
-                    "INNER JOIN Pose s " +
-                    "ON s.poseID = p.poseID " +
-                    "WHERE c.className = @room " +
-                    "AND s.poseName = @poseName " +
-                    "AND p.jointID = @joint";
+                String sqlQuery = "SELECT axis_x, axis_y, axis_z " +
+                    "FROM ((JointPosition " +
+                    "INNER JOIN ClassRoom ON ClassRoom.classId = JointPosition.classID) " +
+                    "INNER JOIN Pose ON Pose.poseID = JointPosition.poseID) " +
+                    "WHERE ClassRoom.className = @room " +
+                    "AND Pose.poseName = @poseName " +
+                    "AND jointID = "+s;
                 cmd = new OleDbCommand(sqlQuery, con);
+                cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Parameters.AddWithValue("@room", classRoom);
                 cmd.Parameters.AddWithValue("@poseName", poseName);
-                cmd.Parameters.AddWithValue("@joint", s);
-                cmd.CommandType = System.Data.CommandType.Text;
 
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    //v.Add(reader["axis_x"].ToString());
                     point = new Point3D((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
-
                 }
 
             }
@@ -129,8 +124,6 @@ namespace MuayThaiTraining
             finally
             {
                 con.Close();
-
-
             }
             return point;
 

@@ -36,7 +36,7 @@ namespace MuayThaiTraining
         public double calScore(Skeleton s, string poseName, string classRoom)
         {
             double score = 0;
-            double totalScore = 0;
+            double totalScore = 1;
 
 
             List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
@@ -50,7 +50,7 @@ namespace MuayThaiTraining
 
                     //trainer
                     Point3D trainerStartpoint = position.getPosition(list[i], poseName, classRoom);
-                    Point3D trainerEndpoint = position.getPosition(list[i+1], poseName, classRoom);
+                    Point3D trainerEndpoint = position.getPosition(list[i + 1], poseName, classRoom);
                     Vector3D trainerVector = getVector(trainerStartpoint, trainerEndpoint);
                     Vector3D normalizeTrainer = normolizeVector(trainerVector);
 
@@ -61,6 +61,7 @@ namespace MuayThaiTraining
                     Vector3D normalizeTrainee = normolizeVector(traineeVector);
 
                     score = compareVector(normalizeTrainer, normalizeTrainee);
+                    Console.WriteLine(score);
                     totalScore *= score;
                 }
             }
