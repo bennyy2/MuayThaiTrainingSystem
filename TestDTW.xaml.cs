@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using Microsoft.Kinect;
+using System.Windows.Media.Media3D;
 
 namespace MuayThaiTraining
 {
@@ -25,6 +26,10 @@ namespace MuayThaiTraining
         Position position = new Position();
         KinectSensor kSensor;
         Skeleton skel;
+        List<BodyJoint> skelMotion = new List<BodyJoint>();
+        List<BodyJoint> trainerMotion = new List<BodyJoint>();
+
+        int len;
         int count = 0;
         double x;
         double y;
@@ -54,24 +59,31 @@ namespace MuayThaiTraining
                     //startRecord();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    kSensor.SkeletonStream.Enable();
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
-                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                 }
                 catch
                 {
                     this.statusLB.Content = kSensor.Status.ToString();
                 }
             }
-            else
+            else if (btnConnect.Content.ToString() == "Stop")
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
+                    kSensor.ColorStream.Disable();
+                    kSensor.SkeletonStream.Disable();
                     kSensor.Stop();
+
+                    skelCanvas.Children.Clear();
+                    colorImage.Source = null;
+                   
                     //colorImage.Source = null;
                     //skelCanvas.Children.Clear();
+                    this.btnRecord.Content = "Record Motion";
                     this.btnConnect.Content = "Connect";
                     this.statusLB.Content = "Disconnect";
+                    this.count = 0;
+                    Console.WriteLine("Stop");
 
                 }
             }
@@ -134,33 +146,10 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
+                    Console.WriteLine(count);
+                    skelMotion.Add(new BodyJoint(skeleton, count));
                     count++;
-
-                    skel = skeleton;
-                    
-                    
-                    //savePicture();
-
-                
-
-
-                    //// Begin timing.
-                    //stopwatch.Start();
-
-                    //// Do something.
-                    //for (int i = 0; i < 1000; i++)
-                    //{
-                    //    Thread.Sleep(1);
-                    //}
-
-                    //Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
-                    //Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
-                    //Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
-                    //Console.WriteLine(" ");
-
                 }
-
-
             }
         }
 
@@ -223,57 +212,28 @@ namespace MuayThaiTraining
 
         private void recordBtn(object sender, RoutedEventArgs e)
         {
-
-            if (btnConnect.Content.ToString() == "Connect")
+            try
             {
-                btnConnect.Content = "Stop";
-                KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
-                kSensor = KinectSensor.KinectSensors[0];
-                if (kSensor.Status == KinectStatus.Connected)
-                {
-                    this.statusLB.Content = kSensor.Status.ToString();
-                }
-                try
-                {
-                    kSensor.Start();
-                    //startRecord();
-                    //this.lbKinectID.Content = kSensor.DeviceConnectionId;
-                    kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    kSensor.SkeletonStream.Enable();
-                    kSensor.ColorFrameReady += KSensor_ColorFrameReady;
-                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
-                }
-                catch
-                {
-                    this.statusLB.Content = kSensor.Status.ToString();
-                }
-            }
-            else
-            {
-                if (kSensor != null && kSensor.IsRunning)
-                {
-                    kSensor.Stop();
-                    //colorImage.Source = null;
-                    //skelCanvas.Children.Clear();
-                    this.btnConnect.Content = "Connect";
-                    this.statusLB.Content = "Disconnect";
+                btnRecord.Content = "Recording..";
+                kSensor.SkeletonStream.Enable();
+                kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+                
 
-                }
             }
+            catch
+            {
+
+                this.statusLB.Content = kSensor.Status.ToString();
+            }
+            
         }
 
         private void saveBtn(object sender, RoutedEventArgs e)
         {
-            savePicture();
-            if(position.saveSkel(skel, "TestPose"))
+            if(position.saveMotionPoint(skelMotion, "TestMotion"))
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
-            else
-            {
-                this.statusLB.Content = "Cannot save skeleton";
+                Console.WriteLine(skelMotion.Count);
+                skelMotion = new List<BodyJoint>();
             }
         }
 
@@ -295,11 +255,28 @@ namespace MuayThaiTraining
             }
         }
 
+        private void learnBtn(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
         private void compareBtn(object sender, RoutedEventArgs e)
         {
-            TestDTW testDTW = new TestDTW();
-            testDTW.Show();
-            this.Close();
+            DTW dtw = new DTW();
+            Position position = new Position();
+            Console.WriteLine("Distance improve : " + dtw.DTW_improved(skelMotion));
+            Console.WriteLine("Distance : " + dtw.DTWDistance(skelMotion));
+            //Console.WriteLine("Vector : " + dtw.DTWDistance(skelMotion));
+            //dtw.DTWDistance(skelMotion);
+            //List<Position> trainerMotion = position.getMotion("Motion", "TestMotion");
+            //Console.WriteLine(trainerMotion.Count/19);
+            //Console.WriteLine(skelMotion.Count);
+
+
+
         }
+
+
     }
 }

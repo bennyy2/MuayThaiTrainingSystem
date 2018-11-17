@@ -29,11 +29,18 @@ namespace MuayThaiTraining
         List<JointType> handRight = new List<JointType> { JointType.HipCenter, JointType.Spine, JointType.ShoulderCenter,
             JointType.ShoulderRight, JointType.ElbowRight, JointType.WristRight, JointType.HandRight };
 
+        List<JointType> body = new List<JointType> { JointType.HipCenter, JointType.HipLeft,
+            JointType.KneeLeft, JointType.AnkleLeft, JointType.FootLeft, JointType.HipRight,
+            JointType.KneeRight, JointType.AnkleRight, JointType.FootRight, JointType.Spine, JointType.ShoulderCenter,
+            JointType.ShoulderLeft, JointType.ElbowLeft, JointType.WristLeft, JointType.HandLeft,
+            JointType.ShoulderRight, JointType.ElbowRight, JointType.WristRight, JointType.HandRight };
+
+
         ConnectDB connect = new ConnectDB();
         Position position = new Position();
 
 
-        public double calScore(Skeleton s, string poseName, string classRoom)
+        public double calScore(Skeleton s, string poseName, string classRoom, int frame)
         {
             double score = 0;
             double totalScore = 1;
@@ -46,11 +53,11 @@ namespace MuayThaiTraining
                 for (int i = 0; i < list.Count - 1; i++)
                 {
                     SkeletonPoint joint = s.Joints[list[i]].Position;
-                    SkeletonPoint nextJoint = s.Joints[list[i+1]].Position;
+                    SkeletonPoint nextJoint = s.Joints[list[i + 1]].Position;
 
                     //trainer
-                    Point3D trainerStartpoint = position.getPosition(list[i], poseName, classRoom);
-                    Point3D trainerEndpoint = position.getPosition(list[i + 1], poseName, classRoom);
+                    Point3D trainerStartpoint = position.getPosition(list[i], poseName, classRoom, frame);
+                    Point3D trainerEndpoint = position.getPosition(list[i + 1], poseName, classRoom, frame);
                     Vector3D trainerVector = getVector(trainerStartpoint, trainerEndpoint);
                     Vector3D normalizeTrainer = normolizeVector(trainerVector);
 
@@ -65,8 +72,17 @@ namespace MuayThaiTraining
                     totalScore *= score;
                 }
             }
-            
+
             return totalScore;
+        }
+
+        private float distance(Point3D template, Point3D input)
+        {
+            double tempSum = 0;
+            tempSum += Math.Pow(Math.Abs(input.X - template.X), 2);
+            tempSum += Math.Pow(Math.Abs(input.Y - template.Y), 2);
+            tempSum += Math.Pow(Math.Abs(input.Z - template.Z), 2);
+            return (float)Math.Sqrt(tempSum);
         }
 
         private double compareVector(Vector3D trainer, Vector3D trainee)
@@ -90,6 +106,34 @@ namespace MuayThaiTraining
             Vector3D vectorResult = new Vector3D(v.X, v.Y, v.Z);
             vectorResult.Normalize();
             return vectorResult;
+        }
+
+
+        public double calDistance(int input, int frame)
+        //public double calDistance(Skeleton input, int frame)
+        {
+            double totalScore = 1;
+            double score = 0;
+            foreach (JointType list in body)
+            {
+                //SkeletonPoint joint = input.Skel.Joints[list].Position;
+
+                //trainer
+                Point3D point = position.getPosition(list, "Motion", "TestMotion", frame);
+                Point3D inputPoint = position.getPosition(list, "MotionCompare", "TestMotion", input);
+
+
+
+                //trainee
+                //Point3D inputPoint = new Point3D(joint.X, joint.Y, joint.Z);
+                
+                score = distance(point, inputPoint);
+                Console.WriteLine(score);
+                totalScore += score;
+                
+            }
+
+            return totalScore;
         }
 
 

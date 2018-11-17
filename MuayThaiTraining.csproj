@@ -60,12 +60,6 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=4.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.4.6.0\lib\net461\MathNet.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="MathNet.Numerics.Data.Text, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.Data.Text.4.0.0\lib\net40\MathNet.Numerics.Data.Text.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Coding4Fun.Kinect.Wpf.1.7.0\lib\Microsoft.Expression.Drawing.dll</HintPath>
     </Reference>
@@ -96,6 +90,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CompareSkel.xaml.cs">
+      <DependentUpon>CompareSkel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Library\DTW.cs" />
+    <Compile Include="Model\BodyJoint.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="TestDTW.xaml.cs">
       <DependentUpon>TestDTW.xaml</DependentUpon>
@@ -130,6 +129,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MuayThaiDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Page Include="CompareSkel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestDTW.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

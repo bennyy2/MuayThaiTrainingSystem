@@ -24,8 +24,6 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.World.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MaterialDesignColors.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MaterialDesignThemes.Wpf.dll
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MathNet.Numerics.Data.Text.dll
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MathNet.Numerics.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Microsoft.Expression.Drawing.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Microsoft.Kinect.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\ZedGraph.dll
@@ -36,8 +34,6 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Emgu.CV.World.xml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MaterialDesignThemes.Wpf.xml
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MathNet.Numerics.xml
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\MathNet.Numerics.Data.Text.xml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\Microsoft.Kinect.xml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\AddPoseUC.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\LearningPoseUC.g.cs
@@ -69,3 +65,5 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserCont
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.g.cs
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.baml

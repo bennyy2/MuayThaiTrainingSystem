@@ -42,6 +42,7 @@ namespace MuayThaiTraining
         int count = 0;
         float x, y, z;
         Skeleton skel;
+        int frame = 1;
         //Stopwatch stopwatch = new Stopwatch();
         String room;
 
@@ -104,6 +105,7 @@ namespace MuayThaiTraining
                     this.btnConnect.Content = "Start Record";
                     this.connectStatus.Content = "Disconnect";
                     this.frameStatus.Content = "Disconnect";
+                    this.frame = 1;
 
                 }
             }
@@ -115,7 +117,7 @@ namespace MuayThaiTraining
             if (poseradio.IsChecked == true)
             {
                 if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, poseradio.Content.ToString()) &&
-            position.saveSkel(skel, room))
+            position.saveSkel(skel, room, 1))
                 {
                     addPosePanel.Children.Clear();
                     LearningPoseUC learningPoseUC = new LearningPoseUC(room);

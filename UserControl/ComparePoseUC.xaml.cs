@@ -32,6 +32,7 @@ namespace MuayThaiTraining
         double x;
         double y;
         double z;
+        int frame = 1;
 
 
         public ComparePoseUC(String poseName, string room)
@@ -82,6 +83,7 @@ namespace MuayThaiTraining
                     
                     this.connectBtn.Content = "Connect Kinect";
                     this.statuslb.Content = "Disconnect";
+                    frame = 1;
 
                 }
             }
@@ -212,7 +214,7 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
-            double score = comparison.calScore(skel, poseName, classRoom);
+            double score = comparison.calScore(skel, poseName, classRoom, frame);
             ScoreUC scoreUC = new ScoreUC(score);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
