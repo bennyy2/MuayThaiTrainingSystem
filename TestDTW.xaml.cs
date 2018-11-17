@@ -266,7 +266,7 @@ namespace MuayThaiTraining
             DTW dtw = new DTW();
             Position position = new Position();
             Console.WriteLine("Distance improve : " + dtw.DTW_improved(skelMotion));
-            Console.WriteLine("Distance : " + dtw.DTWDistance(skelMotion));
+            //Console.WriteLine("Distance : " + dtw.DTWDistance(skelMotion));
             //Console.WriteLine("Vector : " + dtw.DTWDistance(skelMotion));
             //dtw.DTWDistance(skelMotion);
             //List<Position> trainerMotion = position.getMotion("Motion", "TestMotion");

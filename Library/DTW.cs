@@ -48,6 +48,7 @@ namespace MuayThaiTraining
         {
             int rows = position.lenghtFrame("Motion", "TestMotion");
             int columns = position.lenghtFrame("MotionCompare", "TestMotion");//input
+            //int columns = position.lenghtFrame("Motion", "TestMotion");//input
             // Don't compare two sequences if one of their lengths is half the other's
             if (columns <= (0.5 * rows) || rows <= (0.5 * columns))
                 return double.PositiveInfinity;
@@ -77,6 +78,15 @@ namespace MuayThaiTraining
                     c1 = temp;
                 }
             }
+            foreach (double i in c2)
+            {
+                Console.WriteLine("C2 : " +i);
+            }
+            foreach (double i in c1)
+            {
+                Console.WriteLine("C1 : " +i);
+            }
+
             return c2[rows - 1] / (0.5 * (columns + rows)); // Normalization: Dividing edit distance by average of input length & template length
         }
 

@@ -121,6 +121,7 @@ namespace MuayThaiTraining
                 //trainer
                 Point3D point = position.getPosition(list, "Motion", "TestMotion", frame);
                 Point3D inputPoint = position.getPosition(list, "MotionCompare", "TestMotion", input);
+                //Point3D inputPoint = position.getPosition(list, "Motion", "TestMotion", input);
 
 
 
@@ -128,7 +129,7 @@ namespace MuayThaiTraining
                 //Point3D inputPoint = new Point3D(joint.X, joint.Y, joint.Z);
                 
                 score = distance(point, inputPoint);
-                Console.WriteLine(score);
+                //Console.WriteLine(score);
                 totalScore += score;
                 
             }
