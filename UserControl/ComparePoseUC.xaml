@@ -9,6 +9,7 @@
     <Grid Name="comparePanel">
         <Label Content="Label" HorizontalContentAlignment="Center" Name="poseNamelb" Margin="233,36,233,0"  VerticalAlignment="Top" Height="41" FontSize="20" FontWeight="Bold"/>
         <Image Name="exampleImage" HorizontalAlignment="Left" Margin="43,130,0,183" Width="600" Height="400"/>
+
         <Image Name="userImage" Margin="681,130,0,141" Height="400" HorizontalAlignment="Left" Width="600"/>
         <Canvas Name="userPanel" Margin="681,130,0,141" Height="400" HorizontalAlignment="Left" Width="600"/>
         <Button Name="compareBtn" Content="Compare Pose" HorizontalAlignment="Left" Margin="512,540,0,0" Width="131" Click="compareBtnClick" Height="37" VerticalAlignment="Top"/>
