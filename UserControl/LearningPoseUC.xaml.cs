@@ -33,7 +33,9 @@ namespace MuayThaiTraining
             InitializeComponent();
             this.room = room;
             createPoseBtn(room);
-           
+            ScrollViewer viewer = new ScrollViewer();
+            viewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+
         }
 
         private void createPoseBtn(String room)

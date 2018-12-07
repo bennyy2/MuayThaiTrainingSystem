@@ -43,7 +43,7 @@ namespace MuayThaiTraining
         public double calScore(Skeleton s, string poseName, string classRoom, int frame)
         {
             double score = 0;
-            double totalScore = 1;
+            double totalScore = 0;
 
 
             List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
@@ -52,8 +52,7 @@ namespace MuayThaiTraining
             {
                 for (int i = 0; i < list.Count - 1; i++)
                 {
-                    SkeletonPoint joint = s.Joints[list[i]].Position;
-                    SkeletonPoint nextJoint = s.Joints[list[i + 1]].Position;
+                    
 
                     //trainer
                     Point3D trainerStartpoint = position.getPosition(list[i], poseName, classRoom, frame);
@@ -62,18 +61,22 @@ namespace MuayThaiTraining
                     Vector3D normalizeTrainer = normolizeVector(trainerVector);
 
                     //trainee
+                    SkeletonPoint joint = s.Joints[list[i]].Position;
+                    SkeletonPoint nextJoint = s.Joints[list[i + 1]].Position;
+
                     Point3D traineeStartpoint = new Point3D(joint.X, joint.Y, joint.Z);
                     Point3D traineeEndpoint = new Point3D(nextJoint.X, nextJoint.Y, nextJoint.Z);
                     Vector3D traineeVector = getVector(traineeStartpoint, traineeEndpoint);
                     Vector3D normalizeTrainee = normolizeVector(traineeVector);
 
                     score = compareVector(normalizeTrainer, normalizeTrainee);
-                    Console.WriteLine(score);
-                    totalScore *= score;
+                    Console.WriteLine(list[i]+" to "+list[i+1]+" : "+ score);
+                    totalScore += score;
+                    
                 }
             }
 
-            return totalScore;
+            return totalScore/2;
         }
 
         private float distance(Point3D template, Point3D input)

@@ -33,7 +33,7 @@ namespace MuayThaiTraining
         double y;
         double z;
         int frame = 1;
-        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
+        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
 
 
         public ComparePoseUC(String poseName, string room)
@@ -42,7 +42,7 @@ namespace MuayThaiTraining
             poseNamelb.Content = poseName;
             this.poseName = poseName;
             this.classRoom = room;
-            this.exampleImage.Source = new BitmapImage(new Uri(path1+"\\test.jpg"));
+            this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName + ".png"));
         }
 
         private void connectBtnClick(object sender, RoutedEventArgs e)

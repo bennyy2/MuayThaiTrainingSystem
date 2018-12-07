@@ -185,20 +185,30 @@ namespace MuayThaiTraining
         //}
         public void savePicture()
         {
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)colorImage.Width, (int)colorImage.Height, 60d, 60d, PixelFormats.Default);
-            renderTarget.Render(colorImage);
-
-            //var crop = new CroppedBitmap(rtb, new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));            
-
-            BitmapEncoder pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
-
             string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
-            using (var fs = System.IO.File.OpenWrite(path1 + "\\"+ nameText.Text.Replace(' ', '_') + ".png"))
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)colorImage.Source));
+            using (FileStream fs = File.OpenWrite(path1 + "\\" + nameText.Text.Replace(' ', '_') + ".png"))
             {
-                pngEncoder.Save(fs);
-                count++;
+                encoder.Save(fs);
+                //count++;
             }
+
+            //int widthbmp = Convert.ToInt32(colorImage.Width);
+            //int heightbmp = Convert.ToInt32(colorImage.Height);
+            //Bitmap bmp = new Bitmap(widthbmp, heightbmp);
+            //RenderTargetBitmap renderTarget = new RenderTargetBitmap(widthbmp, heightbmp, 69d, 69d, PixelFormats.Default);
+            //renderTarget.Render(colorImage);
+
+            //BitmapEncoder encoder = new PngBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            //string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
+            //using (var fs = File.OpenWrite(path1 + "\\" + nameText.Text.Replace(' ', '_') + ".png"))
+            //{
+            //    encoder.Save(fs);
+            //    //count++;
+            //}
         }
 
         private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)

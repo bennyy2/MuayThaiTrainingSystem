@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052">
-    <Grid Name="posepanel" >
-        <Button Content="Add Pose" Margin="949,0,28,34" RenderTransformOrigin="1.082,0.986" Height="39" VerticalAlignment="Bottom" Click="addClick"/>
-    </Grid>
+    <ScrollViewer>
+        <Grid Name="posepanel" >
+            <Button Content="Add Pose" Margin="857,0,120,502" RenderTransformOrigin="1.082,0.986" Height="39" VerticalAlignment="Bottom" Click="addClick"/>
+
+        </Grid>
+    </ScrollViewer>
 </UserControl>
