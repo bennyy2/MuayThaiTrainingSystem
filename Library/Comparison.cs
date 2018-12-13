@@ -44,15 +44,13 @@ namespace MuayThaiTraining
         {
             double score = 0;
             double totalScore = 0;
-
-
             List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
 
             foreach (List<JointType> list in listsJoint)
             {
                 for (int i = 0; i < list.Count - 1; i++)
                 {
-                    
+
 
                     //trainer
                     Point3D trainerStartpoint = position.getPosition(list[i], poseName, classRoom, frame);
@@ -70,9 +68,9 @@ namespace MuayThaiTraining
                     Vector3D normalizeTrainee = normolizeVector(traineeVector);
 
                     score = compareVector(normalizeTrainer, normalizeTrainee);
-                    Console.WriteLine(list[i]+" to "+list[i+1]+" : "+ score);
+                    Console.WriteLine(list[i] + " to " + list[i + 1] + " : " + score);
                     totalScore += score;
-                    
+
                 }
             }
 

@@ -4,9 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuayThaiTraining"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052" >
-    <Grid Name="classpanel">
-        <Button Name="addClassRoom" Content="Add Class room" Margin="0,0,100,42" Height="61" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="180" Click="addClassRoomClick"/>
+    <Grid Name="classpanel" RenderTransformOrigin="0.89,0.199">
+        <Grid Height="60" VerticalAlignment="Top" Margin="0,60,50,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="Classroom" BorderBrush="{x:Null}"  Background="{x:Null}" Click="addClassRoomClick">
+                    <materialDesign:PackIcon BorderBrush="Gray" BorderThickness="2" Background="{x:Null}" Kind="Add" Width="50" Height="50" Foreground="Black"></materialDesign:PackIcon>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Label Content="Class Room" FontSize="36" Margin="548,30,277,0" VerticalAlignment="Top" FontWeight="Bold"/>
     </Grid>
 </UserControl>

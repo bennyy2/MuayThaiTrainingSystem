@@ -47,7 +47,8 @@ namespace MuayThaiTraining.Model
                     "FROM Pose p " +
                     "INNER JOIN ClassRoom c " +
                     "ON p.classID = c.classId " +
-                    "WHERE c.className = @room";
+                    "WHERE c.className = @room " +
+                    "ORDER BY poseID";
                 cmd = new OleDbCommand(sqlQuery, con);
                 cmd.Parameters.AddWithValue("@room", room);
                 cmd.CommandType = System.Data.CommandType.Text;

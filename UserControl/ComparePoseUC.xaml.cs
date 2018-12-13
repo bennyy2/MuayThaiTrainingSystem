@@ -33,7 +33,7 @@ namespace MuayThaiTraining
         double y;
         double z;
         int frame = 1;
-        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
+        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
 
 
         public ComparePoseUC(String poseName, string room)
@@ -42,7 +42,7 @@ namespace MuayThaiTraining
             poseNamelb.Content = poseName;
             this.poseName = poseName;
             this.classRoom = room;
-            this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName + ".png"));
+            this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') + ".png"));
         }
 
         private void connectBtnClick(object sender, RoutedEventArgs e)
@@ -150,8 +150,9 @@ namespace MuayThaiTraining
                     DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
                     count++;
-
                     skel = skeleton;
+
+                    
                 }
 
             }
@@ -216,11 +217,17 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
-            double score = comparison.calScore(skel, poseName, classRoom, frame);
-            ScoreUC scoreUC = new ScoreUC(score);
+            
+            ScoreUC scoreUC = new ScoreUC(skel, poseName, classRoom, frame);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
+        }
 
+        private void backBtnClick(object sender, RoutedEventArgs e)
+        {
+            LearningPoseUC learningPoseUC = new LearningPoseUC(classRoom);
+            comparePanel.Children.Clear();
+            comparePanel.Children.Add(learningPoseUC);
         }
     }
 }

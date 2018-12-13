@@ -35,8 +35,8 @@ namespace MuayThaiTraining
         private void createClassRoomBtn()
         {
             // Create a Button margin
-            int left = 50;
-            int top = 50;
+            int left = 100;
+            int top = 150;
             int right = 0;
             int bottom = 0;
 
@@ -48,17 +48,18 @@ namespace MuayThaiTraining
                 // Set Button properties
                 btn.Height = 100;
                 btn.Width = 100;
+                btn.FontSize = 15;
                 btn.Margin = new Thickness(left, top, right, bottom);
                 btn.HorizontalAlignment = HorizontalAlignment.Left;
                 btn.VerticalAlignment = VerticalAlignment.Top;
                 btn.Content = i.ClassName;
                 btn.Name = i.ClassName.Replace(' ', '_');
-                //System.Drawing.Rectangle workingRectangle = Screen.PrimaryScreen.WorkingArea;
-                //if (x + 200 > workingRectangle.Width)
-                //{
-                //    y += 170;
-                //    x = 20;
-                //}
+
+                if (left + 300 > System.Windows.SystemParameters.WorkArea.Width)
+                {
+                    top += 150;
+                    left = -100;
+                }
 
                 left += 200;
 
@@ -73,7 +74,7 @@ namespace MuayThaiTraining
         private void classRoomClick(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Name.ToString());
+            LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Content.ToString());
             classpanel.Children.Clear();
             classpanel.Children.Add(learningPoseUC);
 

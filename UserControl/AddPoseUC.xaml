@@ -6,25 +6,29 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052">
-    <Grid Margin="0,0,-305,-213" Name="addPosePanel">
+    <Grid Margin="0,0,0,10" Name="addPosePanel">
+        <Grid Width="150" Margin="0,300,100,300" HorizontalAlignment="Right" >
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                <Button Content="Save" Click="savePoseClick" Height="50" Margin="0,10,0,10"/>
+                <Button x:Name="btnConnect"  Content="Start Record" Height="50" Click="btnConnectClick" Margin="0,10,0,10"/>
+            </StackPanel>
+        </Grid>
         <Label Content="Name" HorizontalAlignment="Left" Height="24" Margin="31,30,0,0" VerticalAlignment="Top" Width="78"/>
         <Label Content="Description" HorizontalAlignment="Left" Height="24" Margin="31,65,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
         <TextBox x:Name="nameText" Text="" HorizontalAlignment="Left" Height="24" Margin="148,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="798"/>
         <TextBox Name="desText" Text="" HorizontalAlignment="Left" Height="67" Margin="148,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="798"/>
 
-        <Button x:Name="btnConnect"  Content="Start Record" Height="32" Margin="0,303,340,0" VerticalAlignment="Top"  RenderTransformOrigin="0.783,1.006" Click="btnConnectClick" HorizontalAlignment="Right" Width="87"/>
-
+        
         <Image x:Name="colorImage" Margin="148,180,0,0" HorizontalAlignment="Left" Width="640" Height="450" VerticalAlignment="Top"/>
         <Canvas x:Name="skelCanvas" Margin="148,180,0,0" HorizontalAlignment="Left" Width="640" Height="450" VerticalAlignment="Top"/>
-        <Button Content="Save" Margin="0,396,340,0"  RenderTransformOrigin="0.187,12.8" Click="savePoseClick" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
         <!--<Button x:Name="compareBtn" Content="Compare" Height="22" Margin="0,0,81,157" VerticalAlignment="Bottom" RenderTransformOrigin="-1.069,8.615" HorizontalAlignment="Right" Width="87"/>-->
         <Label x:Name="connectStatus" Margin="1060,30,0,0" VerticalAlignment="Top" Height="27" HorizontalAlignment="Left" Width="229"/>
         <Label x:Name="frameStatus" HorizontalAlignment="Left" Margin="1060,82,0,0" VerticalAlignment="Top" Height="29" Width="222"/>
-        <RadioButton GroupName="typeradio" Name="poseradio" Content="Pose" HorizontalAlignment="Left" Margin="148,150,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
-        <RadioButton GroupName="typeradio" Name="motionradio" Content="Motion" HorizontalAlignment="Left" Margin="493,150,0,0" VerticalAlignment="Top" Width="147" Height="24"/>
+        <!--<RadioButton GroupName="typeradio" Name="poseradio" Content="Pose" HorizontalAlignment="Left" Margin="148,150,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
+        <RadioButton GroupName="typeradio" Name="motionradio" Content="Motion" HorizontalAlignment="Left" Margin="493,150,0,0" VerticalAlignment="Top" Width="147" Height="24"/>-->
         <Label Content="Kinect Status" HorizontalAlignment="Left" Height="24" Margin="978,30,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
         <Label Content="Frame Status" HorizontalAlignment="Left" Height="24" Margin="978,82,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
-        <Label Content="Type" HorizontalAlignment="Left" Height="24" Margin="31,145,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>
+        <!--<Label Content="Type" HorizontalAlignment="Left" Height="24" Margin="31,145,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.526,2.583"/>-->
 
 
     </Grid>

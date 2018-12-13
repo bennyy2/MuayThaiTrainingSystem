@@ -4,12 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuayThaiTraining"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052">
-    <ScrollViewer>
-        <Grid Name="posepanel" >
-            <Button Content="Add Pose" Margin="857,0,120,502" RenderTransformOrigin="1.082,0.986" Height="39" VerticalAlignment="Bottom" Click="addClick"/>
-
-        </Grid>
-    </ScrollViewer>
+    <Grid>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid Name="posepanel">
+                <Label Name="nameLbl" Margin="548,30,277,0" VerticalAlignment="Top" Height="50" FontSize="36" FontWeight="Bold"/>
+                <Grid Height="60" VerticalAlignment="Top" Margin="100">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="Classroom" BorderBrush="{x:Null}" Background="{x:Null}" Click="addClick">
+                            <materialDesign:PackIcon Kind="Add" BorderBrush="Gray" BorderThickness="2" Width="60" Height="50"  Foreground="Black"></materialDesign:PackIcon>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        
+        </ScrollViewer>
+    </Grid>
+    
 </UserControl>

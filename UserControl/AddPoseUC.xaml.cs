@@ -43,7 +43,6 @@ namespace MuayThaiTraining
         float x, y, z;
         Skeleton skel;
         int frame = 1;
-        //Stopwatch stopwatch = new Stopwatch();
         String room;
 
 
@@ -72,7 +71,6 @@ namespace MuayThaiTraining
                 try
                 {
                     kSensor.Start();
-                    //startRecord();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                     kSensor.SkeletonStream.Enable();
@@ -90,18 +88,7 @@ namespace MuayThaiTraining
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
-
-                    //saveFile();
-                    //stopRecord();
-                    //compare.calScore(skel);
-                    savePicture();
                     kSensor.Stop();
-                    //colorImage.Source = null;
-                    //skelCanvas.Children.Clear();
-                    //stopwatch.Stop();
-
-                    // Write result.
-                    //Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
                     this.btnConnect.Content = "Start Record";
                     this.connectStatus.Content = "Disconnect";
                     this.frameStatus.Content = "Disconnect";
@@ -114,78 +101,23 @@ namespace MuayThaiTraining
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
             
-            if (poseradio.IsChecked == true)
-            {
-                if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, poseradio.Content.ToString()) &&
+            if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose") &&
             position.saveSkel(skel, room, 1))
-                {
-                    addPosePanel.Children.Clear();
-                    LearningPoseUC learningPoseUC = new LearningPoseUC(room);
-                    addPosePanel.Children.Add(learningPoseUC);
-
-
-                }
-                else
-                {
-                    this.connectStatus.Content = "Cannot save pose.";
-                }
+            {
+                savePicture();
+                addPosePanel.Children.Clear();
+                LearningPoseUC learningPoseUC = new LearningPoseUC(room);
+                addPosePanel.Children.Add(learningPoseUC);
             }
             else
             {
-
+                this.connectStatus.Content = "Cannot save pose.";
             }
-            
-
         }
 
-        //private void stopRecord()
-        //{
-        //    if (videoCapture != null)
-        //    {
-        //        videoCapture.Stop();
-        //    }
-        //}
-
-        //private void startRecord()
-        //{
-        //    if (videoCapture == null)
-        //    {
-        //        OpenFileDialog openFileDialog = new OpenFileDialog();
-        //        openFileDialog.Filter = "Video File |*.mp4";
-        //        var result = MessageBox.Show("Message", "caption", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-        //        if (result == MessageBoxResult.Yes)
-        //        {
-        //            videoCapture = new VideoCapture(openFileDialog.FileName);
-        //        }
-        //        try
-        //        {
-        //            //videoCapture.ImageGrabbed += VideoCapture_ImageGrabbed;
-        //            videoCapture.Start();
-        //        }
-        //        catch
-        //        {
-        //            this.frameStatus.Content = "Cannot start recording video";
-        //        }
-        //    }
-        //}
-
-        //private void VideoCapture_ImageGrabbed(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        Mat m = new Mat();
-        //        videoCapture.Retrieve(m);
-        //        colorImage.Source = m.Bitmap;
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
         public void savePicture()
         {
-            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)colorImage.Source));
             using (FileStream fs = File.OpenWrite(path1 + "\\" + nameText.Text.Replace(' ', '_') + ".png"))
@@ -193,22 +125,6 @@ namespace MuayThaiTraining
                 encoder.Save(fs);
                 //count++;
             }
-
-            //int widthbmp = Convert.ToInt32(colorImage.Width);
-            //int heightbmp = Convert.ToInt32(colorImage.Height);
-            //Bitmap bmp = new Bitmap(widthbmp, heightbmp);
-            //RenderTargetBitmap renderTarget = new RenderTargetBitmap(widthbmp, heightbmp, 69d, 69d, PixelFormats.Default);
-            //renderTarget.Render(colorImage);
-
-            //BitmapEncoder encoder = new PngBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(renderTarget));
-
-            //string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic");
-            //using (var fs = File.OpenWrite(path1 + "\\" + nameText.Text.Replace(' ', '_') + ".png"))
-            //{
-            //    encoder.Save(fs);
-            //    //count++;
-            //}
         }
 
         private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
@@ -274,17 +190,6 @@ namespace MuayThaiTraining
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
-                    //savePicture();
-                    
-
-                    //// Begin timing.
-                    //stopwatch.Start();
-
-                    //// Do something.
-                    //for (int i = 0; i < 1000; i++)
-                    //{
-                    //    Thread.Sleep(1);
-                    //}
 
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);

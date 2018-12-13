@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Microsoft.Kinect;
+
 using MuayThaiTraining.Model;
 
 namespace MuayThaiTraining
@@ -22,12 +24,26 @@ namespace MuayThaiTraining
     /// </summary>
     public partial class ScoreUC : UserControl
     {
-        Position position = new Position();
+        Comparison comparison = new Comparison();
 
-        public ScoreUC(double score)
+        string poseName;
+        string room;
+
+
+        public ScoreUC(Skeleton skel, string poseName, string classRoom, int frame)
         {
             InitializeComponent();
-            this.scoreLB.Content = score;
+            double score = comparison.calScore(skel, poseName, classRoom, frame);
+            this.poseName = poseName;
+            this.room = classRoom;
+            this.scoreLB.Content = score.ToString("0.00");
+        }
+
+        private void replayClick(object sender, RoutedEventArgs e)
+        {
+            ComparePoseUC comparePoseUC = new ComparePoseUC(poseName, room);
+            scorePanel.Children.Clear();
+            scorePanel.Children.Add(comparePoseUC);
         }
 
 

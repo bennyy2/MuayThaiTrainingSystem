@@ -4,17 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuayThaiTraining"
-             mc:Ignorable="d" 
-             d:DesignHeight="620" d:DesignWidth="1400">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" d:DesignWidth="1400" Height="630">
     <Grid Name="comparePanel">
         <Label Content="Label" HorizontalContentAlignment="Center" Name="poseNamelb" Margin="233,36,233,0"  VerticalAlignment="Top" Height="41" FontSize="20" FontWeight="Bold"/>
         <Image Name="exampleImage" HorizontalAlignment="Left" Margin="43,130,0,183" Width="600" Height="400"/>
 
         <Image Name="userImage" Margin="681,130,0,190" Height="400" HorizontalAlignment="Left" Width="600"/>
+
         <Canvas Name="userPanel" Margin="681,130,0,190" Height="400" HorizontalAlignment="Left" Width="600"/>
-        <Button Name="compareBtn" Content="Compare Pose" HorizontalAlignment="Right" Margin="0,540,345,0" Width="131" Click="compareBtnClick" Height="37" VerticalAlignment="Top"/>
-        <Button Name="connectBtn" Content="Connect Kinect" HorizontalAlignment="Left" Margin="1150,540,0,0" Width="131" Click="connectBtnClick" Height="37" VerticalAlignment="Top"/>
         <Label Content="Kinect Status" HorizontalAlignment="Left" Height="32" Margin="43,80,0,0" VerticalAlignment="Top" Width="185"/>
         <Label Name="statuslb" HorizontalAlignment="Left" Height="32" Margin="320,80,0,0" VerticalAlignment="Top" Width="380"/>
+        <!--<Button Name="compareBtn" Content="Compare Pose" Margin="0,540,345,0" Width="131" Click="compareBtnClick" Height="37" VerticalAlignment="Top"/>
+        <Button Name="connectBtn" Content="Connect Kinect" Margin="1150,540,0,0" Width="131" Click="connectBtnClick" Height="37" VerticalAlignment="Top"/>-->
+
+        <Grid Height="75" VerticalAlignment="Bottom" Margin="0,0,50,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick" >
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="Gray" BorderThickness="2" Height="50" Foreground="Black"></materialDesign:PackIcon>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="compareBtn" Content="Compare" Margin="10" Background="White" Width="100" Height="50" Click="compareBtnClick"></Button>
+                <Button x:Name="connectBtn" Content="Connect Kinect" Margin="10" Background="White" Width="100" Height="50" Click="connectBtnClick"></Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

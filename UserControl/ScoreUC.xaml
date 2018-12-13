@@ -4,11 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuayThaiTraining"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="614" d:DesignWidth="1052">
-    <Grid>
-        <Label Name="scoreLB" Content="Label" Margin="418,217,373,168" FontSize="36" FontWeight="Bold"/>
-        <Label Content="SCORE" HorizontalAlignment="Center" Margin="418,72,373,0" VerticalAlignment="Top" Height="49" FontWeight="Bold" FontSize="20"/>
+    <Grid Name="scorePanel">
+        <Label Name="scoreLB" Content="Label" Margin="625,176,255,258" FontSize="36" FontWeight="Bold" RenderTransformOrigin="0.113,0.242"/>
+        <Label Content="SCORE" Margin="625,79,376,0" VerticalAlignment="Top" Height="49" FontWeight="Bold" FontSize="20" RenderTransformOrigin="1.598,0.532"/>
+        <DockPanel Margin="0,400,0,0">
+            <Button Width="70" Height="70" Background="{x:Null}" BorderBrush="{x:Null}" Click="replayClick">
+                <materialDesign:PackIcon Kind="Replay" Width="70" Height="70" Foreground="Black"/>
+            </Button>
+        </DockPanel>
 
     </Grid>
 </UserControl>

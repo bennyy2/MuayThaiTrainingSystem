@@ -34,7 +34,8 @@ namespace MuayThaiTraining.Model
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT className FROM [ClassRoom]";
+                String sqlQuery = "SELECT className FROM [ClassRoom]" +
+                    " ORDER BY classId";
                 cmd = new OleDbCommand(sqlQuery, con);
                 cmd.CommandType = System.Data.CommandType.Text;
 

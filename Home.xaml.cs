@@ -34,12 +34,15 @@ namespace MuayThaiTraining
 
         private void logoutClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("logout");
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
 
         private void classroomClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("classroom");
+            controlArea.Children.Clear();
+            getClassRoom();
         }
 
         private void profileClick(object sender, RoutedEventArgs e)
