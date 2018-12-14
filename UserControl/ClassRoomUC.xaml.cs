@@ -46,6 +46,7 @@ namespace MuayThaiTraining
                 Button btn = new Button();
 
                 // Set Button properties
+                
                 btn.Height = 100;
                 btn.Width = 100;
                 btn.FontSize = 15;
@@ -57,7 +58,7 @@ namespace MuayThaiTraining
 
                 if (left + 300 > System.Windows.SystemParameters.WorkArea.Width)
                 {
-                    top += 150;
+                    top += 250;
                     left = -100;
                 }
 
@@ -75,6 +76,7 @@ namespace MuayThaiTraining
         {
             Button btn = (Button)sender;
             LearningPoseUC learningPoseUC = new LearningPoseUC(btn.Content.ToString());
+            //btnpanel.Children.Clear();
             classpanel.Children.Clear();
             classpanel.Children.Add(learningPoseUC);
 
@@ -83,6 +85,7 @@ namespace MuayThaiTraining
         private void addClassRoomClick(object sender, RoutedEventArgs e)
         {
             addClassRoomUC addClassRoomUC = new addClassRoomUC();
+            //btnpanel.Children.Clear();
             classpanel.Children.Clear();
             classpanel.Children.Add(addClassRoomUC);
 

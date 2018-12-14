@@ -73,7 +73,14 @@ namespace MuayThaiTraining
                     kSensor.Start();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    kSensor.SkeletonStream.Enable();
+                    kSensor.SkeletonStream.Enable(new TransformSmoothParameters
+                    {
+                        Smoothing = 0.7f,
+                        Correction = 0.3f,
+                        Prediction = 1.0f,
+                        JitterRadius = 1.0f,
+                        MaxDeviationRadius = 1.0f
+                    });
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
                     kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                 }
@@ -81,7 +88,7 @@ namespace MuayThaiTraining
                 {
                     this.connectStatus.Content = "Cannot connect Kinect";
                 }
-                  
+
 
             }
             else
@@ -100,7 +107,7 @@ namespace MuayThaiTraining
 
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
-            
+
             if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose") &&
             position.saveSkel(skel, room, 1))
             {
@@ -230,7 +237,7 @@ namespace MuayThaiTraining
                 {
                     return;
                 }
-                
+
 
                 byte[] colorData = new byte[colorFrame.PixelDataLength];
 
@@ -242,7 +249,7 @@ namespace MuayThaiTraining
                 {
                     this.colorImage.Source = BitmapSource.Create((int)skelCanvas.Width, (int)skelCanvas.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
-                    
+
                 }
                 catch
                 {
@@ -257,6 +264,13 @@ namespace MuayThaiTraining
         private void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
             this.connectStatus.Content = kSensor.Status.ToString();
+        }
+
+        private void backBtnClick(object sender, RoutedEventArgs e)
+        {
+            addPosePanel.Children.Clear();
+            LearningPoseUC learningPoseUC = new LearningPoseUC(room);
+            addPosePanel.Children.Add(learningPoseUC);
         }
     }
 }

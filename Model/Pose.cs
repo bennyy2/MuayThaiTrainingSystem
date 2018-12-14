@@ -136,5 +136,42 @@ namespace MuayThaiTraining.Model
             return poseID;
         }
 
+        public String getPoseDescription(string poseName, string className)
+        {
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                String sqlQuery = "SELECT poseDescription " +
+                    "FROM Pose p " +
+                    "INNER JOIN ClassRoom c " +
+                    "ON (p.classID = c.classId) " +
+                    "WHERE c.className = @classname " +
+                    "AND p.poseName = @posename";
+                cmd = new OleDbCommand(sqlQuery, con);
+                cmd.Parameters.AddWithValue("@classname", className);
+                cmd.Parameters.AddWithValue("@posename", poseName);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    poseDescription = reader["poseDescription"].ToString();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return poseDescription;
+        }
+
     }
 }

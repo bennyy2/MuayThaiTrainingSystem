@@ -28,6 +28,7 @@ namespace MuayThaiTraining
         String poseName;
         String classRoom;
         Comparison comparison = new Comparison();
+        Pose pose = new Pose();
         Skeleton skel;
         double x;
         double y;
@@ -42,6 +43,7 @@ namespace MuayThaiTraining
             poseNamelb.Content = poseName;
             this.poseName = poseName;
             this.classRoom = room;
+            this.deslb.Text = pose.getPoseDescription(poseName, room);
             this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') + ".png"));
         }
 

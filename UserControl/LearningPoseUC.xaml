@@ -14,7 +14,7 @@
                 <Grid Height="60" VerticalAlignment="Top" Margin="100">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="Classroom" BorderBrush="{x:Null}" Background="{x:Null}" Click="addClick">
-                            <materialDesign:PackIcon Kind="Add" BorderBrush="Gray" BorderThickness="2" Width="60" Height="50"  Foreground="Black"></materialDesign:PackIcon>
+                            <materialDesign:PackIcon Kind="AddCircle" BorderBrush="{x:Null}" Width="60" Height="50"  Foreground="gray"></materialDesign:PackIcon>
                         </Button>
                     </StackPanel>
                 </Grid>
