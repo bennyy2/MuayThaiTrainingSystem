@@ -9,10 +9,13 @@
     <Grid>
         <Image x:Name="colorImage" Margin="148,74,0,0" HorizontalAlignment="Left" Width="640" Height="480" VerticalAlignment="Top"/>
         <Canvas x:Name="skelCanvas" Margin="148,74,0,0" HorizontalAlignment="Left" Width="640" Height="480" VerticalAlignment="Top"/>
+        
         <Button Name="btnConnect" Content="Connect" Click="connectBtn" Margin="0,179,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
         <Button Name="btnRecord" Content="Record Motion" Click="recordBtn" Margin="0,256,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        
         <Button Content="Save Skeleton" Click="saveBtn" Margin="0,422,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
-        <Button Content="Learning" Click="learnBtn" Margin="0,337,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
+        <!--<Button Content="Learning" Click="learnBtn" Margin="0,337,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>-->
+        
         <Label Name="statusLB" HorizontalAlignment="Left" Margin="883,74,0,0" VerticalAlignment="Top" Height="48" Width="123"/>
         <Button Content="Compare" Click="compareBtn" Margin="0,522,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
 

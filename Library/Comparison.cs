@@ -138,96 +138,10 @@ namespace MuayThaiTraining
             return totalScore;
         }
 
-
-
-        //public double calScore(Skeleton s)
-        //{
-        //    double score = 0;
-        //    double totalScore = 0;
-
-
-        //    List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight};
-
-        //    foreach (List<JointType> j in li)
-        //    {
-        //        for (int i = 0; i < j.Count - 1; i++)
-        //        {
-        //              //s.Joints[j[i]].Position
-        //            //s.Joints[j[i + 1]]
-        //            Vector traninee = getVector(s.Joints[j[i]].Position.X, s.Joints[j[i]].Position.Y, s.Joints[j[i]].Position.Z,
-        //                s.Joints[j[i + 1]].Position.X, s.Joints[j[i + 1]].Position.Y, s.Joints[j[i + 1]].Position.Z);
-
-        //            Vector traninerUnit = normalize(getTrainnerVector(j[i], j[i + 1]));
-        //            Vector tranineeUnit = normalize(traninee);
-        //            score = compareVector(traninerUnit, tranineeUnit);
-        //            //Console.Write(j[i] + ". X: " + s.Joints[j[i]].Position.X);
-        //            //Console.Write(" Y: " + s.Joints[j[i]].Position.Y);
-        //            //Console.Write(" Z: " + s.Joints[j[i]].Position.Z);
-        //            //Console.WriteLine("");
-        //            //Console.WriteLine(j[i] + " to " + j[i + 1] + " " + tranineeUnit.X + " " + tranineeUnit.Y + " " + tranineeUnit.Z);
-        //            //Console.WriteLine(j[i] + " to " + j[i + 1] + " " + traninerUnit.X + " " + traninerUnit.Y + " " + traninerUnit.Z);
-        //            Console.WriteLine(score);
-
-        //        }
-        //    }
-        //    return totalScore;
-        //}
+        
 
 
 
-        //private Vector getTrainnerVector(JointType joint, JointType nextJoint)
-        //{
-        //    Vector trainer = connect.getJointPosition(joint);
-        //    Vector trainer1 = connect.getJointPosition(nextJoint);
-
-        //    Vector vector = getVector(trainer.X, trainer.Y, trainer.Z, trainer1.X, trainer1.Y, trainer1.Z);
-
-        //    return vector;
-        //}
-
-
-
-        //public Boolean saveSkel(Skeleton skel)
-        //{
-        //    Boolean result = false;
-        //    List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
-        //    try
-        //    {
-        //        con = connectDB.connect();
-        //        con.Open();
-        //        foreach (List<JointType> j in li)
-        //        {
-
-        //            foreach (JointType i in j)
-        //            {
-
-        //                OleDbCommand cmd = new OleDbCommand();
-        //                cmd.CommandText = "insert into [Position]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID)";
-        //                cmd.Parameters.AddWithValue("@axis_x", skel.Joints[i].Position.X);
-        //                cmd.Parameters.AddWithValue("@axis_y", skel.Joints[i].Position.Y);
-        //                cmd.Parameters.AddWithValue("@axis_z", skel.Joints[i].Position.Z);
-        //                cmd.Parameters.AddWithValue("@poseID", 7);
-        //                cmd.Parameters.AddWithValue("@classID", 2);
-        //                cmd.Parameters.AddWithValue("@jointID", i);
-        //                cmd.Connection = con;
-        //                int a = cmd.ExecuteNonQuery();
-        //                Console.WriteLine(i + " X: " + skel.Joints[i].Position.X + " Y: " + skel.Joints[i].Position.Y);
-        //            }
-        //        }
-
-        //        result = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        con.Close();
-        //    }
-        //    return result;
-
-        //}
 
     }
 }

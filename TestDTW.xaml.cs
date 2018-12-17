@@ -40,6 +40,9 @@ namespace MuayThaiTraining
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
+            double[,] score = new double[5, 10];
+            Console.WriteLine(score.Length);
+
         }
 
         private void connectBtn(object sender, RoutedEventArgs e)
@@ -265,13 +268,7 @@ namespace MuayThaiTraining
         {
             DTW dtw = new DTW();
             Position position = new Position();
-            Console.WriteLine("Distance improve : " + dtw.DTW_improved(skelMotion));
-            //Console.WriteLine("Distance : " + dtw.DTWDistance(skelMotion));
-            //Console.WriteLine("Vector : " + dtw.DTWDistance(skelMotion));
-            //dtw.DTWDistance(skelMotion);
-            //List<Position> trainerMotion = position.getMotion("Motion", "TestMotion");
-            //Console.WriteLine(trainerMotion.Count/19);
-            //Console.WriteLine(skelMotion.Count);
+            Console.WriteLine("Distance : " + dtw.DTW_improved(skelMotion));
 
 
 

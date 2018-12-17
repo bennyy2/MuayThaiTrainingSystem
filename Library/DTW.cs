@@ -91,6 +91,64 @@ namespace MuayThaiTraining
         }
 
 
+        public double[,] modifiedDTW(List<BodyJoint> input)
+        {
+            List<Position> trainer = position.getMotion("posename", "classroom");
+
+            int rows = input.Count;
+            int columns = position.lenghtFrame("posename", "classroom"); ;
+            
+            double[,] table = new double[rows, columns];
+            double[,] score = new double[rows, columns];
+            table[0, 0] = 0;
+
+            for (int i = 1; i < rows; i++)
+            {
+                for(int j = 1; j < columns; j++)
+                {
+                    double cost = comparison.calScore(input[i].Skel, "posename", "classroom", j);
+                    if (i == 1 && j == 1)
+                    {
+                        table[i, j] = cost;
+                        score[i, j] = cost;
+                    }
+                        
+                    else if (i == 1)
+                    {
+                        table[i, j] = cost + table[i, j - 1];
+                        score[i, j] = cost;
+                    }
+                        
+                    else if (j == 0)
+                    {
+                        table[i, j] = cost + table[i - 1, j];
+                        score[i, j] = cost;
+                    }
+
+                    else
+                    {
+                        table[i, j] = (cost + Math.Max(table[i - 1, j], Math.Max(table[i - 1, j - 1], table[i, j - 1])));
+                        score[i, j] = cost;
+
+                    }
+                }
+            }
+
+            return table;
+        }
+
+
+        public int[,] wrapPath(double[,] table)
+        {
+            int[,] simPath = new int[table.Length, table.Length];
+
+            for (int i = table.Length; i >= 1; i--)
+            {
+                
+            }
+
+            return simPath;
+        }
 
 
 

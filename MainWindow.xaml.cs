@@ -27,6 +27,7 @@ namespace MuayThaiTraining
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
+
         }
 
         private void btnLogin(object sender, RoutedEventArgs e)
