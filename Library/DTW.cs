@@ -10,6 +10,9 @@ namespace MuayThaiTraining
     {
         Position position = new Position();
         Comparison comparison = new Comparison();
+        int rows;
+        int columns;
+            
 
         public double DTWDistance(List<BodyJoint> input)
         {
@@ -91,13 +94,14 @@ namespace MuayThaiTraining
         }
 
 
-        public double[,] modifiedDTW(List<BodyJoint> input)
+        public Tuple<double[,], double[,]> modifiedDTW(List<BodyJoint> input)
         {
             List<Position> trainer = position.getMotion("posename", "classroom");
 
             int rows = input.Count;
-            int columns = position.lenghtFrame("posename", "classroom"); ;
+            int columns = position.lenghtFrame("posename", "classroom");
             
+
             double[,] table = new double[rows, columns];
             double[,] score = new double[rows, columns];
             table[0, 0] = 0;
@@ -134,20 +138,40 @@ namespace MuayThaiTraining
                 }
             }
 
-            return table;
+            return new Tuple<double[,], double[,]>(table, score);
         }
 
 
-        public int[,] wrapPath(double[,] table)
+        public List<Tuple<int, int, double>> wrapPath(double[,] table, double[,] score, int rows)
         {
-            int[,] simPath = new int[table.Length, table.Length];
-
-            for (int i = table.Length; i >= 1; i--)
+            List<Tuple<int,int, double>> path = new List<Tuple<int, int, double>>();
+            int columns = position.lenghtFrame("posename", "classroom");
+            while (rows != 1 && columns != 1)
             {
-                
+                path.Add(check(table, score, rows, columns));
             }
 
-            return simPath;
+            return path;
+        }
+
+        private Tuple<int, int, double> check(double[,] table, double[,] score, int row, int col)
+        {
+            Tuple<int, int, double> frames = new Tuple<int, int, double>(row, col, score[row, col]);
+
+            if (table[row-1, col-1] >= table[row, col - 1] && table[row - 1, col - 1] >= table[row-1, col])
+            {
+                frames = new Tuple<int, int, double>(row-1, col-1, score[row - 1,col - 1] );
+            }
+            else if (table[row, col - 1] > table[row - 1, col - 1] && table[row, col - 1] > table[row - 1, col])
+            {
+                frames = new Tuple<int, int, double>(row, col - 1, score[row, col - 1]);
+            }
+            else if (table[row - 1, col] > table[row - 1, col - 1] && table[row - 1, col] > table[row, col - 1])
+            {
+                frames = new Tuple<int, int, double>(row - 1, col, score[row - 1, col]);
+            }
+
+            return frames;
         }
 
 

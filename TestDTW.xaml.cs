@@ -25,11 +25,10 @@ namespace MuayThaiTraining
         ConnectDB connectDB = new ConnectDB();
         Position position = new Position();
         KinectSensor kSensor;
-        Skeleton skel;
         List<BodyJoint> skelMotion = new List<BodyJoint>();
         List<BodyJoint> trainerMotion = new List<BodyJoint>();
 
-        int len;
+        
         int count = 0;
         double x;
         double y;
@@ -40,9 +39,6 @@ namespace MuayThaiTraining
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
-            double[,] score = new double[5, 10];
-            Console.WriteLine(score.Length);
-
         }
 
         private void connectBtn(object sender, RoutedEventArgs e)
