@@ -30,10 +30,9 @@ namespace MuayThaiTraining
         string room;
 
 
-        public ScoreUC(Skeleton skel, string poseName, string classRoom, int frame)
+        public ScoreUC(double score, string poseName, string classRoom)
         {
             InitializeComponent();
-            double score = comparison.calScore(skel, poseName, classRoom, frame);
             this.poseName = poseName;
             this.room = classRoom;
             this.scoreLB.Content = score.ToString("0.00");

@@ -14,7 +14,7 @@
         <Button Name="btnRecord" Content="Record Motion" Click="recordBtn" Margin="0,256,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
         
         <Button Content="Save Skeleton" Click="saveBtn" Margin="0,422,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
-        <!--<Button Content="Learning" Click="learnBtn" Margin="0,337,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>-->
+        <Button Content="Record video" Click="recordMotion"  Margin="0,337,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>
         
         <Label Name="statusLB" HorizontalAlignment="Left" Margin="883,74,0,0" VerticalAlignment="Top" Height="48" Width="123"/>
         <Button Content="Compare" Click="compareBtn" Margin="0,522,102,0"  RenderTransformOrigin="0.187,12.8" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="87"/>

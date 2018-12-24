@@ -136,14 +136,15 @@ namespace MuayThaiTraining.Model
             return poseID;
         }
 
-        public String getPoseDescription(string poseName, string className)
+        public List<string> getPoseDescription(string poseName, string className)
         {
+            List<string> description = new List<string>();
             try
             {
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT poseDescription " +
+                String sqlQuery = "SELECT poseDescription, type " +
                     "FROM Pose p " +
                     "INNER JOIN ClassRoom c " +
                     "ON (p.classID = c.classId) " +
@@ -157,7 +158,8 @@ namespace MuayThaiTraining.Model
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    poseDescription = reader["poseDescription"].ToString();
+                    description.Add(reader["poseDescription"].ToString());
+                    description.Add(reader["type"].ToString());
                 }
 
             }
@@ -170,7 +172,7 @@ namespace MuayThaiTraining.Model
                 con.Close();
             }
 
-            return poseDescription;
+            return description;
         }
 
     }

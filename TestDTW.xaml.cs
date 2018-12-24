@@ -254,19 +254,24 @@ namespace MuayThaiTraining
             }
         }
 
-        private void learnBtn(object sender, RoutedEventArgs e)
+        private void recordMotion(object sender, RoutedEventArgs e)
         {
 
         }
+
 
 
         private void compareBtn(object sender, RoutedEventArgs e)
         {
             DTW dtw = new DTW();
             Position position = new Position();
-            Console.WriteLine("Distance : " + dtw.DTW_improved(skelMotion));
 
-
+            Tuple<double[,], double[,]> table = dtw.modifiedDTW(skelMotion);
+            foreach (var i in table.Item1)
+            {
+                Console.WriteLine(i);
+            }
+            
 
         }
 

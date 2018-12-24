@@ -39,6 +39,8 @@ namespace MuayThaiTraining
         Comparison compare = new Comparison();
         Position position = new Position();
         Pose pose = new Pose();
+        BodyJoint bodyJoint = new BodyJoint();
+        List<BodyJoint> motion = new List<BodyJoint>();
         int count = 0;
         float x, y, z;
         Skeleton skel;
@@ -107,18 +109,28 @@ namespace MuayThaiTraining
 
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
-
-            if (pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose") &&
-            position.saveSkel(skel, room, 1))
+            try
             {
-                savePicture();
+                if (poseRadio.IsChecked == true)
+                {
+                    pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose");
+                    position.saveSkel(skel, room, 1);
+                }
+                else if (motionRadio.IsChecked == true)
+                {
+                    pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Motion");
+                    position.saveMotionPoint(motion, room);
+                }
+            }
+            catch
+            {
+                this.frameStatus.Content = "Cannot save pose.";
+            }
+            finally
+            {
                 addPosePanel.Children.Clear();
                 LearningPoseUC learningPoseUC = new LearningPoseUC(room);
                 addPosePanel.Children.Add(learningPoseUC);
-            }
-            else
-            {
-                this.connectStatus.Content = "Cannot save pose.";
             }
         }
 
@@ -197,6 +209,8 @@ namespace MuayThaiTraining
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
+
+                    motion.Add(new BodyJoint(skel, count));
 
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);

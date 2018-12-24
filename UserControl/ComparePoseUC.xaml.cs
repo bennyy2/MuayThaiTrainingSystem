@@ -28,12 +28,16 @@ namespace MuayThaiTraining
         String poseName;
         String classRoom;
         Comparison comparison = new Comparison();
+        Position position = new Position();
+        DTW dtw = new DTW();
         Pose pose = new Pose();
+        List<BodyJoint> motion = new List<BodyJoint>();
         Skeleton skel;
         double x;
         double y;
         double z;
         int frame = 1;
+        string type;
         string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
 
 
@@ -43,7 +47,8 @@ namespace MuayThaiTraining
             poseNamelb.Content = poseName;
             this.poseName = poseName;
             this.classRoom = room;
-            this.deslb.Text = pose.getPoseDescription(poseName, room);
+            this.type = pose.getPoseDescription(poseName, room)[1];
+            this.deslb.Text = pose.getPoseDescription(poseName, room)[0];
             this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') + ".png"));
         }
 
@@ -153,6 +158,7 @@ namespace MuayThaiTraining
 
                     count++;
                     skel = skeleton;
+                    motion.Add(new BodyJoint(skel, count));
 
                     
                 }
@@ -219,8 +225,27 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
+            double score = 0;
+
+            if (type == "Pose")
+            {
+                score = comparison.calScore(skel, poseName, classRoom, frame);
+            }
+            else
+            {
+                Tuple<double[,], double[,]> table = dtw.modifiedDTW(motion, poseName, classRoom);
+                int rows = motion.Count;
+                int columns = position.lenghtFrame(poseName, classRoom);
+                List<Tuple<int, int, double, int>> path = dtw.wrapPath(table.Item1, table.Item2, rows, columns);
+                foreach (Tuple<int, int, double, int> i in path)
+                {
+                    score += i.Item3;
+                }
+                score /= path.Count;
+                
+            }
             
-            ScoreUC scoreUC = new ScoreUC(skel, poseName, classRoom, frame);
+            ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
         }
