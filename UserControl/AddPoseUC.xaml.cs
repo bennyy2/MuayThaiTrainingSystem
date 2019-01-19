@@ -44,7 +44,6 @@ namespace MuayThaiTraining
         int count = 0;
         float x, y, z;
         Skeleton skel;
-        int frame = 1;
         String room;
 
 
@@ -56,7 +55,7 @@ namespace MuayThaiTraining
 
         private void btnConnectClick(object sender, RoutedEventArgs e)
         {
-            if (btnConnect.Content.ToString() == "Start Record")
+            if (btnConnect.Content.ToString() == "Connect")
             {
                 if (KinectSensor.KinectSensors.Count > 0)
                 {
@@ -72,19 +71,11 @@ namespace MuayThaiTraining
                 }
                 try
                 {
+
                     kSensor.Start();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    kSensor.SkeletonStream.Enable(new TransformSmoothParameters
-                    {
-                        Smoothing = 0.7f,
-                        Correction = 0.3f,
-                        Prediction = 1.0f,
-                        JitterRadius = 1.0f,
-                        MaxDeviationRadius = 1.0f
-                    });
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
-                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
                 }
                 catch
                 {
@@ -98,26 +89,44 @@ namespace MuayThaiTraining
                 if (kSensor != null && kSensor.IsRunning)
                 {
                     kSensor.Stop();
+                    
                     this.btnConnect.Content = "Start Record";
                     this.connectStatus.Content = "Disconnect";
                     this.frameStatus.Content = "Disconnect";
-                    this.frame = 1;
+                    this.count = 0;
 
                 }
             }
+        }
+
+        private void recordClick(object sender, RoutedEventArgs e)
+        {
+            kSensor.SkeletonStream.Enable(new TransformSmoothParameters
+            {
+                Smoothing = 0.7f,
+                Correction = 0.3f,
+                Prediction = 1.0f,
+                JitterRadius = 1.0f,
+                MaxDeviationRadius = 1.0f
+            });
+
+            kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
         }
 
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
             try
             {
+                
                 if (poseRadio.IsChecked == true)
                 {
+                    savePicture(1);
                     pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose");
                     position.saveSkel(skel, room, 1);
                 }
                 else if (motionRadio.IsChecked == true)
                 {
+                    //savePicture();
                     pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Motion");
                     position.saveMotionPoint(motion, room);
                 }
@@ -134,12 +143,13 @@ namespace MuayThaiTraining
             }
         }
 
-        public void savePicture()
+        public void savePicture(int frame)
         {
-            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
+            string name = nameText.Text.Replace(' ', '_') + frame.ToString();
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainer");
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)colorImage.Source));
-            using (FileStream fs = File.OpenWrite(path1 + "\\" + nameText.Text.Replace(' ', '_') + ".png"))
+            using (FileStream fs = File.OpenWrite(path1 + "\\" + name + ".png"))
             {
                 encoder.Save(fs);
                 //count++;
@@ -175,43 +185,44 @@ namespace MuayThaiTraining
                     //Using drawbone function only when implement
 
                     //center bone
-                    DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
-                    DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
+                    //DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
+                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
+                    //DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
 
-                    //left arm
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
-                    DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
-                    DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
-                    DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
+                    ////left arm
+                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
+                    //DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
+                    //DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
+                    //DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
 
-                    //right arm
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
-                    DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
-                    DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
-                    DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
+                    ////right arm
+                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
+                    //DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
+                    //DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
+                    //DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
 
-                    //left leg
-                    DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
-                    DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
-                    DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
-                    DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
+                    ////left leg
+                    //DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
+                    //DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
+                    //DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
+                    //DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
 
-                    //Right leg
-                    DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
-                    DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
-                    DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
-                    DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
+                    ////Right leg
+                    //DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
+                    //DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
+                    //DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
+                    //DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
-                    count++;
+                    
                     x = skeleton.Joints[JointType.HipCenter].Position.X;
                     y = skeleton.Joints[JointType.HipCenter].Position.Y;
                     z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
 
+                    savePicture(count);
                     motion.Add(new BodyJoint(skel, count));
-
+                    count++;
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
                     Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);

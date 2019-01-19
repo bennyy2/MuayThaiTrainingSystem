@@ -64,6 +64,6 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserCont
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ScoreUC.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.baml
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.baml
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache

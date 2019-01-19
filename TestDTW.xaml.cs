@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using Microsoft.Kinect;
+using Microsoft.Kinect; 
+using Accord.Video.FFMPEG;
+using System.Drawing;
 using System.Windows.Media.Media3D;
 
 namespace MuayThaiTraining
@@ -257,6 +259,20 @@ namespace MuayThaiTraining
         private void recordMotion(object sender, RoutedEventArgs e)
         {
 
+            int width = (int)skelCanvas.Width;
+            int height = (int)skelCanvas.Height;
+
+            Bitmap target = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(target))
+            {
+                g.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(width, height));
+            }
+
+            VideoFileWriter writer = new VideoFileWriter();
+            writer.Open("test.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            
+
+            writer.Close();
         }
 
 
@@ -266,11 +282,11 @@ namespace MuayThaiTraining
             DTW dtw = new DTW();
             Position position = new Position();
 
-            Tuple<double[,], double[,]> table = dtw.modifiedDTW(skelMotion);
-            foreach (var i in table.Item1)
-            {
-                Console.WriteLine(i);
-            }
+            //Tuple<double[,], double[,]> table = dtw.modifiedDTW(skelMotion);
+            //foreach (var i in table.Item1)
+            //{
+            //    Console.WriteLine(i);
+            //}
             
 
         }

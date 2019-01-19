@@ -98,10 +98,12 @@ namespace MuayThaiTraining
             double[,] table = new double[rows, columns];
             double[,] score = new double[rows, columns];
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i <= rows; i++)
             {
-                for (int j = 0; j < columns+1; j++)
+                for (int j = 0; j <= columns; j++)
                 {
+                    Console.WriteLine("Frame "+i.ToString()+" "+j.ToString());
+
                     double cost = comparison.calScore(input[i].Skel, pose, room, j);
                     if (i == 0 && j == 0)
                     {

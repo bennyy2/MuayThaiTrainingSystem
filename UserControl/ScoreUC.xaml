@@ -6,15 +6,40 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="614" d:DesignWidth="1052">
+             d:DesignWidth="1600" Height="630">
     <Grid Name="scorePanel">
-        <Label Name="scoreLB" Content="Label" Margin="625,176,255,258" FontSize="36" FontWeight="Bold" RenderTransformOrigin="0.113,0.242"/>
-        <Label Content="SCORE" Margin="625,79,376,0" VerticalAlignment="Top" Height="49" FontWeight="Bold" FontSize="20" RenderTransformOrigin="1.598,0.532"/>
-        <DockPanel Margin="0,400,0,0">
-            <Button Width="70" Height="70" Background="{x:Null}" BorderBrush="{x:Null}" Click="replayClick">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="poseLB" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="SCORE" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <Label Grid.Row="1" Grid.Column="1" Name="scoreLB" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="36" FontWeight="Bold"/>
+
+            <Image Grid.Row="2" Grid.Column="0" Name="trainerImage" Width="600" Height="400"/>
+            <Image Grid.Row="2" Grid.Column="1" Name="traineeImage" Width="600" Height="400"/>
+            
+            
+
+            <Button Grid.Row="4" Grid.Column="1" Width="70" Height="70" Background="{x:Null}" BorderBrush="{x:Null}" Click="replayClick" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <materialDesign:PackIcon Kind="Replay" Width="70" Height="70" Foreground="Black"/>
             </Button>
-        </DockPanel>
+
+            <Button Grid.Row="4" Grid.Column="0" Width="50" HorizontalAlignment="Right" Margin="0,0,20,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick">
+                <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>
+            </Button>
+            
+        </Grid>
 
     </Grid>
 </UserControl>

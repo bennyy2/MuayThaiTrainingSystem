@@ -49,7 +49,7 @@ namespace MuayThaiTraining
 
             foreach (List<JointType> i in listsJoint)
             {
-                for (int j = 0; j < i.Count; j++)
+                for (int j = 0; j < i.Count-1; j++)
                 {
                     //trainer
                     Point3D trainerStartpoint = position.getPosition(i[j], poseName, classRoom, frame);
@@ -68,11 +68,12 @@ namespace MuayThaiTraining
 
                     score = compareVector(normalizeTrainer, normalizeTrainee);
                     Console.WriteLine(i[j].ToString() + " to " + i[j + 1].ToString() + " : " + score);
+      
                     totalScore += score;
                 }
             }
-            
-                    
+
+            Console.WriteLine("-----------------------------------------");     
 
             return totalScore;
         }

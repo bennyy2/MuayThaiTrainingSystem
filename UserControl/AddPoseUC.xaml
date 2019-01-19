@@ -16,6 +16,7 @@
                 <RowDefinition Height="35"/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -35,18 +36,20 @@
             <RadioButton Grid.Row="3" Grid.Column="1" Content="Pose" GroupName="typeCheck" Name="poseRadio"/>
             <RadioButton Grid.Row="3" Grid.Column="2" Content="Motion" GroupName="typeCheck" Name="motionRadio" />
 
-            <Canvas Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10" Width="600" Height="400" x:Name="skelCanvas"/>
-            <Image Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10" Width="600" Height="400" x:Name="colorImage"/>
+            <Image Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10" Width="600" Height="400" x:Name="colorImage"/>
+
+            <Canvas Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10" Width="600" Height="400" x:Name="skelCanvas"/>
 
             <Label Grid.Row="1" Grid.Column="4" x:Name="connectStatus"/>
             <Label Grid.Row="2" Grid.Column="4" x:Name="frameStatus"/>
             <Label Grid.Row="1" Grid.Column="3" Content="Kinect Status"/>
             <Label Grid.Row="2" Grid.Column="3" Content="Frame Status"/>
 
-            <Button Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" x:Name="btnConnect"  Content="Start Record" Click="btnConnectClick"/>
-            <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" Content="Save" Click="savePoseClick" VerticalAlignment="Top" />
+            <Button Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" x:Name="btnConnect"  Content="Connect" Click="btnConnectClick"/>
+            <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" Content="Record" Click="recordClick" VerticalAlignment="Center" />
+            <Button Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" Content="Save" Click="savePoseClick" VerticalAlignment="Center" />
 
-            <Button Grid.Row="6" Grid.Column="0" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick" >
+            <Button Grid.Row="7" Grid.Column="0" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick" >
                 <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>
             </Button>
 

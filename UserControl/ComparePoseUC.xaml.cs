@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.IO;
 using Microsoft.Kinect;
 using MuayThaiTraining.Model;
 
@@ -36,9 +37,9 @@ namespace MuayThaiTraining
         double x;
         double y;
         double z;
-        int frame = 1;
+        int count = 0;
         string type;
-        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\Images");
+        string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainer");
 
 
         public ComparePoseUC(String poseName, string room)
@@ -49,7 +50,9 @@ namespace MuayThaiTraining
             this.classRoom = room;
             this.type = pose.getPoseDescription(poseName, room)[1];
             this.deslb.Text = pose.getPoseDescription(poseName, room)[0];
-            this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') + ".png"));
+            int num = position.lenghtFrame(poseName, room);
+            string name = poseName.Replace(' ', '_') + "7";
+            this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + name + ".png"));
         }
 
         private void connectBtnClick(object sender, RoutedEventArgs e)
@@ -73,9 +76,9 @@ namespace MuayThaiTraining
                     //startRecord();
                     //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    kSensor.SkeletonStream.Enable();
+                    
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
-                    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+                    
                 }
                 catch
                 {
@@ -92,16 +95,27 @@ namespace MuayThaiTraining
                     
                     this.connectBtn.Content = "Connect Kinect";
                     this.statuslb.Content = "Disconnect";
-                    frame = 1;
+                    count = 0;
 
                 }
+            }
+        }
+
+        private void recordBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (recordBtn.Content.ToString() == "Record")
+            {
+                this.recordBtn.Content = "Record...";
+                kSensor.SkeletonStream.Enable();
+                kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+
             }
         }
 
         private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             userPanel.Children.Clear();
-            int count = 0;
+            
 
             Skeleton[] skeletons = null;
 
@@ -126,43 +140,32 @@ namespace MuayThaiTraining
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
                     //Using drawbone function only when implement
-
-                    //center bone
-                    DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
-                    DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
-
-                    //left arm
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
-                    DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
-                    DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
-                    DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
-
-                    //right arm
-                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
-                    DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
-                    DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
-                    DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
-
-                    //left leg
-                    DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
-                    DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
-                    DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
-                    DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
-
-                    //Right leg
-                    DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
-                    DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
-                    DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
-                    DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
-
-                    count++;
-                    skel = skeleton;
-                    motion.Add(new BodyJoint(skel, count));
-
                     
+                    skel = skeleton;
+                    savePicture(count);
+                    motion.Add(new BodyJoint(skel, count));
+                    
+                    count++;
+                    Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
+                    Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
+                    Console.Write(" Z: " + skeleton.Joints[JointType.HipCenter].Position.Z);
+                    Console.WriteLine(" ");
+
+
                 }
 
+            }
+        }
+
+        public void savePicture(int frame)
+        {
+            string name = poseName.Replace(' ', '_') + frame.ToString();
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainee");
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)userImage.Source));
+            using (FileStream fs = File.OpenWrite(path1 + "\\" + name + ".png"))
+            {
+                encoder.Save(fs);
             }
         }
 
@@ -225,29 +228,52 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
-            double score = 0;
-
-            if (type == "Pose")
-            {
-                score = comparison.calScore(skel, poseName, classRoom, frame);
-            }
-            else
-            {
-                Tuple<double[,], double[,]> table = dtw.modifiedDTW(motion, poseName, classRoom);
-                int rows = motion.Count;
-                int columns = position.lenghtFrame(poseName, classRoom);
-                List<Tuple<int, int, double, int>> path = dtw.wrapPath(table.Item1, table.Item2, rows, columns);
-                foreach (Tuple<int, int, double, int> i in path)
-                {
-                    score += i.Item3;
-                }
-                score /= path.Count;
-                
-            }
-            
-            ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom);
+            //ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom, type, path, motion);
+            ScoreUC scoreUC = new ScoreUC(poseName, classRoom, type, motion);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
+            //if (compareBtn.Content.ToString() == "Compare")
+            //{
+            //    compareBtn.Content = "Comapring...";
+
+            //    position.saveMotionTraineePoint(motion, classRoom);
+
+            //    double score = 0;
+            //    List<Tuple<int, int, double, int>> path = new List<Tuple<int, int, double, int>>();
+
+            //    if (type == "Pose")
+            //    {
+            //        score = comparison.calScore(skel, poseName, classRoom, 1);
+            //    }
+            //    else
+            //    {
+            //        Tuple<double[,], double[,]> table = dtw.modifiedDTW(motion, poseName, classRoom);
+            //        int rows = motion.Count;
+            //        int columns = position.lenghtFrame(poseName, classRoom);
+            //        path = dtw.wrapPath(table.Item1, table.Item2, rows, columns);
+            //        foreach (Tuple<int, int, double, int> i in path)
+            //        {
+            //            score += i.Item3;
+            //        }
+            //        score /= path.Count;
+
+
+
+            //        foreach (Tuple<int, int, double, int> i in path)
+            //        {
+            //            Console.WriteLine(i.Item1 + " " + i.Item2 + " " + i.Item3);
+            //        }
+
+            //        Console.WriteLine("Score : " + score);
+
+            //    }
+
+            //    ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom, type, path, motion);
+            //    comparePanel.Children.Clear();
+            //    comparePanel.Children.Add(scoreUC);
+            //}
+
+
         }
 
         private void backBtnClick(object sender, RoutedEventArgs e)

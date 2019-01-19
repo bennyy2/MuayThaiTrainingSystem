@@ -39,8 +39,9 @@
             <Button Grid.Row="5" Grid.Column="0" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick">
                 <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>
             </Button>
-            <Button Grid.Row="5" Grid.Column="2" Width="150" HorizontalAlignment="Right" Margin="20,10,10,10"  Click="connectBtnClick" Name="connectBtn" Content="Connect Kinect"/>
-            <Button Grid.Row="5" Grid.Column="3" Width="150" HorizontalAlignment="Left" Margin="20,10,10,10"  Click="compareBtnClick" Content="Compare"/>
+            <Button Grid.Row="5" Grid.Column="1" Width="150" HorizontalAlignment="Right" Margin="20,10,10,10"  Click="connectBtnClick" Name="connectBtn" Content="Connect Kinect"/>
+            <Button Grid.Row="5" Grid.Column="2" Width="150" HorizontalAlignment="Center" Margin="20,10,10,10"  Click="recordBtnClick" Name="recordBtn" Content="Record"/>
+            <Button Grid.Row="5" Grid.Column="3" Width="150" HorizontalAlignment="Left" Margin="20,10,10,10"  Click="compareBtnClick" Name="compareBtn" Content="Compare"/>
 
         </Grid>
         

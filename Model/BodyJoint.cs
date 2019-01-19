@@ -8,7 +8,7 @@ using Microsoft.Kinect;
 
 namespace MuayThaiTraining
 {
-    class BodyJoint
+    public class BodyJoint
     {
         Skeleton skel;
         int frame;

@@ -164,7 +164,7 @@ namespace MuayThaiTraining
                 con = connectDB.connect();
                 con.Open();
                 int classid = classRoom.getClassId(classname);
-                int poseid = 18;
+                int poseid = pose.getPoseId();
 
                 foreach (BodyJoint i in bodyJoint)
                 {
@@ -174,6 +174,49 @@ namespace MuayThaiTraining
 
                         OleDbCommand cmd = new OleDbCommand();
                         cmd.CommandText = "insert into [JointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID], [frameNo]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID, @frameNo)";
+                        cmd.Parameters.AddWithValue("@axis_x", i.Skel.Joints[j].Position.X);
+                        cmd.Parameters.AddWithValue("@axis_y", i.Skel.Joints[j].Position.Y);
+                        cmd.Parameters.AddWithValue("@axis_z", i.Skel.Joints[j].Position.Z);
+                        cmd.Parameters.AddWithValue("@poseID", poseid);
+                        cmd.Parameters.AddWithValue("@classID", classid);
+                        cmd.Parameters.AddWithValue("@jointID", j);
+                        cmd.Parameters.AddWithValue("@frameNo", i.Frame);
+                        cmd.Connection = con;
+                        int a = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public Boolean saveMotionTraineePoint(List<BodyJoint> bodyJoint, string classname)
+        {
+            Boolean result = false;
+            try
+            {
+                con = connectDB.connect();
+                con.Open();
+                int classid = classRoom.getClassId(classname);
+                int poseid = pose.getPoseId();
+
+                foreach (BodyJoint i in bodyJoint)
+                {
+
+                    foreach (JointType j in body)
+                    {
+
+                        OleDbCommand cmd = new OleDbCommand();
+                        cmd.CommandText = "insert into [TraineeJointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID], [frameNo]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID, @frameNo)";
                         cmd.Parameters.AddWithValue("@axis_x", i.Skel.Joints[j].Position.X);
                         cmd.Parameters.AddWithValue("@axis_y", i.Skel.Joints[j].Position.Y);
                         cmd.Parameters.AddWithValue("@axis_z", i.Skel.Joints[j].Position.Z);
