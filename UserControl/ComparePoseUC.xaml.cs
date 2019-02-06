@@ -40,6 +40,7 @@ namespace MuayThaiTraining
         int count = 0;
         string type;
         string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainer");
+        string path2 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainee");
 
 
         public ComparePoseUC(String poseName, string room)
@@ -51,6 +52,8 @@ namespace MuayThaiTraining
             this.type = pose.getPoseDescription(poseName, room)[1];
             this.deslb.Text = pose.getPoseDescription(poseName, room)[0];
             int num = position.lenghtFrame(poseName, room);
+
+            userImage.Source = new BitmapImage(new Uri(path2 + "\\aax71.png"));
             string name = poseName.Replace(' ', '_') + "7";
             this.exampleImage.Source = new BitmapImage(new Uri(path1 + "\\" + name + ".png"));
         }

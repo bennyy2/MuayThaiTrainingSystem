@@ -23,13 +23,13 @@
 
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="poseLB" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="SCORE" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <Label Grid.Row="1" Grid.Column="1" Name="scoreLB" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="36" FontWeight="Bold"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="SCORE" HorizontalAlignment="Right" Margin="0,0,20,0" FontSize="34" FontWeight="Bold"/>
+            <Label Grid.Row="1" Grid.Column="1" Name="scoreLB" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="28" />
 
             <Image Grid.Row="2" Grid.Column="0" Name="trainerImage" Width="600" Height="400"/>
             <Image Grid.Row="2" Grid.Column="1" Name="traineeImage" Width="600" Height="400"/>
-            
-            
+
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Move your right hand, right angle" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <Button Grid.Row="4" Grid.Column="1" Width="70" Height="70" Background="{x:Null}" BorderBrush="{x:Null}" Click="replayClick" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <materialDesign:PackIcon Kind="Replay" Width="70" Height="70" Foreground="Black"/>

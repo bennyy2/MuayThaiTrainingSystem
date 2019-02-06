@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MuayThaiTraining"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
-    <Grid Name="mainPanel">
-        <Frame Content="" Name="mainFrame" HorizontalAlignment="Left" Height="669" VerticalAlignment="Top" Width="992"/>
+    <Grid>
+        
 
-        <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="98,47,0,0" VerticalAlignment="Top" Height="63" Width="500" FontWeight="Bold" FontFamily="Segoe UI Black" FontSize="36"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="265,162,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="265,220,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308"/>
-        <Label Content="User name" HorizontalAlignment="Left" Height="23" Margin="125,162,0,0" VerticalAlignment="Top" Width="84"/>
-        <Label Content="Password" HorizontalAlignment="Left" Height="23" Margin="125,220,0,0" VerticalAlignment="Top" Width="84"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="503,319,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin"/>
-        <Button Content="Test" HorizontalAlignment="Left" Margin="665,319,0,0" VerticalAlignment="Top" Width="75" Click="testBtn"/>
-     
+            <Image Source="Resource/logo วงกลม.png" Margin="306,112,428,383" RenderTransformOrigin="0.2,0.523"/>
+            <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="359,49,0,0" VerticalAlignment="Top" Height="63" Width="500" FontFamily="Segoe UI Black" FontSize="36" FontWeight="Bold"/>
+        <Grid Name="mainArea">    
+        <TextBox HorizontalAlignment="Left" Height="41" Margin="492,380,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308"/>
+            <TextBox HorizontalAlignment="Left" Height="43" Margin="492,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308"/>
+            <Label Content="User name" HorizontalAlignment="Left" Height="41" Margin="332,380,0,0" VerticalAlignment="Top" Width="101" FontWeight="Bold" FontSize="14"/>
+            <Label Content="Password" HorizontalAlignment="Left" Height="41" Margin="332,444,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold" FontSize="14"/>
+            <Button Content="Login" HorizontalAlignment="Left" Margin="683,519,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin" RenderTransformOrigin="1.293,3.4"/>
+            <Button Content="Register" HorizontalAlignment="Left" Margin="418,519,0,0" VerticalAlignment="Top" Width="75" Click="regis" RenderTransformOrigin="1,7.6"/>
+            <!--<Button Content="Test" HorizontalAlignment="Left" Margin="665,319,0,0" VerticalAlignment="Top" Width="75" Click="testBtn"/>-->
+
+        </Grid>
     </Grid>
 </Window>

@@ -11,7 +11,7 @@
         <Grid Height="60" VerticalAlignment="Top" Margin="0,60,50,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button BorderBrush="{x:Null}"  Background="{x:Null}" Click="addClassRoomClick">
-                    <materialDesign:PackIcon BorderBrush="{x:Null}"  Background="{x:Null}" Kind="AddCircle" Width="50" Height="50" Foreground="Gray"></materialDesign:PackIcon>
+                    <materialDesign:PackIcon BorderBrush="{x:Null}"  Background="{x:Null}" Kind="AddCircle" Width="50" Height="50" Foreground="#981A19"></materialDesign:PackIcon>
                 </Button>
                 <!--<Button BorderBrush="{x:Null}"  Background="{x:Null}">
                     <materialDesign:PackIcon BorderBrush="{x:Null}" Background="{x:Null}" Kind="DeleteCircle" Width="50" Height="50" Foreground="Gray"></materialDesign:PackIcon>

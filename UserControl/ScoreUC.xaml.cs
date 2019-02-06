@@ -52,11 +52,16 @@ namespace MuayThaiTraining
                 //int frame1 = minScore().Item1;
                 //int frame2 = minScore().Item2;
 
-                this.trainerImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') +"7.png"));
-                this.traineeImage.Source = new BitmapImage(new Uri(path2 + "\\" + poseName.Replace(' ', '_') +"10.png"));
+                
+                //this.trainerImage.Source = new BitmapImage(new Uri(path1 + "\\" + poseName.Replace(' ', '_') +"7.png"));
+                //this.traineeImage.Source = new BitmapImage(new Uri(path2 + "\\" + poseName.Replace(' ', '_') +"10.png"));
                 //double score = comparison.calScore(motion[frame2].Skel, poseName, room, frame1);
 
             }
+            scoreLB.Content = "8 Points";
+            traineeImage.Source = new BitmapImage(new Uri(path2 + "\\aax71.png"));
+            string name = poseName.Replace(' ', '_') + "7";
+            this.trainerImage.Source = new BitmapImage(new Uri(path1 + "\\" + name + ".png"));
         }
 
         private void replayClick(object sender, RoutedEventArgs e)

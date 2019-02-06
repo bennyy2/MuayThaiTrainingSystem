@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using Microsoft.Kinect; 
-using Accord.Video.FFMPEG;
+using Microsoft.Kinect;
 using System.Drawing;
 using System.Windows.Media.Media3D;
 
@@ -259,20 +258,20 @@ namespace MuayThaiTraining
         private void recordMotion(object sender, RoutedEventArgs e)
         {
 
-            int width = (int)skelCanvas.Width;
-            int height = (int)skelCanvas.Height;
+            //int width = (int)skelCanvas.Width;
+            //int height = (int)skelCanvas.Height;
 
-            Bitmap target = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(target))
-            {
-                g.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(width, height));
-            }
+            //Bitmap target = new Bitmap(width, height);
+            //using (Graphics g = Graphics.FromImage(target))
+            //{
+            //    g.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(width, height));
+            //}
 
-            VideoFileWriter writer = new VideoFileWriter();
-            writer.Open("test.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
+            //VideoFileWriter writer = new VideoFileWriter();
+            //writer.Open("test.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
             
 
-            writer.Close();
+            //writer.Close();
         }
 
 

@@ -8,10 +8,10 @@
         mc:Ignorable="d"
         Title="Home" Height="450" Width="800">
     <Grid>
-        <Grid Height="60" VerticalAlignment="Top" Background="#646464">
+        <Grid Height="60" VerticalAlignment="Top" Background="#981A19">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <materialDesign:PackIcon Kind="Circle" Width="30" Height="30" Margin="10" Foreground="White"></materialDesign:PackIcon>
-                <TextBlock Text="LOGO" Foreground="White" FontSize="30" Margin="5"></TextBlock>
+                <Image Source="Resource/logo วงกลม.png" Margin="0,0,0,0" />
+                <!--<TextBlock Text="LOGO" Foreground="White" FontSize="30" Margin="5"></TextBlock>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="Classroom" Background="{x:Null}" Click="classroomClick">

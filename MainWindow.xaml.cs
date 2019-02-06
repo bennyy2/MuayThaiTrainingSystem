@@ -38,6 +38,12 @@ namespace MuayThaiTraining
             //showClassRoom.Show();
             this.Close();
         }
+        private void regis(object sender, RoutedEventArgs e)
+        {
+            RegisterUC registerUC = new RegisterUC();
+            mainArea.Children.Clear();
+            mainArea.Children.Add(registerUC);
+        }
 
         private void testBtn(object sender, RoutedEventArgs e)
         {
