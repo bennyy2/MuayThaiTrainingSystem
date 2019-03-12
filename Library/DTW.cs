@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,48 @@ namespace MuayThaiTraining
         Comparison comparison = new Comparison();
         int rows;
         int columns;
-            
+           
+        
+        public void DTWPath(List<BodyJoint> input, string pose, string room , int col)
+        {
+            int rows = input.Count;
+            int columns = col;
+            double[,] dtw = new double[rows, columns];
+            for (int i = 0; i < columns; i++)
+            {
+                for (int j = 0; j < rows; j++)
+                {
+                    double cost = comparison.calDistance(input[i].Skel, j);
+                    if (i == 0 && j == 0)
+                        dtw[i, j] = cost;
+                    double a = comparison.calDistance(input[i + 1].Skel, j);
+                    double b = comparison.calDistance(input[i + 1].Skel, j+j);
+                    double c = comparison.calDistance(input[i].Skel, j+1);
+
+                    if (a >= b && a >= c)
+                    {
+                        dtw[i + 1, j] = a;
+                        break;
+
+                    }else if(b >= a && b >= c)
+                    {
+                        dtw[i + 1, j + 1] = b;
+                        j++;
+                        break;
+
+                    }
+                    else
+                    {
+                        dtw[i, j+1] = c;
+                        i--;
+                        j++;
+                        break;
+                    }
+                }
+            }
+
+        }
+
 
         public double DTWDistance(List<BodyJoint> input)
         {
@@ -89,22 +132,22 @@ namespace MuayThaiTraining
             return c2[rows - 1] / (0.5 * (columns + rows)); // Normalization: Dividing edit distance by average of input length & template length
         }
 
-
-        public Tuple<double[,], double[,]> modifiedDTW(List<BodyJoint> input, string pose, string room)
+        
+        public Tuple<double[,], double[,]> modifiedDTW(JointType first, JointType sec, string poseName, string roomName, List<BodyJoint> input, int col)
         {
             int rows = input.Count;
-            int columns = position.lenghtFrame(pose, room);
+            int columns = col;
 
             double[,] table = new double[rows, columns];
             double[,] score = new double[rows, columns];
 
-            for (int i = 0; i <= rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j <= columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    Console.WriteLine("Frame "+i.ToString()+" "+j.ToString());
+                    Console.WriteLine(i + " " + j);
 
-                    double cost = comparison.calScore(input[i].Skel, pose, room, j);
+                    double cost = comparison.compareScoreByJoint(first, sec, poseName, roomName, input[i].Skel, i, j);
                     if (i == 0 && j == 0)
                     {
                         table[i, j] = cost;
@@ -136,6 +179,53 @@ namespace MuayThaiTraining
 
             return result;
         }
+        //public Tuple<double[,], double[,]> modifiedDTW(List<BodyJoint> input, string pose, string room)
+        //{
+        //    int rows = input.Count;
+        //    int columns = position.lenghtFrame(pose, room);
+
+        //    double[,] table = new double[rows, columns];
+        //    double[,] score = new double[rows, columns];
+
+        //    for (int i = 0; i <= rows; i++)
+        //    {
+        //        for (int j = 0; j <= columns; j++)
+        //        {
+        //            Console.WriteLine("Frame "+i.ToString()+" "+j.ToString());
+        //            //double cost = compare.compareScoreByJoint(first, sec, poseRow, roomRow, poseCol, roomCol, rows[i], columns[j]);
+
+        //            double cost = comparison.calScore(input[i].Skel, pose, room, j).Item2;
+        //            if (i == 0 && j == 0)
+        //            {
+        //                table[i, j] = cost;
+        //                score[i, j] = cost;
+        //            }
+
+        //            else if (i == 0)
+        //            {
+        //                table[i, j] = cost + table[i, j - 1];
+        //                score[i, j] = cost;
+        //            }
+
+        //            else if (j == 0)
+        //            {
+        //                table[i, j] = cost + table[i - 1, j];
+        //                score[i, j] = cost;
+        //            }
+
+        //            else
+        //            {
+        //                table[i, j] = (cost + Math.Max(table[i - 1, j], Math.Max(table[i - 1, j - 1], table[i, j - 1])));
+        //                score[i, j] = cost;
+
+        //            }
+        //        }
+        //    }
+
+        //    Tuple<double[,], double[,]> result = new Tuple<double[,], double[,]>(table, score);
+
+        //    return result;
+        //}
 
 
         public List<Tuple<int, int, double, int>> wrapPath(double[,] table, double[,] score, int rows, int cols)

@@ -8,6 +8,7 @@ using System.Data.OleDb;
 using Microsoft.Kinect;
 using MuayThaiTraining.Model;
 using System.Windows.Media.Media3D;
+using System.Configuration;
 
 namespace MuayThaiTraining
 {
@@ -66,6 +67,17 @@ namespace MuayThaiTraining
         public int Joint { get => joint; set => joint = value; }
         public int Frame { get => frame; set => frame = value; }
 
+        public void openConnection()
+        {
+            con = connectDB.connect();
+            con.Open();
+        }
+
+        public void closeConnection()
+        {
+            con.Close();
+        }
+
         public Boolean saveSkel(Skeleton skel, string classname, int frame)
         {
             Boolean result = false;
@@ -94,6 +106,7 @@ namespace MuayThaiTraining
                         cmd.Parameters.AddWithValue("@frameNo", frame);
                         cmd.Connection = con;
                         int a = cmd.ExecuteNonQuery();
+                        
                     }
                 }
 
@@ -116,22 +129,21 @@ namespace MuayThaiTraining
         {
             int s = (int)j;
             Point3D point = new Point3D();
-
-
-            try
+            using (OleDbConnection conn = new OleDbConnection())
             {
-                con = connectDB.connect();
-                con.Open();
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["MuayThaiDBConnectionString"].ToString();
+
+                conn.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT axis_x, axis_y, axis_z " +
-                    "FROM ((JointPosition " +
-                    "INNER JOIN ClassRoom ON ClassRoom.classId = JointPosition.classID) " +
-                    "INNER JOIN Pose ON Pose.poseID = JointPosition.poseID) " +
-                    "WHERE ClassRoom.className = @room " +
-                    "AND Pose.poseName = @poseName " +
-                    "AND frameNo = @frame " +
-                    "AND jointID = "+s;
-                cmd = new OleDbCommand(sqlQuery, con);
+                String sqlQuery = "SELECT JP.axis_x, JP.axis_y, JP.axis_z " +
+                    "FROM ((JointPosition AS JP " +
+                    "INNER JOIN ClassRoom AS CR ON CR.classId = JP.classID) " +
+                    "INNER JOIN Pose AS P ON P.poseID = JP.poseID) " +
+                    "WHERE CR.className = @room " +
+                    "AND P.poseName = @poseName " +
+                    "AND JP.frameNo = @frame " +
+                    "AND JP.jointID = " + s;
+                cmd = new OleDbCommand(sqlQuery, conn);
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Parameters.AddWithValue("@room", classRoom);
                 cmd.Parameters.AddWithValue("@poseName", poseName);
@@ -142,19 +154,13 @@ namespace MuayThaiTraining
                 {
                     point = new Point3D((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"]);
                 }
-
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-            }
+            
             return point;
 
         }
+
+        
 
         public Boolean saveMotionPoint(List<BodyJoint> bodyJoint, string classname)
         {

@@ -27,13 +27,13 @@
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="Add New Pose" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-            <Label Grid.Row="1" Grid.Column="0" Margin="20,0,0,0" Content="Name" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="New Pose" HorizontalAlignment="Center"  FontSize="24" FontWeight="Bold"/>
+            <Label Grid.Row="1" Grid.Column="0" Margin="20,0,0,0" Content="Name" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold"/>
             <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="20,0,0,0" x:Name="nameText" FontSize="16" />
-            <Label Grid.Row="2" Grid.Column="0" Margin="20,0,0,0" Content="Description" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+            <Label Grid.Row="2" Grid.Column="0" Margin="20,0,0,0" Content="Description" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold"/>
             <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="20,10,0,0" FontSize="16" Name="desText" TextWrapping="Wrap"/>
-            <Label Grid.Row="3" Grid.Column="0" Margin="20,0,0,0" Content="Type" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
-            <RadioButton Grid.Row="3" Grid.Column="1" Content="Pose" GroupName="typeCheck" Name="poseRadio" VerticalAlignment="Center" />
+            <Label Grid.Row="3" Grid.Column="0" Margin="20,0,0,0" Content="Type" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold"/>
+            <RadioButton Margin="30,0,0,0" Grid.Row="3" Grid.Column="1" Content="Pose" GroupName="typeCheck" Name="poseRadio" VerticalAlignment="Center" />
             <RadioButton Grid.Row="3" Grid.Column="2" Content="Motion" GroupName="typeCheck" Name="motionRadio" VerticalAlignment="Center" />
 
             <Image Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10" Width="600" Height="400" x:Name="colorImage"/>
@@ -42,12 +42,12 @@
 
             <Label Grid.Row="1" Grid.Column="4" x:Name="connectStatus"/>
             <Label Grid.Row="2" Grid.Column="4" x:Name="frameStatus"/>
-            <Label Grid.Row="1" Grid.Column="3" Content="Kinect Status"/>
-            <Label Grid.Row="2" Grid.Column="3" Content="Frame Status"/>
+            <Label Grid.Row="1" Grid.Column="3" Content="Kinect Status" FontWeight="Bold" />
+            <Label Grid.Row="2" Grid.Column="3" Content="Frame Status" FontWeight="Bold" />
 
-            <Button Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" x:Name="btnConnect"  Content="Connect" Click="btnConnectClick"/>
-            <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" Content="Record" Click="recordClick" VerticalAlignment="Center" />
-            <Button Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="50" Content="Save" Click="savePoseClick" VerticalAlignment="Center" />
+            <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnConnect"  Content="Connect" Click="btnConnectClick"/>
+            <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnRecord" Content="Record" Click="recordClick" VerticalAlignment="Center" />
+            <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnSave" Content="Save" Click="savePoseClick" Background="#00C5CD" VerticalAlignment="Center" />
 
             <Button Grid.Row="7" Grid.Column="0" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick" >
                 <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>

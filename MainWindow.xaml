@@ -6,21 +6,30 @@
         xmlns:local="clr-namespace:MuayThaiTraining"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        Background="#e1e1e1"
         Title="MainWindow" Height="700" Width="1000">
     <Grid>
-        
+        <Grid Height="60" VerticalAlignment="Top" Background="#383838">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <materialDesign:PackIcon Kind="BoxingGlove" Width="60" Height="50" Margin="10" Foreground="#8B0000"></materialDesign:PackIcon>
 
-            <Image Source="Resource/logo วงกลม.png" Margin="306,112,428,383" RenderTransformOrigin="0.2,0.523"/>
-            <Label Content="Muay Thai Training System" HorizontalAlignment="Left" Margin="359,49,0,0" VerticalAlignment="Top" Height="63" Width="500" FontFamily="Segoe UI Black" FontSize="36" FontWeight="Bold"/>
-        <Grid Name="mainArea">    
-        <TextBox HorizontalAlignment="Left" Height="41" Margin="492,380,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308"/>
-            <TextBox HorizontalAlignment="Left" Height="43" Margin="492,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308"/>
-            <Label Content="User name" HorizontalAlignment="Left" Height="41" Margin="332,380,0,0" VerticalAlignment="Top" Width="101" FontWeight="Bold" FontSize="14"/>
-            <Label Content="Password" HorizontalAlignment="Left" Height="41" Margin="332,444,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold" FontSize="14"/>
-            <Button Content="Login" HorizontalAlignment="Left" Margin="683,519,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin" RenderTransformOrigin="1.293,3.4"/>
-            <Button Content="Register" HorizontalAlignment="Left" Margin="418,519,0,0" VerticalAlignment="Top" Width="75" Click="regis" RenderTransformOrigin="1,7.6"/>
-            <!--<Button Content="Test" HorizontalAlignment="Left" Margin="665,319,0,0" VerticalAlignment="Top" Width="75" Click="testBtn"/>-->
-
+                <!--<Image Source="Resource/logo วงกลม.png" Margin="0,0,0,0" />-->
+                <TextBlock Text="THAI BOXING" Foreground="White" FontWeight="Bold" FontSize="26" Margin="5" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="TRAINING" Foreground="White" FontWeight="Bold" FontSize="26" Margin="5" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="Classroom" BorderBrush="{x:Null}" Background="{x:Null}" Click="classroomClick">
+                    <materialDesign:PackIcon Kind="Home" Width="60" Height="50" Margin="10" Foreground="White"></materialDesign:PackIcon>
+                </Button>
+                <!--<Button x:Name="profile" BorderBrush="{x:Null}" Background="{x:Null}" Click="profileClick">
+                    <materialDesign:PackIcon Kind="HumanMale" Width="60" Height="50" Margin="10" Foreground="gray"></materialDesign:PackIcon>
+                </Button>-->
+                <!--<Button x:Name="logout" BorderBrush="{x:Null}" Background="{x:Null}" Click="logoutClick">
+                    <materialDesign:PackIcon Kind="Logout" Width="50" Height="40" Margin="10" Foreground="gray"></materialDesign:PackIcon>
+                </Button>-->
+            </StackPanel>
         </Grid>
+        <StackPanel Name="controlArea" Margin="10,65,10,10"/>
+        
     </Grid>
 </Window>

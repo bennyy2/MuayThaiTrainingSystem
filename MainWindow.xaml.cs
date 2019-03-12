@@ -21,35 +21,39 @@ namespace MuayThaiTraining
     /// </summary>
     public partial class MainWindow : Window
     {
-        Position position = new Position();
+        
 
         public MainWindow()
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
+            getClassRoom();
+            this.WindowState = WindowState.Maximized;
 
         }
 
-        private void btnLogin(object sender, RoutedEventArgs e)
+        private void getClassRoom()
         {
-            Home home = new Home();
-            home.Show();
-            //ShowClassRoom showClassRoom = new ShowClassRoom();
-            //showClassRoom.Show();
+            ClassRoomUC classRoomUC = new ClassRoomUC();
+            controlArea.Children.Add(classRoomUC);
+        }
+
+        private void logoutClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
-        private void regis(object sender, RoutedEventArgs e)
+
+        private void classroomClick(object sender, RoutedEventArgs e)
         {
-            RegisterUC registerUC = new RegisterUC();
-            mainArea.Children.Clear();
-            mainArea.Children.Add(registerUC);
+            controlArea.Children.Clear();
+            getClassRoom();
         }
 
-        private void testBtn(object sender, RoutedEventArgs e)
+        private void profileClick(object sender, RoutedEventArgs e)
         {
-            TestDTW testDTW = new TestDTW();
-            testDTW.Show();
-            this.Close();
+            Console.WriteLine("profile");
         }
     }
 }

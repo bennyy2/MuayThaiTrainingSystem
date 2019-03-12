@@ -10,17 +10,34 @@
     <Grid>
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Grid Name="posepanel">
-                <Label Name="nameLbl" Margin="548,30,277,0" VerticalAlignment="Top" Height="50" FontSize="36" FontWeight="Bold"/>
-                <Grid Height="60" VerticalAlignment="Top" Margin="100">
+                <Label Name="nameLbl" Foreground="#1C1C1C" Margin="506,30,259,0" VerticalAlignment="Top" FontSize="46"/>
+
+                <Grid Height="60" VerticalAlignment="Top" Margin="0,60,50,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="Classroom" BorderBrush="{x:Null}" Background="{x:Null}" Click="addClick">
-                            <materialDesign:PackIcon Kind="AddCircle" BorderBrush="{x:Null}" Width="60" Height="50"  Foreground="#981A19"></materialDesign:PackIcon>
+                        <Button BorderBrush="{x:Null}"  Background="{x:Null}" Click="addClick">
+                            <materialDesign:PackIcon BorderBrush="{x:Null}"  Background="{x:Null}" Kind="AddCircle" Width="50" Height="50" Foreground="#1C1C1C"></materialDesign:PackIcon>
+                        </Button>
+
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+    <!--<Grid>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid Name="posepanel">
+                <Label Name="nameLbl" Foreground="#1C1C1C" Margin="506,30,259,0" VerticalAlignment="Top" FontSize="46" Height="60"/>
+                <Grid Height="60" VerticalAlignment="Top" Margin="0,60,50,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button BorderBrush="{x:Null}"  Background="{x:Null}" Click="addClick">
+                            <materialDesign:PackIcon BorderBrush="{x:Null}"  Background="{x:Null}" Kind="AddCircle" Width="50" Height="50" Foreground="#1C1C1C"></materialDesign:PackIcon>
                         </Button>
                     </StackPanel>
                 </Grid>
             </Grid>
         
         </ScrollViewer>
-    </Grid>
+    </Grid>-->
     
 </UserControl>

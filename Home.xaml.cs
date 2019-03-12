@@ -19,35 +19,48 @@ namespace MuayThaiTraining
     /// </summary>
     public partial class Home : Window
     {
+        Position position = new Position();
+        User user = new User();
         public Home()
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
-            getClassRoom();
+        }
+        private void btnLogin(object sender, RoutedEventArgs e)
+        {
+            Home home = new Home();
+            home.Show();
+            //ShowClassRoom showClassRoom = new ShowClassRoom();
+            //showClassRoom.Show();
+            this.Close();
+            //if(user.checkUser(username.Text, pass.Text))
+            //{
+            //    Home home = new Home();
+            //    home.Show();
+            //    //ShowClassRoom showClassRoom = new ShowClassRoom();
+            //    //showClassRoom.Show();
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    error.Content = "Username or password is incorrect";
+            //}
+
+        }
+        private void regis(object sender, RoutedEventArgs e)
+        {
+            RegisterUC registerUC = new RegisterUC();
+            mainArea.Children.Clear();
+            mainArea.Children.Add(registerUC);
         }
 
-        private void getClassRoom()
+        private void testBtn(object sender, RoutedEventArgs e)
         {
-            ClassRoomUC classRoomUC = new ClassRoomUC();
-            controlArea.Children.Add(classRoomUC);
-        }
-
-        private void logoutClick(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            TestDTW testDTW = new TestDTW();
+            testDTW.Show();
             this.Close();
         }
 
-        private void classroomClick(object sender, RoutedEventArgs e)
-        {
-            controlArea.Children.Clear();
-            getClassRoom();
-        }
-
-        private void profileClick(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("profile");
-        }
+        
     }
 }

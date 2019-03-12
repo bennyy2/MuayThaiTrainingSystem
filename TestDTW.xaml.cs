@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using Microsoft.Kinect;
 using System.Drawing;
 using System.Windows.Media.Media3D;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace MuayThaiTraining
 {
@@ -28,6 +30,9 @@ namespace MuayThaiTraining
         KinectSensor kSensor;
         List<BodyJoint> skelMotion = new List<BodyJoint>();
         List<BodyJoint> trainerMotion = new List<BodyJoint>();
+        Image<Bgr, byte> img;
+
+        VideoWriter writer;
 
         
         int count = 0;
@@ -257,7 +262,13 @@ namespace MuayThaiTraining
 
         private void recordMotion(object sender, RoutedEventArgs e)
         {
+            string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\savePic\\test.mp4");
 
+            string destionpath = "@D:\\output.mp4";
+            int fourcc = VideoWriter.Fourcc('M', 'P', 'E', 'G');
+
+            writer = new VideoWriter(path1, fourcc, 15, new System.Drawing.Size((int)skelCanvas.Width, (int)skelCanvas.Height), true);
+            recordVideo();
             //int width = (int)skelCanvas.Width;
             //int height = (int)skelCanvas.Height;
 
@@ -269,7 +280,7 @@ namespace MuayThaiTraining
 
             //VideoFileWriter writer = new VideoFileWriter();
             //writer.Open("test.avi", width, height, 25, VideoCodec.MPEG4, 1000000);
-            
+
 
             //writer.Close();
         }
@@ -288,6 +299,29 @@ namespace MuayThaiTraining
             //}
             
 
+        }
+
+        private void recordVideo()
+        {
+            img = new Image<Bgr, byte>(ImageSourceToBitmap((BitmapSource)colorImage.Source));
+
+            Mat m = img.Mat;
+
+            writer.Write(m);
+
+        }
+
+        private System.Drawing.Bitmap ImageSourceToBitmap(BitmapSource bitmapSource)
+        {
+            using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
+            {
+                BitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+                encoder.Save(memory);
+                Bitmap bitmap = new Bitmap(memory);
+                return new Bitmap(bitmap);
+
+            }
         }
 
 

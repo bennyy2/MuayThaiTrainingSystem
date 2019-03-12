@@ -12,7 +12,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition Height="100"/>
-            <RowDefinition/>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,11 +21,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Add New Class Room" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18" FontWeight="Bold" />
-
-        <TextBox Grid.Row="1" Grid.Column="1" Height="30" FontSize="16" Name="classRoomtxt" />
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Foreground="#1C1C1C" Content="New Classroom" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24" />
+        <TextBox Grid.Row="1" Grid.Column="1" Height="50" FontSize="16" Name="classRoomtxt" VerticalAlignment="Center" />
         <Label Grid.Row="1" Grid.Column="2" Height="30" FontSize="16" Name="statuslb"/>
-        <Button Grid.Row="2" Grid.Column="1" Height="30" Width="50" Content="ADD"  Click="addClassRoomClick" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="2" Grid.Column="1" Width="150" Height="50" FontSize="16" FontWeight="Bold" Background="#00C5CD"  Content="ADD"  Click="addClassRoomClick" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <!--<Label Content="Class room name" Margin="55,142,543,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <Button Content="Add" Margin="680,232,0,0" VerticalAlignment="Top" Click="addClassRoomClick" RenderTransformOrigin="-0.587,1.4" HorizontalAlignment="Left" Width="75"/>-->
 

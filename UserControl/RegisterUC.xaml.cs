@@ -27,6 +27,10 @@ namespace MuayThaiTraining
 
         private void registerClick(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            var myWindow = Window.GetWindow(this);
+            myWindow.Close();
 
         }
     }

@@ -23,7 +23,7 @@ using Emgu.Util;
 using Emgu.CV.Structure;
 using System.Diagnostics;
 using System.Threading;
-
+using System.Runtime.ExceptionServices;
 
 namespace MuayThaiTraining
 {
@@ -32,7 +32,7 @@ namespace MuayThaiTraining
     /// </summary>
     public partial class AddPoseUC : UserControl
     {
-        KinectSensor kSensor;
+        private KinectSensor kSensor;
         ConnectDB connectDB = new ConnectDB();
         Comparison compare = new Comparison();
         Position position = new Position();
@@ -43,20 +43,15 @@ namespace MuayThaiTraining
         float x, y, z;
         Skeleton skel;
         String room;
-        VideoWriter writer;
+        VideoWriter videoWriter;
         Image<Bgr, byte> img;
-        Task thread1;
-        Task thread2;
         string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainer");
-
+        Mat m;
 
         public AddPoseUC(String room)
         {
             InitializeComponent();
             this.room = room;
-            connectStatus.Content = "Connected";
-            frameStatus.Content = "Connected";
-            this.colorImage.Source = new BitmapImage(new Uri(path1 + "\\Straight_Punch.png"));
         }
 
         private void btnConnectClick(object sender, RoutedEventArgs e)
@@ -79,13 +74,6 @@ namespace MuayThaiTraining
                 {
 
                     kSensor.Start();
-                    //this.lbKinectID.Content = kSensor.DeviceConnectionId;
-
-                    string destionpath = @"D:\\output.mp4";
-                    int fourcc = VideoWriter.Fourcc('M', 'P', '4', 'V');
-
-                    writer = new VideoWriter(destionpath, fourcc, 15, new System.Drawing.Size((int)skelCanvas.Width, (int)skelCanvas.Height), true);
-
 
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
@@ -101,10 +89,18 @@ namespace MuayThaiTraining
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
+                    if (videoWriter != null)
+                    {
+                        videoWriter.Dispose();
+                    }
+                    
                     kSensor.Stop();
-                    writer = null;
-                    colorImage = null;
-                    this.btnConnect.Content = "Start Record";
+                    kSensor.ColorStream.Disable();
+                    kSensor.SkeletonStream.Disable();
+
+                    kSensor = null;
+                    btnRecord.Content = "Record";
+                    this.btnConnect.Content = "Connect";
                     this.connectStatus.Content = "Disconnect";
                     this.frameStatus.Content = "Disconnect";
                     this.count = 0;
@@ -115,43 +111,46 @@ namespace MuayThaiTraining
 
         private void recordClick(object sender, RoutedEventArgs e)
         {
-            string destionpath = @"D:\\output.mp4";
-            int fourcc = VideoWriter.Fourcc('M', 'P', 'E', 'G');
+            btnRecord.Content = "Recording...";
+            if (motionRadio.IsChecked == true)
+            {
+                string destionpath = path1 + "\\" + nameText.Text.Replace(' ', '_').ToString() + ".mp4";
+                //int fourcc = VideoWriter.Fourcc('M', 'P', 'E', 'G');
+                int fourcc = VideoWriter.Fourcc('M', 'P', '4', 'V');
 
-            writer = new VideoWriter(destionpath, fourcc, 15, new System.Drawing.Size((int)skelCanvas.Width, (int)skelCanvas.Height), true);
+                videoWriter = new VideoWriter(destionpath, fourcc, 15, new System.Drawing.Size((int)skelCanvas.Width, (int)skelCanvas.Height), true);
 
-            
-            //thread2 = Task.Factory.StartNew(() => {
-            //    //Some work...
-            //    kSensor.SkeletonStream.Enable(new TransformSmoothParameters
-            //    {
-            //        Smoothing = 0.7f,
-            //        Correction = 0.3f,
-            //        Prediction = 1.0f,
-            //        JitterRadius = 1.0f,
-            //        MaxDeviationRadius = 1.0f
-            //    });
+            }
 
-            //    kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
-            //});
 
-            
+            kSensor.SkeletonStream.Enable(new TransformSmoothParameters
+            {
+                Smoothing = 0.7f,
+                Correction = 0.3f,
+                Prediction = 1.0f,
+                JitterRadius = 1.0f,
+                MaxDeviationRadius = 1.0f
+            });
+
+            kSensor.SkeletonFrameReady += KSensor_SkeletonFrameReady;
+
         }
 
         private void savePoseClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                
                 if (poseRadio.IsChecked == true)
                 {
-                    savePicture(1);
+                    savePicture();
                     pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose");
-                    position.saveSkel(skel, room, 1);
+                    if (position.saveSkel(skel, room, 1))
+                    {
+                        this.frameStatus.Content = "Success.";
+                    }
                 }
                 else if (motionRadio.IsChecked == true)
                 {
-                    //savePicture();
                     pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Motion");
                     position.saveMotionPoint(motion, room);
                 }
@@ -168,21 +167,22 @@ namespace MuayThaiTraining
             }
         }
 
-        public void savePicture(int frame)
+        public void savePicture()
         {
-            string name = nameText.Text.Replace(' ', '_') + frame.ToString();
+            string name = nameText.Text.Replace(' ', '_').ToString();
             string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainer");
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)colorImage.Source));
             using (FileStream fs = File.OpenWrite(path1 + "\\" + name + ".png"))
             {
                 encoder.Save(fs);
-                //count++;
             }
         }
 
+        [HandleProcessCorruptedStateExceptions]
         private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
+
             skelCanvas.Children.Clear();
 
             Skeleton[] skeletons = null;
@@ -207,6 +207,7 @@ namespace MuayThaiTraining
                 //if skeleton is tracked
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
+                    frameStatus.Content = "Tracking...";
                     //Using drawbone function only when implement
 
                     //center bone
@@ -238,15 +239,32 @@ namespace MuayThaiTraining
                     //DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
                     //DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
-                    
-                    x = skeleton.Joints[JointType.HipCenter].Position.X;
-                    y = skeleton.Joints[JointType.HipCenter].Position.Y;
-                    z = skeleton.Joints[JointType.HipCenter].Position.Z;
+
+                    //x = skeleton.Joints[JointType.HipCenter].Position.X;
+                    //y = skeleton.Joints[JointType.HipCenter].Position.Y;
+                    //z = skeleton.Joints[JointType.HipCenter].Position.Z;
 
                     skel = skeleton;
-                    recordVideo();
-                    savePicture(count);
-                    motion.Add(new BodyJoint(skel, count));
+                    //savePicture(count);
+                    
+                    if (motionRadio.IsChecked == true)
+                    {
+                        try
+                        {
+                            img = new Image<Bgr, byte>(ImageSourceToBitmap((BitmapSource)colorImage.Source));
+                            videoWriter.Write(img.Mat);
+                            motion.Add(new BodyJoint(skel, count));
+
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+
+
+
+                    }
+                    
                     count++;
                     Console.Write(count + ". X: " + skeleton.Joints[JointType.HipCenter].Position.X);
                     Console.Write(" Y: " + skeleton.Joints[JointType.HipCenter].Position.Y);
@@ -258,15 +276,7 @@ namespace MuayThaiTraining
 
             }
         }
-
-        private void recordVideo()
-        {
-            img = new Image<Bgr, byte>(ImageSourceToBitmap((BitmapSource)colorImage.Source));
-
-            Mat m = img.Mat;
-
-            writer.Write(m);
-        }
+       
 
         private System.Drawing.Bitmap ImageSourceToBitmap(BitmapSource bitmapSource)
         {

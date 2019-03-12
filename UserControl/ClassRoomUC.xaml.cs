@@ -28,6 +28,8 @@ namespace MuayThaiTraining
         {
             InitializeComponent();
             createClassRoomBtn();
+            ScrollViewer viewer = new ScrollViewer();
+            viewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
         }
 
 
@@ -35,10 +37,12 @@ namespace MuayThaiTraining
         private void createClassRoomBtn()
         {
             // Create a Button margin
-            int left = 100;
+            int left = 80;
             int top = 150;
             int right = 0;
             int bottom = 0;
+
+            var brush = new SolidColorBrush(Color.FromRgb((byte)31, (byte)30, (byte)27));
 
             List<ClassRoom> list = classRoom.getClassRoom();
             foreach (var i in list)
@@ -46,23 +50,35 @@ namespace MuayThaiTraining
                 Button btn = new Button();
 
                 // Set Button properties
-                
-                btn.Height = 100;
-                btn.Width = 100;
-                btn.FontSize = 15;
+                btn.Height = 200;
+                btn.Width = 200;
+                btn.FontSize = 20;
+                btn.Style = (Style)FindResource("ButtonTemplate");
                 btn.Margin = new Thickness(left, top, right, bottom);
                 btn.HorizontalAlignment = HorizontalAlignment.Left;
                 btn.VerticalAlignment = VerticalAlignment.Top;
                 btn.Content = i.ClassName;
                 btn.Name = i.ClassName.Replace(' ', '_');
-
                 if (left + 300 > System.Windows.SystemParameters.WorkArea.Width)
                 {
                     top += 250;
-                    left = -100;
+                    left = -170;
                 }
 
-                left += 200;
+                left += 250;
+                //Button btn = new Button();
+
+                //btn.Height = 80;
+                //btn.Width = 400;
+                //btn.FontSize = 15;
+                ////btn.Background = Brushes.Gray;
+                ////btn.Foreground = Brushes.White
+                //btn.Margin = new Thickness(0, top, 0, 0);
+                //btn.Content = i.ClassName;
+                //btn.Name = i.ClassName.Replace(' ', '_');
+                //top += 150;
+
+
 
                 // Add a Button Click Event handler
                 btn.Click += classRoomClick;
