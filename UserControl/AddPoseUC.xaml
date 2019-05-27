@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="620" d:DesignWidth="1400">
+             d:DesignHeight="600" d:DesignWidth="1400">
     <Grid Name="addPosePanel">
         <Grid>
             <Grid.RowDefinitions>
@@ -48,6 +48,7 @@
             <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnConnect"  Content="Connect" Click="btnConnectClick"/>
             <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnRecord" Content="Record" Click="recordClick" VerticalAlignment="Center" />
             <Button Style="{StaticResource AddButtonTemplate}" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnSave" Content="Save" Click="savePoseClick" Background="#00C5CD" VerticalAlignment="Center" />
+            <!--<Button Style="{StaticResource AddButtonTemplate}" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Width="150" Height="60" FontSize="18" x:Name="btnWeight" Content="Weight" Click="weightClick" VerticalAlignment="Center" />-->
 
             <Button Grid.Row="7" Grid.Column="0" Width="50" HorizontalAlignment="Left" Margin="20,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick" >
                 <materialDesign:PackIcon Kind="ArrowBack" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>

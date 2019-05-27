@@ -28,7 +28,6 @@ namespace MuayThaiTraining
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
             getClassRoom();
-            this.WindowState = WindowState.Maximized;
 
         }
 

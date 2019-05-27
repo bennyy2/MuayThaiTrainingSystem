@@ -37,8 +37,7 @@ namespace MuayThaiTraining
         Comparison compare = new Comparison();
         Position position = new Position();
         Pose pose = new Pose();
-        BodyJoint bodyJoint = new BodyJoint();
-        List<BodyJoint> motion = new List<BodyJoint>();
+        List<Position> motion = new List<Position>();
         int count = 0;
         float x, y, z;
         Skeleton skel;
@@ -95,8 +94,10 @@ namespace MuayThaiTraining
                     }
                     
                     kSensor.Stop();
+                    
                     kSensor.ColorStream.Disable();
                     kSensor.SkeletonStream.Disable();
+                    kSensor.Dispose();
 
                     kSensor = null;
                     btnRecord.Content = "Record";
@@ -144,7 +145,7 @@ namespace MuayThaiTraining
                 {
                     savePicture();
                     pose.savePoseDetail(nameText.Text.ToString(), desText.Text.ToString(), room, "Pose");
-                    if (position.saveSkel(skel, room, 1))
+                    if (position.saveSkel(motion, room, 1))
                     {
                         this.frameStatus.Content = "Success.";
                     }
@@ -211,33 +212,33 @@ namespace MuayThaiTraining
                     //Using drawbone function only when implement
 
                     //center bone
-                    //DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
-                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
-                    //DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
+                    DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
+                    DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
 
-                    ////left arm
-                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
-                    //DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
-                    //DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
-                    //DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
+                    //left arm
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
+                    DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
+                    DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
+                    DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
 
-                    ////right arm
-                    //DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
-                    //DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
-                    //DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
-                    //DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
+                    //right arm
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
+                    DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
+                    DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
+                    DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
 
-                    ////left leg
-                    //DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
-                    //DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
-                    //DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
-                    //DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
+                    //left leg
+                    DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
+                    DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
+                    DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
+                    DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
 
-                    ////Right leg
-                    //DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
-                    //DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
-                    //DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
-                    //DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
+                    //Right leg
+                    DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
+                    DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
+                    DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
+                    DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
 
 
                     //x = skeleton.Joints[JointType.HipCenter].Position.X;
@@ -253,7 +254,7 @@ namespace MuayThaiTraining
                         {
                             img = new Image<Bgr, byte>(ImageSourceToBitmap((BitmapSource)colorImage.Source));
                             videoWriter.Write(img.Mat);
-                            motion.Add(new BodyJoint(skel, count));
+                            
 
                         }
                         catch (Exception)
@@ -299,6 +300,15 @@ namespace MuayThaiTraining
 
             ColorImagePoint joint1Point = kSensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeleton.Joints[joint1].Position, ColorImageFormat.RgbResolution640x480Fps30);
             ColorImagePoint joint2Point = kSensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeleton.Joints[joint2].Position, ColorImageFormat.RgbResolution640x480Fps30);
+            motion.Add(new Position(
+                skeleton.Joints[joint2].Position.X,
+                skeleton.Joints[joint2].Position.Y,
+                skeleton.Joints[joint2].Position.Z,
+                joint2Point.X,
+                joint2Point.Y,
+                (int)joint2,
+                count
+                ));
 
             Line backBone = new Line();
             backBone.Stroke = new SolidColorBrush(Colors.Yellow);

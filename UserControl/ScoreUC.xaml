@@ -6,39 +6,54 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignWidth="1600" Height="630">
+             d:DesignWidth="1600" Height="600">
     <Grid Name="scorePanel">
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="poseLB" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Name="poseLB" HorizontalAlignment="Center" FontSize="35" FontWeight="Bold"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="SCORE" HorizontalAlignment="Right" Margin="0,0,20,0" FontSize="34" FontWeight="Bold"/>
-            <Label Grid.Row="1" Grid.Column="1" Name="scoreLB" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="28" />
+            <Label Grid.Row="1" Grid.Column="1" Content="SCORE" HorizontalAlignment="Right" Margin="0,0,20,0" FontSize="30" FontWeight="Bold"/>
+            <Label Grid.Row="1" Grid.Column="2" Name="scoreLB" HorizontalAlignment="Left" Margin="20,0,0,0" FontSize="28" />
 
-            <Image Grid.Row="2" Grid.Column="0" Name="trainerImage" Width="600" Height="400" MouseDown="trainerImage_MouseDown"/>
-            <Image Grid.Row="2" Grid.Column="1" Name="traineeImage" Width="600" Height="400" MouseDown="traineeImage_MouseDown"/>
-
-            <Label Name="suggestlbl" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-            <Button Grid.Row="4" Grid.Column="0" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" Click="replayClick" HorizontalAlignment="Right" Margin="20,0,0,0">
-                <materialDesign:PackIcon Kind="Replay" Width="60" Height="60" Foreground="Black"/>
-            </Button>
-
-            <Button Grid.Row="4" Grid.Column="1" Width="70" Height="70" HorizontalAlignment="left" Margin="0,0,20,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick">
-                <materialDesign:PackIcon Kind="ArrowForward" Width="70" BorderBrush="{x:Null}" Height="70" Foreground="Black"></materialDesign:PackIcon>
-            </Button>
+            <Image Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Name="trainerImage" Width="600" Height="400"/>
             
+            <Canvas Name="drawPanel" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="600" Height="400"   />
+
+            <Image Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="2" Name="traineeImage" Width="600" Height="400" />
+
+            <Label Name="suggestlbl" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Button Name="Playbtn" Grid.Row="4" Grid.Column="0" Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Click="playAllClick" HorizontalAlignment="Right" Margin="20,0,0,0">
+                <materialDesign:PackIcon Kind="Play" Width="50" Height="50" Foreground="Black"/>
+            </Button>
+
+            <!--<Button Grid.Row="4" Grid.Column="0" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" Click="leftClick" HorizontalAlignment="Right" Margin="20,0,0,0" Name="leftbtn">
+                <materialDesign:PackIcon Kind="ArrowLeft" Width="60" Height="60" Foreground="Black"/>
+            </Button>
+            <Button Grid.Row="4" Grid.Column="1"  Width="60" Height="60" HorizontalAlignment="left" Margin="0,0,20,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="rightClick" Name="rightbtn">
+                <materialDesign:PackIcon Kind="ArrowRight" Width="70" BorderBrush="{x:Null}" Height="70" Foreground="Black"></materialDesign:PackIcon>
+            </Button>-->
+            
+            <Button Name="Replaybtn" Grid.Row="4" Grid.Column="3" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,0,20,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="backBtnClick">
+                <materialDesign:PackIcon Kind="Replay" Width="50" BorderBrush="{x:Null}" Height="50" Foreground="Black"></materialDesign:PackIcon>
+            </Button>
+            <Slider Background="Black" Padding="10" Name="Slidelb" Grid.Row="4" Grid.Column="1" Maximum="100" Grid.ColumnSpan="2" Minimum="0" Height="20" Width="500"  HorizontalAlignment="Center" TickFrequency="1" VerticalAlignment="Center" ValueChanged="Slider_ValueChanged">
+            </Slider>
+
         </Grid>
 
     </Grid>

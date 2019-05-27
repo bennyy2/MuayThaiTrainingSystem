@@ -108,13 +108,9 @@
       <DependentUpon>CompareSkel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Library\DTW.cs" />
-    <Compile Include="Model\BodyJoint.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="UserControl\RegisterUC.xaml.cs">
       <DependentUpon>RegisterUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestDTW.xaml.cs">
-      <DependentUpon>TestDTW.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\User.cs" />
     <Compile Include="UserControl\ScoreUC.xaml.cs">
@@ -152,10 +148,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\RegisterUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestDTW.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -17,7 +17,7 @@ namespace MuayThaiTraining
 {
     class Comparison
     {
-        
+
         List<JointType> legLeft = new List<JointType> { JointType.HipCenter, JointType.HipLeft,
             JointType.KneeLeft};
 
@@ -39,24 +39,106 @@ namespace MuayThaiTraining
 
         ConnectDB connect = new ConnectDB();
         Position position = new Position();
-        
+        public double compareFrame(List<Position> trainerMotion, List<Position> traineeMotion, int frameTrainer, int frameTrainee)
+        {
+            double totalScore = 0;
+            double score = 0;
+            List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
+            foreach (List<JointType> i in listsJoint)
+            {
+                for (int j = 0; j < i.Count - 1; j++)
+                {
+                    //trainer
+                    var trainerStartpoint = trainerMotion.FirstOrDefault(x => x.Joint == (int)i[j] && x.Frame == frameTrainer);
+                    var trainerEndpoint = trainerMotion.FirstOrDefault(x => x.Joint == (int)i[j+1] && x.Frame == frameTrainer);
+                    Vector3D trainerVector = getVector(trainerStartpoint, trainerEndpoint);
+                    Vector3D normalizeTrainer = normolizeVector(trainerVector);
+
+                    //trainee
+                    var traineeStartpoint = traineeMotion.FirstOrDefault(x => x.Joint == (int)i[j] && x.Frame == frameTrainee);
+                    var traineeEndpoint = traineeMotion.FirstOrDefault(x => x.Joint == (int)i[j+1] && x.Frame == frameTrainee);
+                    Vector3D traineeVector = getVector(traineeStartpoint, traineeEndpoint);
+                    Vector3D normalizeTrainee = normolizeVector(traineeVector);
+                    
+                    score = compareVector(normalizeTrainer, normalizeTrainee);
+
+                    totalScore += score;
+
+                }
+                
+            }
+
+            return totalScore/16;
+        }
+        public List<int> getErrorJoint(List<Position> trainerMotion, List<Position> traineeMotion, int frameTrainer, int frameTrainee)
+        {
+            List<int> errorJoint = new List<int>();
+            double score = 0;
+            List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
+            foreach (List<JointType> i in listsJoint)
+            {
+                for (int j = 0; j < i.Count - 1; j++)
+                {
+                    //trainer
+                    var trainerStartpoint = trainerMotion.FirstOrDefault(x => x.Joint == (int)i[j] && x.Frame == frameTrainer);
+                    var trainerEndpoint = trainerMotion.FirstOrDefault(x => x.Joint == (int)i[j+1] && x.Frame == frameTrainer);
+                    Vector3D trainerVector = getVector(trainerStartpoint, trainerEndpoint);
+                    Vector3D normalizeTrainer = normolizeVector(trainerVector);
+
+                    //trainee
+                    var traineeStartpoint = traineeMotion.FirstOrDefault(x => x.Joint == (int)i[j] && x.Frame == frameTrainee);
+                    var traineeEndpoint = traineeMotion.FirstOrDefault(x => x.Joint == (int)i[j+1] && x.Frame == frameTrainee);
+                    Vector3D traineeVector = getVector(traineeStartpoint, traineeEndpoint);
+                    Vector3D normalizeTrainee = normolizeVector(traineeVector);
+                    
+                    score = compareVector(normalizeTrainer, normalizeTrainee);
+                    if (score < 0.8)
+                    {
+                        errorJoint.Add((int)i[j]);
+                    }
+
+                }
+                
+            }
+
+            return errorJoint;
+        }
+
+        private Vector3D getVector(Position start, Position end)
+        {
+            Vector3D vector = new Vector3D();
+            vector.X = end.X - start.X;
+            vector.Y = end.Y - start.Y;
+            vector.Z = end.Z - start.Z;
+            return vector;
+        }
+
+        private Vector3D getVector(SkeletonPoint start, SkeletonPoint end)
+        {
+            Vector3D vector = new Vector3D();
+            vector.X = end.X - start.X;
+            vector.Y = end.Y - start.Y;
+            vector.Z = end.Z - start.Z;
+            return vector;
+        }
+
 
         //public double calScore(Skeleton s,string poseName, string classRoom, int frame)
-        public Tuple<List<Tuple<string, double>>, double> calScore(Skeleton s, string poseName, string classRoom, int frame)
+        public Tuple<List<Tuple<JointType, double>>, double> calScore(Skeleton s, string poseName, string classRoom, int frame)
         {
             double score = 0;
             double totalScore = 0;
             List<List<JointType>> listsJoint = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
-            
-            List<Tuple<string, double>> tupleList = new List<Tuple<string, double>>();
+
+            List<Tuple<JointType, double>> tupleList = new List<Tuple<JointType, double>>();
 
             foreach (List<JointType> i in listsJoint)
             {
-                for (int j = 0; j < i.Count-1; j++)
+                for (int j = 0; j < i.Count - 1; j++)
                 {
                     //trainer
                     Point3D trainerStartpoint = position.getPosition(i[j], poseName, classRoom, frame);
-                    Point3D trainerEndpoint = position.getPosition(i[j+1], poseName, classRoom, frame);
+                    Point3D trainerEndpoint = position.getPosition(i[j + 1], poseName, classRoom, frame);
                     Vector3D trainerVector = getVector(trainerStartpoint, trainerEndpoint);
                     Vector3D normalizeTrainer = normolizeVector(trainerVector);
                     //trainee
@@ -70,25 +152,25 @@ namespace MuayThaiTraining
 
                     score = compareVector(normalizeTrainer, normalizeTrainee);
                     Console.WriteLine(i[j].ToString() + " to " + i[j + 1].ToString() + " : " + score);
-                    Tuple<string, double> tuple = new Tuple<string, double>(i[j].ToString(), score);
+                    Tuple<JointType, double> tuple = new Tuple<JointType, double>(i[j], score);
                     tupleList.Add(tuple);
 
                     totalScore += score;
                 }
             }
 
-            Console.WriteLine("-----------------------------------------");     
+            Console.WriteLine("-----------------------------------------");
 
-            return new Tuple<List<Tuple<string, double>>, double>(tupleList, totalScore/16);
+            return new Tuple<List<Tuple<JointType, double>>, double>(tupleList, totalScore / 16);
         }
-       
+
 
         public double compareScoreByJoint(JointType first, JointType sec, string poseName, string classRoom, Skeleton skel, int frameTrainee, int frameTrainer)
         {
             double score = 0;
             double totalscore = 0;
             List<JointType> joint = new List<JointType> { first, sec };
-            
+
 
             for (int i = 0; i < joint.Count - 1; i++)
             {
@@ -150,7 +232,7 @@ namespace MuayThaiTraining
             return vectorResult;
         }
 
-        
+
 
         //for dtw 
         public double calDistance(Skeleton input, int frame)
@@ -170,13 +252,13 @@ namespace MuayThaiTraining
                 score = distance(point, inputPoint);
                 //Console.WriteLine(score);
                 totalScore += score;
-                
+
             }
 
             return totalScore;
         }
 
-        
+
 
 
 

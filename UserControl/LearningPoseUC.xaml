@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MuayThaiTraining"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="614" d:DesignWidth="1052">
+             d:DesignHeight="600" d:DesignWidth="1052">
     <Grid>
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Grid Name="posepanel">

@@ -133,7 +133,8 @@ namespace MuayThaiTraining
         {
             
                 Image img = (Image)sender;
-                ComparePoseUC comparePoseUC = new ComparePoseUC(img.Name.Replace(' ', '_'), room);
+            string n = img.Name.Replace('_', ' ');
+                ComparePoseUC comparePoseUC = new ComparePoseUC(n, room);
                 posepanel.Children.Clear();
                 posepanel.Children.Add(comparePoseUC);
             

@@ -53,13 +53,7 @@ namespace MuayThaiTraining
             mainArea.Children.Clear();
             mainArea.Children.Add(registerUC);
         }
-
-        private void testBtn(object sender, RoutedEventArgs e)
-        {
-            TestDTW testDTW = new TestDTW();
-            testDTW.Show();
-            this.Close();
-        }
+        
 
         
     }

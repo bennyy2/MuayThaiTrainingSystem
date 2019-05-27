@@ -38,7 +38,7 @@ namespace MuayThaiTraining
         Position position = new Position();
         DTW dtw = new DTW();
         Pose pose = new Pose();
-        List<BodyJoint> motion = new List<BodyJoint>();
+        List<Position> motion = new List<Position>();
         Skeleton skel;
         double x;
         double y;
@@ -65,7 +65,7 @@ namespace MuayThaiTraining
             this.poseName = poseName;
             this.classRoom = room;
             this.type = pose.getPoseDescription(poseName, room)[1];
-            poseType.Content = type;
+            //poseType.Content = type;
             this.deslb.Text = pose.getPoseDescription(poseName, room)[0];
             int num = position.lenghtFrame(poseName, room);
             if(type == "Motion")
@@ -113,11 +113,7 @@ namespace MuayThaiTraining
                 try
                 {
                     kSensor.Start();
-                    
-                    //startRecord();
-                    //this.lbKinectID.Content = kSensor.DeviceConnectionId;
                     kSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    
                     kSensor.ColorFrameReady += KSensor_ColorFrameReady;
                     
                 }
@@ -125,20 +121,19 @@ namespace MuayThaiTraining
                 {
                     this.statuslb.Content = "Cannot connect Kinect";
                 }
-
+                
 
             }
             else
             {
                 if (kSensor != null && kSensor.IsRunning)
                 {
-                    if (type == "Pose")
-                    {
-                        savePicture();
-                    }
+                    savePicture();
+                    
                     kSensor.Stop();
                     kSensor.ColorStream.Disable();
                     kSensor.SkeletonStream.Disable();
+                    kSensor.Dispose();
                     kSensor = null;
                     if (videoWriter != null)
                     {
@@ -163,14 +158,12 @@ namespace MuayThaiTraining
                 if (type == "Motion")
                 {
                     string destionpath = path2 + "\\" + poseName + ".mp4";
+
                     //int fourcc = VideoWriter.Fourcc('M', 'P', 'E', 'G');
                     int fourcc = VideoWriter.Fourcc('M', 'P', '4', 'V');
 
                     videoWriter = new VideoWriter(destionpath, fourcc, 15, new System.Drawing.Size((int)userImage.Width, (int)userImage.Height), true);
-                    if (File.Exists(destionpath))
-                    {
-                        File.Delete(destionpath);
-                    }
+
                 }
 
 
@@ -217,15 +210,44 @@ namespace MuayThaiTraining
                 {
                     //Using drawbone function only when implement
                     framelb.Content = "Recording..";
+
+                    DrawBone(skeleton, JointType.Head, JointType.ShoulderCenter);
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.Spine);
+                    DrawBone(skeleton, JointType.Spine, JointType.HipCenter);
+
+                    //left arm
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderLeft);
+                    DrawBone(skeleton, JointType.ShoulderLeft, JointType.ElbowLeft);
+                    DrawBone(skeleton, JointType.ElbowLeft, JointType.WristLeft);
+                    DrawBone(skeleton, JointType.WristLeft, JointType.HandLeft);
+
+                    //right arm
+                    DrawBone(skeleton, JointType.ShoulderCenter, JointType.ShoulderRight);
+                    DrawBone(skeleton, JointType.ShoulderRight, JointType.ElbowRight);
+                    DrawBone(skeleton, JointType.ElbowRight, JointType.WristRight);
+                    DrawBone(skeleton, JointType.WristRight, JointType.HandRight);
+
+                    //left leg
+                    DrawBone(skeleton, JointType.HipCenter, JointType.HipLeft);
+                    DrawBone(skeleton, JointType.HipLeft, JointType.KneeLeft);
+                    DrawBone(skeleton, JointType.KneeLeft, JointType.AnkleLeft);
+                    DrawBone(skeleton, JointType.AnkleLeft, JointType.FootLeft);
+
+                    //Right leg
+                    DrawBone(skeleton, JointType.HipCenter, JointType.HipRight);
+                    DrawBone(skeleton, JointType.HipRight, JointType.KneeRight);
+                    DrawBone(skeleton, JointType.KneeRight, JointType.AnkleRight);
+                    DrawBone(skeleton, JointType.AnkleRight, JointType.FootRight);
+
                     skel = skeleton;
-                    motion.Add(new BodyJoint(skel, count));
+                    //motion.Add(new BodyJoint(skel, count));
                     if (type == "Motion")
                     {
                         try
                         {
                             img = new Image<Bgr, byte>(ImageSourceToBitmap((BitmapSource)userImage.Source));
                             videoWriter.Write(img.Mat);
-                            
+
 
                         }
                         catch (Exception)
@@ -254,16 +276,14 @@ namespace MuayThaiTraining
             string name = poseName.Replace(' ', '_').ToString();
             string path1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MotionTrainee");
 
-            if (File.Exists(path1 + "\\" + name + ".png"))
-            {
-                File.Delete(path1 + "\\" + name + ".png");
-            }
+            string filePath = path1 + "\\" + name+ ".png";
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)userImage.Source));
-            using (FileStream fs = File.OpenWrite(path1 + "\\" + name + ".png"))
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 encoder.Save(fs);
             }
+
         }
 
         public void savePicture(int count)
@@ -286,9 +306,19 @@ namespace MuayThaiTraining
             ColorImagePoint joint1Point = kSensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeleton.Joints[joint1].Position, ColorImageFormat.RgbResolution640x480Fps30);
             ColorImagePoint joint2Point = kSensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeleton.Joints[joint2].Position, ColorImageFormat.RgbResolution640x480Fps30);
 
+            motion.Add(new Position(
+               skeleton.Joints[joint2].Position.X,
+               skeleton.Joints[joint2].Position.Y,
+               skeleton.Joints[joint2].Position.Z,
+               joint2Point.X,
+               joint2Point.Y,
+               (int)joint2,
+               count
+               ));
+
             Line backBone = new Line();
             backBone.Stroke = new SolidColorBrush(Colors.Yellow);
-            backBone.StrokeThickness = 5;
+            backBone.StrokeThickness = 2;
 
             backBone.X1 = joint1Point.X;
             backBone.Y1 = joint1Point.Y;
@@ -296,6 +326,7 @@ namespace MuayThaiTraining
             backBone.Y2 = joint2Point.Y;
 
             userPanel.Children.Add(backBone);
+            
         }
 
         private void KSensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
@@ -318,6 +349,8 @@ namespace MuayThaiTraining
                 {
                     this.userImage.Source = BitmapSource.Create((int)userPanel.Width, (int)userPanel.Height,
                     96, 96, PixelFormats.Bgr32, null, colorData, stride);
+                    int zindex = Canvas.GetZIndex(userImage);
+                    Canvas.SetZIndex(userPanel, zindex + 1);
 
                 }
                 catch
@@ -337,51 +370,9 @@ namespace MuayThaiTraining
 
         private void compareBtnClick(object sender, RoutedEventArgs e)
         {
-            //ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom, type, path, motion);
             ScoreUC scoreUC = new ScoreUC(poseName, classRoom, type, motion);
             comparePanel.Children.Clear();
             comparePanel.Children.Add(scoreUC);
-            //if (compareBtn.Content.ToString() == "Compare")
-            //{
-            //    compareBtn.Content = "Comapring...";
-
-            //    position.saveMotionTraineePoint(motion, classRoom);
-
-            //    double score = 0;
-            //    List<Tuple<int, int, double, int>> path = new List<Tuple<int, int, double, int>>();
-
-            //    if (type == "Pose")
-            //    {
-            //        score = comparison.calScore(skel, poseName, classRoom, 1);
-            //    }
-            //    else
-            //    {
-            //        Tuple<double[,], double[,]> table = dtw.modifiedDTW(motion, poseName, classRoom);
-            //        int rows = motion.Count;
-            //        int columns = position.lenghtFrame(poseName, classRoom);
-            //        path = dtw.wrapPath(table.Item1, table.Item2, rows, columns);
-            //        foreach (Tuple<int, int, double, int> i in path)
-            //        {
-            //            score += i.Item3;
-            //        }
-            //        score /= path.Count;
-
-
-
-            //        foreach (Tuple<int, int, double, int> i in path)
-            //        {
-            //            Console.WriteLine(i.Item1 + " " + i.Item2 + " " + i.Item3);
-            //        }
-
-            //        Console.WriteLine("Score : " + score);
-
-            //    }
-
-            //    ScoreUC scoreUC = new ScoreUC(score, poseName, classRoom, type, path, motion);
-            //    comparePanel.Children.Clear();
-            //    comparePanel.Children.Add(scoreUC);
-            //}
-
 
         }
 
@@ -407,13 +398,25 @@ namespace MuayThaiTraining
         {
 
             Mat m = new Mat();
-            while (IsReadingFrame == true && FrameNo < TotalFrame-1)
+
+            while (IsReadingFrame == true && FrameNo < TotalFrame - 1)
             {
                 FrameNo += 1;
+                frame.Content = "TIME: "+((FrameNo/Fps)/100).ToString("0.00");
                 videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, FrameNo);
+                //if (String.IsNullOrEmpty(frame.Text))
+                //{
+                    
+
+                //}
+                //else
+                //{
+                //    videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, Convert.ToInt32(frame.Text));
+
+                //}
                 videoCapture.Read(m);
                 exampleImage.Source = ImageSourceForBitmap(m.Bitmap);
-                await Task.Delay(1000 / Convert.ToInt16(Fps));
+                await Task.Delay(1000 / Convert.ToInt16(30));
             }
             FrameNo = 0;
         }

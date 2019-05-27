@@ -47,9 +47,9 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\sv\ZedGr
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\RegisterUC.g.cs
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ScoreUC.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ComparePoseUC.g.cs
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\AddClassRoomUC.g.cs
@@ -65,7 +65,6 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThai
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\App.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\CompareSkel.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\RegisterUC.baml
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\TestDTW.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ScoreUC.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\ComparePoseUC.baml
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\UserControl\AddClassRoomUC.baml
@@ -81,4 +80,3 @@ C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThai
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csproj.CopyComplete
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.exe
 C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.pdb
-C:\Users\Benny\source\repos\MuayThaiTraining\MuayThaiTraining\obj\Debug\MuayThaiTraining.csprojAssemblyReference.cache

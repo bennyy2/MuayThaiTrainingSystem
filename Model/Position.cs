@@ -12,11 +12,13 @@ using System.Configuration;
 
 namespace MuayThaiTraining
 {
-    class Position
+    public class Position
     {
         double x;
         double y;
         double z;
+        int imx;
+        int imy;
         int joint;
         int frame;
 
@@ -59,29 +61,30 @@ namespace MuayThaiTraining
             this.Joint = joint;
             this.Frame = frame;
         }
+
+        public Position(double x, double y, double z, int imx, int imy, int joint, int frame)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.Imx = imx;
+            this.Imy = imy;
+            this.Joint = joint;
+            this.Frame = frame;
+        }
         
 
         public double X { get => x; set => x = value; }
         public double Y { get => y; set => y = value; }
         public double Z { get => z; set => z = value; }
+        public int Imx { get => imx; set => imx = value; }
+        public int Imy { get => imy; set => imy = value; }
         public int Joint { get => joint; set => joint = value; }
         public int Frame { get => frame; set => frame = value; }
 
-        public void openConnection()
-        {
-            con = connectDB.connect();
-            con.Open();
-        }
-
-        public void closeConnection()
-        {
-            con.Close();
-        }
-
-        public Boolean saveSkel(Skeleton skel, string classname, int frame)
+        public Boolean saveSkel(List<Position> skel, string classname, int frame)
         {
             Boolean result = false;
-            List<List<JointType>> li = new List<List<JointType>> { legLeft, legRight, handLeft, handRight };
             try
             {
                 con = connectDB.connect();
@@ -89,25 +92,24 @@ namespace MuayThaiTraining
                 int classid = classRoom.getClassId(classname);
                 int poseid = pose.getPoseId();
 
-                foreach (List<JointType> j in li)
+                var f = skel.Max(x => x.Frame);
+                var body = skel.Where(x=>x.Frame == f).ToList();
+
+                foreach (var i in body)
                 {
-
-                    foreach (JointType i in j)
-                    {
-
-                        OleDbCommand cmd = new OleDbCommand();
-                        cmd.CommandText = "insert into [JointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID], [frameNo]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID, @frameNo)";
-                        cmd.Parameters.AddWithValue("@axis_x", skel.Joints[i].Position.X);
-                        cmd.Parameters.AddWithValue("@axis_y", skel.Joints[i].Position.Y);
-                        cmd.Parameters.AddWithValue("@axis_z", skel.Joints[i].Position.Z);
-                        cmd.Parameters.AddWithValue("@poseID", poseid);
-                        cmd.Parameters.AddWithValue("@classID", classid);
-                        cmd.Parameters.AddWithValue("@jointID", i);
-                        cmd.Parameters.AddWithValue("@frameNo", frame);
-                        cmd.Connection = con;
-                        int a = cmd.ExecuteNonQuery();
-                        
-                    }
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "insert into [Data]([X], [Y], [Z], [imX], [imY], [poseID], [classID], [jointID], [frame]) Values(@x, @y, @z, @imx, @imy, @poseID, @classID, @jointID, @frame)";
+                    cmd.Parameters.AddWithValue("@x", i.X);
+                    cmd.Parameters.AddWithValue("@y", i.Y);
+                    cmd.Parameters.AddWithValue("@z", i.Z);
+                    cmd.Parameters.AddWithValue("@imx", i.Imx);
+                    cmd.Parameters.AddWithValue("@imy", i.Imy);
+                    cmd.Parameters.AddWithValue("@poseID", poseid);
+                    cmd.Parameters.AddWithValue("@classID", classid);
+                    cmd.Parameters.AddWithValue("@jointID", i.Joint);
+                    cmd.Parameters.AddWithValue("@frameNo", 0);
+                    cmd.Connection = con;
+                    int a = cmd.ExecuteNonQuery();
                 }
 
                 result = true;
@@ -162,7 +164,7 @@ namespace MuayThaiTraining
 
         
 
-        public Boolean saveMotionPoint(List<BodyJoint> bodyJoint, string classname)
+        public Boolean saveMotionPoint(List<Position> bodyJoint, string classname)
         {
             Boolean result = false;
             try
@@ -172,24 +174,21 @@ namespace MuayThaiTraining
                 int classid = classRoom.getClassId(classname);
                 int poseid = pose.getPoseId();
 
-                foreach (BodyJoint i in bodyJoint)
+                foreach (var i in bodyJoint)
                 {
-
-                    foreach (JointType j in body)
-                    {
-
-                        OleDbCommand cmd = new OleDbCommand();
-                        cmd.CommandText = "insert into [JointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID], [frameNo]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID, @frameNo)";
-                        cmd.Parameters.AddWithValue("@axis_x", i.Skel.Joints[j].Position.X);
-                        cmd.Parameters.AddWithValue("@axis_y", i.Skel.Joints[j].Position.Y);
-                        cmd.Parameters.AddWithValue("@axis_z", i.Skel.Joints[j].Position.Z);
-                        cmd.Parameters.AddWithValue("@poseID", poseid);
-                        cmd.Parameters.AddWithValue("@classID", classid);
-                        cmd.Parameters.AddWithValue("@jointID", j);
-                        cmd.Parameters.AddWithValue("@frameNo", i.Frame);
-                        cmd.Connection = con;
-                        int a = cmd.ExecuteNonQuery();
-                    }
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "insert into [Data]([X], [Y], [Z], [imX], [imY], [poseID], [classID], [jointID], [frame]) Values(@x, @y, @z, @imx, @imy, @poseID, @classID, @jointID, @frame)";
+                    cmd.Parameters.AddWithValue("@x", i.X);
+                    cmd.Parameters.AddWithValue("@y", i.Y);
+                    cmd.Parameters.AddWithValue("@z", i.Z);
+                    cmd.Parameters.AddWithValue("@imx", i.Imx);
+                    cmd.Parameters.AddWithValue("@imy", i.Imy);
+                    cmd.Parameters.AddWithValue("@poseID", poseid);
+                    cmd.Parameters.AddWithValue("@classID", classid);
+                    cmd.Parameters.AddWithValue("@jointID", i.Joint);
+                    cmd.Parameters.AddWithValue("@frameNo", i.Frame);
+                    cmd.Connection = con;
+                    int a = cmd.ExecuteNonQuery();
                 }
 
                 result = true;
@@ -204,51 +203,9 @@ namespace MuayThaiTraining
             }
             return result;
         }
+        
 
-        public Boolean saveMotionTraineePoint(List<BodyJoint> bodyJoint, string classname)
-        {
-            Boolean result = false;
-            try
-            {
-                con = connectDB.connect();
-                con.Open();
-                int classid = classRoom.getClassId(classname);
-                int poseid = pose.getPoseId();
-
-                foreach (BodyJoint i in bodyJoint)
-                {
-
-                    foreach (JointType j in body)
-                    {
-
-                        OleDbCommand cmd = new OleDbCommand();
-                        cmd.CommandText = "insert into [TraineeJointPosition]([axis_x], [axis_y], [axis_z], [poseID], [classID], [jointID], [frameNo]) Values(@axis_x, @axis_y, @axis_z, @poseID, @classID, @jointID, @frameNo)";
-                        cmd.Parameters.AddWithValue("@axis_x", i.Skel.Joints[j].Position.X);
-                        cmd.Parameters.AddWithValue("@axis_y", i.Skel.Joints[j].Position.Y);
-                        cmd.Parameters.AddWithValue("@axis_z", i.Skel.Joints[j].Position.Z);
-                        cmd.Parameters.AddWithValue("@poseID", poseid);
-                        cmd.Parameters.AddWithValue("@classID", classid);
-                        cmd.Parameters.AddWithValue("@jointID", j);
-                        cmd.Parameters.AddWithValue("@frameNo", i.Frame);
-                        cmd.Connection = con;
-                        int a = cmd.ExecuteNonQuery();
-                    }
-                }
-
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-            }
-            return result;
-        }
-
-        public List<Position> getMotionByFrame(string poseName, string classRoom, int frame)
+        public List<Position> getMotionByFrame(string classRoom, string poseName)
         {
             List<Position> trainerMotion = new List<Position>();
 
@@ -257,10 +214,10 @@ namespace MuayThaiTraining
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT axis_x, axis_y, axis_z, jointID, frameNo " +
-                    "FROM ((JointPosition " +
-                    "INNER JOIN ClassRoom ON ClassRoom.classId = JointPosition.classID) " +
-                    "INNER JOIN Pose ON Pose.poseID = JointPosition.poseID) " +
+                String sqlQuery = "SELECT X, Y, Z, imX, imY, jointID, frame " +
+                    "FROM ((Data " +
+                    "INNER JOIN ClassRoom ON ClassRoom.classId = Data.classID) " +
+                    "INNER JOIN Pose ON Pose.poseID = Data.poseID) " +
                     "WHERE ClassRoom.className = @room " +
                     "AND Pose.poseName = @poseName ";
                 cmd = new OleDbCommand(sqlQuery, con);
@@ -271,7 +228,7 @@ namespace MuayThaiTraining
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Position position = new Position((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"], (int)reader["jointID"], (int)reader["frameNo"]);
+                    Position position = new Position((double)reader["X"], (double)reader["Y"], (double)reader["Z"], (int)reader["imX"], (int)reader["imY"], (int)reader["jointID"], (int)reader["frame"]);
                     trainerMotion.Add(position);
                 }
 
@@ -300,10 +257,10 @@ namespace MuayThaiTraining
                 con = connectDB.connect();
                 con.Open();
                 OleDbCommand cmd = new OleDbCommand();
-                String sqlQuery = "SELECT axis_x, axis_y, axis_z, jointID, frameNo " +
-                    "FROM ((JointPosition " +
-                    "INNER JOIN ClassRoom ON ClassRoom.classId = JointPosition.classID) " +
-                    "INNER JOIN Pose ON Pose.poseID = JointPosition.poseID) " +
+                String sqlQuery = "SELECT X, Y, Z, imX, imY,jointID, frame " +
+                    "FROM ((Data " +
+                    "INNER JOIN ClassRoom ON ClassRoom.classId = Data.classID) " +
+                    "INNER JOIN Pose ON Pose.poseID = Data.poseID) " +
                     "WHERE ClassRoom.className = @room " +
                     "AND Pose.poseName = @poseName ";
                 cmd = new OleDbCommand(sqlQuery, con);
@@ -314,7 +271,7 @@ namespace MuayThaiTraining
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Position position = new Position((double)reader["axis_x"], (double)reader["axis_y"], (double)reader["axis_z"], (int)reader["jointID"], (int)reader["frameNo"]);
+                    Position position = new Position((double)reader["X"], (double)reader["Y"], (double)reader["Z"], (int)reader["imX"], (int)reader["imY"], (int)reader["jointID"], (int)reader["frame"]);
                     trainerMotion.Add(position);
                 }
 
